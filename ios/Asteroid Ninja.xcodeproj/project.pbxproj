@@ -1,0 +1,540 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		31F4E05B5BD9B8DB3309E225 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4E962D9CC4CB20CA588CB /* shader.vsh */; };
+		31F4E2381778527B6D0047F5 /* CRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EFE7B712A1F288ABF41D /* CRectangle.cpp */; };
+		31F4E4D89C5EBA5C17A977DE /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EECD6AB5AE27687FCDD0 /* Game.cpp */; };
+		31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EEA73B747DF93993E514 /* Shader.mm */; };
+		31F4E699BB027260D88B9123 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4E5B473E9FC7AAD93C7D2 /* shader.fsh */; };
+		31F4EA2FA41213F0746C48D2 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E5DEE361EF1EF0F9564D /* Logger.cpp */; };
+		31F4EC2890C9E082557053AA /* MainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */; };
+		4A785ADA17D0E3FB00CB9555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AD917D0E3FB00CB9555 /* UIKit.framework */; };
+		4A785ADC17D0E3FB00CB9555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADB17D0E3FB00CB9555 /* Foundation.framework */; };
+		4A785ADE17D0E3FB00CB9555 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADD17D0E3FB00CB9555 /* CoreGraphics.framework */; };
+		4A785AE217D0E3FB00CB9555 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AE117D0E3FB00CB9555 /* OpenGLES.framework */; };
+		4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AE617D0E3FB00CB9555 /* InfoPlist.strings */; };
+		4A785AEA17D0E3FB00CB9555 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A785AE917D0E3FB00CB9555 /* main.m */; };
+		4A785AEE17D0E3FB00CB9555 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A785AED17D0E3FB00CB9555 /* AppDelegate.mm */; };
+		4A785AF017D0E3FB00CB9555 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AEF17D0E3FB00CB9555 /* Default.png */; };
+		4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AF117D0E3FB00CB9555 /* Default@2x.png */; };
+		4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AF317D0E3FB00CB9555 /* Default-568h@2x.png */; };
+		4A785B0917D0E3FC00CB9555 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785B0817D0E3FC00CB9555 /* SenTestingKit.framework */; };
+		4A785B0A17D0E3FC00CB9555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AD917D0E3FB00CB9555 /* UIKit.framework */; };
+		4A785B0B17D0E3FC00CB9555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADB17D0E3FB00CB9555 /* Foundation.framework */; };
+		4A785B1317D0E3FC00CB9555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A785B1117D0E3FC00CB9555 /* InfoPlist.strings */; };
+		4A785B1617D0E3FC00CB9555 /* Asteroid_NinjaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */; };
+		4A785B2217D4EFD000CB9555 /* MainView2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A785B2117D4EFD000CB9555 /* MainView2D.mm */; };
+		4A785B2917D5190A00CB9555 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785B2817D5190A00CB9555 /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4A785B0C17D0E3FC00CB9555 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A785ACE17D0E3FB00CB9555 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A785AD517D0E3FB00CB9555;
+			remoteInfo = "Asteroid Ninja";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		31F4E104ECD9AD25623B39A0 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
+		31F4E5B473E9FC7AAD93C7D2 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
+		31F4E5DEE361EF1EF0F9564D /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		31F4E6FC79EBD1AB09696328 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
+		31F4E8D9F9625153C3E547D4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		31F4E8F0EAF13C16AD7E7100 /* CRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRectangle.h; sourceTree = "<group>"; };
+		31F4E962D9CC4CB20CA588CB /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
+		31F4ED7DC2434772365C93DC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../common/Game.h; sourceTree = "<group>"; };
+		31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainViewController.mm; sourceTree = "<group>"; };
+		31F4EEA73B747DF93993E514 /* Shader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Shader.mm; sourceTree = "<group>"; };
+		31F4EECD6AB5AE27687FCDD0 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../common/Game.cpp; sourceTree = "<group>"; };
+		31F4EFE7B712A1F288ABF41D /* CRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRectangle.cpp; sourceTree = "<group>"; };
+		4A785AD617D0E3FB00CB9555 /* Asteroid Ninja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Asteroid Ninja.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A785AD917D0E3FB00CB9555 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4A785ADB17D0E3FB00CB9555 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4A785ADD17D0E3FB00CB9555 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4A785AE117D0E3FB00CB9555 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		4A785AE517D0E3FB00CB9555 /* Asteroid Ninja-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Asteroid Ninja-Info.plist"; sourceTree = "<group>"; };
+		4A785AE717D0E3FB00CB9555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4A785AE917D0E3FB00CB9555 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4A785AEB17D0E3FB00CB9555 /* Asteroid Ninja-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Asteroid Ninja-Prefix.pch"; sourceTree = "<group>"; };
+		4A785AEC17D0E3FB00CB9555 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4A785AED17D0E3FB00CB9555 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		4A785AEF17D0E3FB00CB9555 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		4A785AF117D0E3FB00CB9555 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		4A785AF317D0E3FB00CB9555 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		4A785B0717D0E3FC00CB9555 /* Asteroid NinjaTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Asteroid NinjaTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A785B0817D0E3FC00CB9555 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		4A785B1017D0E3FC00CB9555 /* Asteroid NinjaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Asteroid NinjaTests-Info.plist"; sourceTree = "<group>"; };
+		4A785B1217D0E3FC00CB9555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4A785B1417D0E3FC00CB9555 /* Asteroid_NinjaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Asteroid_NinjaTests.h; sourceTree = "<group>"; };
+		4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Asteroid_NinjaTests.m; sourceTree = "<group>"; };
+		4A785B2017D4EFD000CB9555 /* MainView2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView2D.h; sourceTree = "<group>"; };
+		4A785B2117D4EFD000CB9555 /* MainView2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainView2D.mm; sourceTree = "<group>"; };
+		4A785B2817D5190A00CB9555 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4A785AD317D0E3FB00CB9555 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A785B2917D5190A00CB9555 /* QuartzCore.framework in Frameworks */,
+				4A785ADA17D0E3FB00CB9555 /* UIKit.framework in Frameworks */,
+				4A785ADC17D0E3FB00CB9555 /* Foundation.framework in Frameworks */,
+				4A785ADE17D0E3FB00CB9555 /* CoreGraphics.framework in Frameworks */,
+				4A785AE217D0E3FB00CB9555 /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A785B0317D0E3FC00CB9555 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A785B0917D0E3FC00CB9555 /* SenTestingKit.framework in Frameworks */,
+				4A785B0A17D0E3FC00CB9555 /* UIKit.framework in Frameworks */,
+				4A785B0B17D0E3FC00CB9555 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		31F4E20A8E0C52DA0861485B /* log */ = {
+			isa = PBXGroup;
+			children = (
+				31F4E5DEE361EF1EF0F9564D /* Logger.cpp */,
+				31F4E104ECD9AD25623B39A0 /* Logger.h */,
+			);
+			name = log;
+			path = ../../common/an/log;
+			sourceTree = "<group>";
+		};
+		31F4EE3A4A6ADD397A40577F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				31F4E5B473E9FC7AAD93C7D2 /* shader.fsh */,
+				31F4E962D9CC4CB20CA588CB /* shader.vsh */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		31F4EFC7C9587C97C8593291 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				31F4E8F0EAF13C16AD7E7100 /* CRectangle.h */,
+				31F4EFE7B712A1F288ABF41D /* CRectangle.cpp */,
+			);
+			name = common;
+			path = ../../common;
+			sourceTree = "<group>";
+		};
+		4A785ACD17D0E3FB00CB9555 = {
+			isa = PBXGroup;
+			children = (
+				4A785B2817D5190A00CB9555 /* QuartzCore.framework */,
+				4A785AE317D0E3FB00CB9555 /* Asteroid Ninja */,
+				4A785B0E17D0E3FC00CB9555 /* Asteroid NinjaTests */,
+				4A785AD817D0E3FB00CB9555 /* Frameworks */,
+				4A785AD717D0E3FB00CB9555 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4A785AD717D0E3FB00CB9555 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4A785AD617D0E3FB00CB9555 /* Asteroid Ninja.app */,
+				4A785B0717D0E3FC00CB9555 /* Asteroid NinjaTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4A785AD817D0E3FB00CB9555 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4A785AD917D0E3FB00CB9555 /* UIKit.framework */,
+				4A785ADB17D0E3FB00CB9555 /* Foundation.framework */,
+				4A785ADD17D0E3FB00CB9555 /* CoreGraphics.framework */,
+				4A785AE117D0E3FB00CB9555 /* OpenGLES.framework */,
+				4A785B0817D0E3FC00CB9555 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A785AE317D0E3FB00CB9555 /* Asteroid Ninja */ = {
+			isa = PBXGroup;
+			children = (
+				4A785B1F17D4EFB200CB9555 /* Classes */,
+				4A785AE417D0E3FB00CB9555 /* Supporting Files */,
+				31F4EE3A4A6ADD397A40577F /* Resources */,
+				31F4EFC7C9587C97C8593291 /* common */,
+			);
+			path = "Asteroid Ninja";
+			sourceTree = "<group>";
+		};
+		4A785AE417D0E3FB00CB9555 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4A785AE517D0E3FB00CB9555 /* Asteroid Ninja-Info.plist */,
+				4A785AE617D0E3FB00CB9555 /* InfoPlist.strings */,
+				4A785AE917D0E3FB00CB9555 /* main.m */,
+				4A785AEB17D0E3FB00CB9555 /* Asteroid Ninja-Prefix.pch */,
+				4A785AEF17D0E3FB00CB9555 /* Default.png */,
+				4A785AF117D0E3FB00CB9555 /* Default@2x.png */,
+				4A785AF317D0E3FB00CB9555 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4A785B0E17D0E3FC00CB9555 /* Asteroid NinjaTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A785B1417D0E3FC00CB9555 /* Asteroid_NinjaTests.h */,
+				4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */,
+				4A785B0F17D0E3FC00CB9555 /* Supporting Files */,
+			);
+			path = "Asteroid NinjaTests";
+			sourceTree = "<group>";
+		};
+		4A785B0F17D0E3FC00CB9555 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4A785B1017D0E3FC00CB9555 /* Asteroid NinjaTests-Info.plist */,
+				4A785B1117D0E3FC00CB9555 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4A785B1F17D4EFB200CB9555 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4A785B2017D4EFD000CB9555 /* MainView2D.h */,
+				4A785B2117D4EFD000CB9555 /* MainView2D.mm */,
+				4A785AEC17D0E3FB00CB9555 /* AppDelegate.h */,
+				4A785AED17D0E3FB00CB9555 /* AppDelegate.mm */,
+				31F4E6FC79EBD1AB09696328 /* Shader.h */,
+				31F4EEA73B747DF93993E514 /* Shader.mm */,
+				31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */,
+				31F4E8D9F9625153C3E547D4 /* MainViewController.h */,
+				31F4EECD6AB5AE27687FCDD0 /* Game.cpp */,
+				31F4ED7DC2434772365C93DC /* Game.h */,
+				31F4E20A8E0C52DA0861485B /* log */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4A785AD517D0E3FB00CB9555 /* Asteroid Ninja */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A785B1917D0E3FC00CB9555 /* Build configuration list for PBXNativeTarget "Asteroid Ninja" */;
+			buildPhases = (
+				4A785AD217D0E3FB00CB9555 /* Sources */,
+				4A785AD317D0E3FB00CB9555 /* Frameworks */,
+				4A785AD417D0E3FB00CB9555 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Asteroid Ninja";
+			productName = "Asteroid Ninja";
+			productReference = 4A785AD617D0E3FB00CB9555 /* Asteroid Ninja.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4A785B0617D0E3FC00CB9555 /* Asteroid NinjaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A785B1C17D0E3FC00CB9555 /* Build configuration list for PBXNativeTarget "Asteroid NinjaTests" */;
+			buildPhases = (
+				4A785B0217D0E3FC00CB9555 /* Sources */,
+				4A785B0317D0E3FC00CB9555 /* Frameworks */,
+				4A785B0417D0E3FC00CB9555 /* Resources */,
+				4A785B0517D0E3FC00CB9555 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A785B0D17D0E3FC00CB9555 /* PBXTargetDependency */,
+			);
+			name = "Asteroid NinjaTests";
+			productName = "Asteroid NinjaTests";
+			productReference = 4A785B0717D0E3FC00CB9555 /* Asteroid NinjaTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4A785ACE17D0E3FB00CB9555 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Anton Gaenko";
+			};
+			buildConfigurationList = 4A785AD117D0E3FB00CB9555 /* Build configuration list for PBXProject "Asteroid Ninja" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4A785ACD17D0E3FB00CB9555;
+			productRefGroup = 4A785AD717D0E3FB00CB9555 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4A785AD517D0E3FB00CB9555 /* Asteroid Ninja */,
+				4A785B0617D0E3FC00CB9555 /* Asteroid NinjaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4A785AD417D0E3FB00CB9555 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */,
+				4A785AF017D0E3FB00CB9555 /* Default.png in Resources */,
+				4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */,
+				4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */,
+				31F4E699BB027260D88B9123 /* shader.fsh in Resources */,
+				31F4E05B5BD9B8DB3309E225 /* shader.vsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A785B0417D0E3FC00CB9555 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A785B1317D0E3FC00CB9555 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4A785B0517D0E3FC00CB9555 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A785AD217D0E3FB00CB9555 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A785AEA17D0E3FB00CB9555 /* main.m in Sources */,
+				4A785AEE17D0E3FB00CB9555 /* AppDelegate.mm in Sources */,
+				31F4E2381778527B6D0047F5 /* CRectangle.cpp in Sources */,
+				4A785B2217D4EFD000CB9555 /* MainView2D.mm in Sources */,
+				31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */,
+				31F4EC2890C9E082557053AA /* MainViewController.mm in Sources */,
+				31F4E4D89C5EBA5C17A977DE /* Game.cpp in Sources */,
+				31F4EA2FA41213F0746C48D2 /* Logger.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A785B0217D0E3FC00CB9555 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A785B1617D0E3FC00CB9555 /* Asteroid_NinjaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4A785B0D17D0E3FC00CB9555 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A785AD517D0E3FB00CB9555 /* Asteroid Ninja */;
+			targetProxy = 4A785B0C17D0E3FC00CB9555 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4A785AE617D0E3FB00CB9555 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A785AE717D0E3FB00CB9555 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4A785B1117D0E3FC00CB9555 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4A785B1217D0E3FC00CB9555 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4A785B1717D0E3FC00CB9555 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4A785B1817D0E3FC00CB9555 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4A785B1A17D0E3FC00CB9555 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
+				INFOPLIST_FILE = "Asteroid Ninja/Asteroid Ninja-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4A785B1B17D0E3FC00CB9555 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
+				INFOPLIST_FILE = "Asteroid Ninja/Asteroid Ninja-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4A785B1D17D0E3FC00CB9555 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Asteroid Ninja.app/Asteroid Ninja";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
+				INFOPLIST_FILE = "Asteroid NinjaTests/Asteroid NinjaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		4A785B1E17D0E3FC00CB9555 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Asteroid Ninja.app/Asteroid Ninja";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
+				INFOPLIST_FILE = "Asteroid NinjaTests/Asteroid NinjaTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4A785AD117D0E3FB00CB9555 /* Build configuration list for PBXProject "Asteroid Ninja" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A785B1717D0E3FC00CB9555 /* Debug */,
+				4A785B1817D0E3FC00CB9555 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A785B1917D0E3FC00CB9555 /* Build configuration list for PBXNativeTarget "Asteroid Ninja" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A785B1A17D0E3FC00CB9555 /* Debug */,
+				4A785B1B17D0E3FC00CB9555 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4A785B1C17D0E3FC00CB9555 /* Build configuration list for PBXNativeTarget "Asteroid NinjaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A785B1D17D0E3FC00CB9555 /* Debug */,
+				4A785B1E17D0E3FC00CB9555 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4A785ACE17D0E3FB00CB9555 /* Project object */;
+}
