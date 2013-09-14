@@ -1,5 +1,6 @@
 /*
- Copyright (C) 2011 by Carsten Haubold
+ Copyright (C) 2013 by Anton Gaenko
+ Mail anton.gaenko@yahoo.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,16 +21,15 @@
  THE SOFTWARE.
  */
 
-//#import <OpenGLES/gl.h>
-#import <OpenGLES/ES2/glext.h>
+#include "OpenGL.h"
 #import "Game.h"
-#import "Shader.h"
+#include "SpacePainter.h"
 #import "Logger.h"
 
 // TODO move it to cpp and cut all Objective C code
 
 const GLfloat shipGeometry[] = {
-        -0.5, -0.5,
+        -11.5, -0.5,
         0.5, -0.5,
         0.0, 0.5
 };
@@ -63,7 +63,8 @@ void Game::setRenderbufferSize(unsigned int width, unsigned int height)
     info("set render buffer size");
     _renderbufferWidth = width;
     _renderbufferHeight = height;
-    
+
+
     glViewport(0, 0, _renderbufferWidth, _renderbufferHeight);
 }
 
@@ -80,7 +81,7 @@ void Game::init()
     //---------------------------------------------------
     //create a triangle
     //generate an ID for our geometry buffer in the video memory and make it the active one
-    glGenBuffers(1, &_geometryBuffer);
+    /*glGenBuffers(1, &_geometryBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, _geometryBuffer);
 
     debug("ship geometry size %d", sizeof(shipGeometry));
@@ -94,59 +95,31 @@ void Game::init()
 
     //send the data to the video memory
     debug("ship color size %d", sizeof(shipGeometry));
-    glBufferData(GL_ARRAY_BUFFER, sizeof(shipColor), shipColor, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(shipColor), shipColor, GL_STATIC_DRAW);*/
 
     //---------------------------------------------------
     //load our shader
-    _shader = new Shader("shader.vsh", "shader.fsh");
 
-    if(!_shader->compileAndLink())
-    {
-        error("Encountered problems when loading shader, application will crash...");
-    }
 
-    //tell OpenGL to use this shader for all coming rendering
-    glUseProgram(_shader->getProgram());
+    info("init space");
+    ViewportConfig vp = {_renderbufferWidth,_renderbufferHeight,0.2,false};
+    _spacePainter = new SpacePainter(vp);
 
-    //get the attachment points for the attributes position and color
-    int resultPosAllocation = glGetAttribLocation(_shader->getProgram(), "position");
-    int resultColorAllocation = glGetAttribLocation(_shader->getProgram(), "color");
-
-    //check that the locations are valid, negative value means invalid
-    if(resultPosAllocation < 0 || resultColorAllocation < 0)
-    {
-        error("Could not query attribute locations");
-    } else {
-        _positionLocation = (GLuint) resultPosAllocation;
-        _colorLocation = (GLuint) resultColorAllocation;
-    }
-
-    // TODO place it with above code into a transaction, because it's unsafe cast
-    glEnableVertexAttribArray(_positionLocation);
-    glEnableVertexAttribArray(_colorLocation);
+    // TODO code here glError checking
 }
 
 //drawing a frame
 void Game::draw()
 {
-    glClearColor(0.5, 0.0, 0.0, 1.0);
+    glClearColor(0.0, 0.0, 0.0, 1.0);
     //clear the color buffer
     glClear(GL_COLOR_BUFFER_BIT);
+    // TODO place here framerate-free animation code
+    _spacePainter->draw();
 
-    //bind the geometry VBO
-    glBindBuffer(GL_ARRAY_BUFFER, _geometryBuffer);
-    //point the position attribute to this buffer, being tuples of 4 floats for each vertex
-//    glVertexAttribPointer(_positionLocation, 4, GL_FLOAT, GL_FALSE, 0, NULL);
-    glVertexAttribPointer(_positionLocation, 2, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    //bint the color VBO
-    glBindBuffer(GL_ARRAY_BUFFER, _colorBuffer);
-    //this attribute is only 3 floats per vertex
-//    glVertexAttribPointer(_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-    glVertexAttribPointer(_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, NULL);
 
-    //initiate the drawing process, we want a triangle, start at index 0 and draw 3 vertices
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+
 
 
 }

@@ -20,7 +20,11 @@
  THE SOFTWARE.
  */
 
+#ifndef GAME_H
+#define GAME_H
+
 class Shader;
+class SpacePainter;
 
 //this is our general lesson class, providing the two most important methods init and draw
 //which will be invoked by our MainView2D
@@ -56,4 +60,7 @@ private:
 
     //locations for the vertex and color attribute in the shader
     GLuint _positionLocation, _colorLocation;
+    SpacePainter *_spacePainter;
 };
+
+#endif /* GAME_H */

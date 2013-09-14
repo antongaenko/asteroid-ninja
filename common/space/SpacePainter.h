@@ -1,5 +1,6 @@
 /*
- Copyright (C) 2013 by Anton Gaenko
+ Copyright (C) 2013 by Anton Gaenko 
+ Mail anton.gaenko@yahoo.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -20,10 +21,46 @@
  THE SOFTWARE.
  */
 
-void info(char const *txt, ...);
+#ifndef SPACE_H
+#define SPACE_H
 
-void debug(char const *txt, ...);
+#include "Ship.h"
+#include "Laser.h"
+#include "Math2D.h"
+#include <vector>
 
-void debugArray(char const *txt, float arr[], int size, short matrixRowSize);
+class Shader;
 
-void error(char const *txt, ...);
+/**
+ * Main container and printer for all game objects.
+ * It rules who, when and how.
+ */
+class SpacePainter {
+private:
+    std::vector<SpaceObject> *_asteroids;
+    Ship *_ship;
+    std::vector<Laser> *_lasers;
+    Shader *_shader;
+    // shader position attribute binder
+    GLuint _positionLocation;
+    // shader color attribute binder
+    GLuint _colorLocation;
+    // shader uniform matrix binder
+    GLuint _mvLocation;
+    // model view transformation ()
+    Matrix2 _modelView;
+    // TODO contain viewport config for correct place of objects
+    ViewportConfig &_viewportConfig;
+protected:
+
+    void setShaderProgram();
+public:
+    //
+    void draw();
+    SpacePainter(ViewportConfig &viewportConfig);
+    ~SpacePainter();
+};
+
+#endif /* SPACE_H */
+
+

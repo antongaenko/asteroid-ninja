@@ -24,35 +24,46 @@
 #include "Logger.h"
 #import <iostream>
 
-// TODO Place here this code if iOS to print to device log
-/*int printf(const char * __restrict format, ...)
-{
-    va_list args;
-    va_start(args,format);
-    NSLogv([NSString stringWithUTF8String:format], args) ;
-    va_end(args);
-    return 1;
-}*/
-
-void info(const char *txt, ...) {
-    fprintf(stdout, "INFO: ");
+// use to notify reader about a program state
+void info(char const *txt, ...) {
+    printf("INFO: ");
     va_list args;
     va_start(args, txt);
-    vfprintf(stdout, txt, args);
+    vprintf(txt, args);
     va_end(args);
-    fprintf(stdout, "\n");
+    printf("\n");
 }
 
-void debug(const char *txt, ...) {
-    fprintf(stdout, "DEBUG: ");
+// use to print for your needs
+void debug(char const *txt, ...) {
+    printf("DEBUG: ");
     va_list args;
     va_start(args, txt);
-    vfprintf(stdout, txt, args);
+    vprintf(txt, args);
     va_end(args);
-    fprintf(stdout, "\n");
+    printf("\n");
 }
 
-void error(const char *txt, ...) {
+// use to print float array or matrix
+void debugArray(char const *txt, float arr[], int size, short matrixRowSize) {
+    printf("DEBUG: %s \n", txt);
+    for (int i=0; i<size; i+= matrixRowSize) {
+        // if this array is matrix
+        if (matrixRowSize >0) {
+            // print each row on new line
+            for (int j=0; j< matrixRowSize; j++) {
+                printf(" %f ", arr[i+j]);
+            }
+            printf("\n");
+        } else {
+            printf("%f, ", arr[i]);
+        }
+    }
+    printf("\n");
+}
+
+// use to notify about wrong state of a program
+void error(char const *txt, ...) {
     fprintf(stderr, "ERROR: ");
     va_list args;
     va_start(args, txt);
@@ -60,3 +71,4 @@ void error(const char *txt, ...) {
     va_end(args);
     fprintf(stderr, "\n");
 }
+

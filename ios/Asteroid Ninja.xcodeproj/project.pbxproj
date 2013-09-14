@@ -7,13 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31F4E05B5BD9B8DB3309E225 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4E962D9CC4CB20CA588CB /* shader.vsh */; };
-		31F4E2381778527B6D0047F5 /* CRectangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EFE7B712A1F288ABF41D /* CRectangle.cpp */; };
+		31F4E083AD18DC1741B04FC9 /* Laser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0F697341A57E2636D6D /* Laser.cpp */; };
+		31F4E3575761C049199FB9A4 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E3DAAE09017503A7FDDE /* Ship.cpp */; };
+		31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0AEF547856665EE0535 /* Math2DTest.mm */; };
 		31F4E4D89C5EBA5C17A977DE /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EECD6AB5AE27687FCDD0 /* Game.cpp */; };
+		31F4E4ED128D697BFFB42C4B /* SpaceObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E49D74A88B9F59954578 /* SpaceObject.cpp */; };
+		31F4E53C5A1767403A4200CF /* SpacePainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E079A80F0DE812A5E484 /* SpacePainter.cpp */; };
 		31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EEA73B747DF93993E514 /* Shader.mm */; };
-		31F4E699BB027260D88B9123 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4E5B473E9FC7AAD93C7D2 /* shader.fsh */; };
-		31F4EA2FA41213F0746C48D2 /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E5DEE361EF1EF0F9564D /* Logger.cpp */; };
+		31F4E65A23E4FBA11387314B /* Math2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */; };
+		31F4E7C39885B623F59E302C /* SpaceObjectTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E4415055A880C37772EC /* SpaceObjectTest.mm */; };
+		31F4EADBBB5843C0D2694491 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4EED7375F9F6783631C02 /* shader.fsh */; };
 		31F4EC2890C9E082557053AA /* MainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */; };
+		31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4E26C320E8654FC3FFEBF /* shader.vsh */; };
+		31F4EE57AF5AE8CA6983253A /* Asteroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EC3816FFC103C757A169 /* Asteroid.cpp */; };
+		31F4EF9065B79E467701570E /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E9631CBC8B0248D3684F /* Logger.cpp */; };
 		4A785ADA17D0E3FB00CB9555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AD917D0E3FB00CB9555 /* UIKit.framework */; };
 		4A785ADC17D0E3FB00CB9555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADB17D0E3FB00CB9555 /* Foundation.framework */; };
 		4A785ADE17D0E3FB00CB9555 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADD17D0E3FB00CB9555 /* CoreGraphics.framework */; };
@@ -44,18 +51,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		31F4E104ECD9AD25623B39A0 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
-		31F4E5B473E9FC7AAD93C7D2 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
-		31F4E5DEE361EF1EF0F9564D /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		31F4E079A80F0DE812A5E484 /* SpacePainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpacePainter.cpp; sourceTree = "<group>"; };
+		31F4E0AEF547856665EE0535 /* Math2DTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Math2DTest.mm; sourceTree = "<group>"; };
+		31F4E0F697341A57E2636D6D /* Laser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Laser.cpp; sourceTree = "<group>"; };
+		31F4E11F0DD92E05FF871E5D /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asteroid.h; sourceTree = "<group>"; };
+		31F4E13C3FE7D91717D176F2 /* SpaceObjectTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceObjectTest.h; sourceTree = "<group>"; };
+		31F4E26C320E8654FC3FFEBF /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
+		31F4E3DAAE09017503A7FDDE /* Ship.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ship.cpp; sourceTree = "<group>"; };
+		31F4E4415055A880C37772EC /* SpaceObjectTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceObjectTest.mm; sourceTree = "<group>"; };
+		31F4E49D74A88B9F59954578 /* SpaceObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpaceObject.cpp; sourceTree = "<group>"; };
+		31F4E49D7CB61E4004D05D82 /* SpacePainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpacePainter.h; sourceTree = "<group>"; };
+		31F4E4B15EA4FAA747CF9937 /* Ship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ship.h; sourceTree = "<group>"; };
+		31F4E6F84F2E36FB4B4A628A /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGL.h; path = ../../common/OpenGL.h; sourceTree = "<group>"; };
 		31F4E6FC79EBD1AB09696328 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		31F4E8D9F9625153C3E547D4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		31F4E8F0EAF13C16AD7E7100 /* CRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CRectangle.h; sourceTree = "<group>"; };
-		31F4E962D9CC4CB20CA588CB /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
+		31F4E91FC262E87FA5860301 /* Math2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Math2D.h; path = ../../common/Math2D.h; sourceTree = "<group>"; };
+		31F4E9631CBC8B0248D3684F /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
+		31F4EA857BA249D62F685ACB /* Math2DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Math2DTest.h; sourceTree = "<group>"; };
+		31F4EB7F0E3BBD6D51EBEB6D /* SpaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceObject.h; sourceTree = "<group>"; };
+		31F4EC3816FFC103C757A169 /* Asteroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Asteroid.cpp; sourceTree = "<group>"; };
+		31F4ED42269E31817CB586F7 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		31F4ED7DC2434772365C93DC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../common/Game.h; sourceTree = "<group>"; };
 		31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainViewController.mm; sourceTree = "<group>"; };
+		31F4EDD7F7E92C0338A7C099 /* Laser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Laser.h; sourceTree = "<group>"; };
+		31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Math2D.cpp; path = ../../common/Math2D.cpp; sourceTree = "<group>"; };
 		31F4EEA73B747DF93993E514 /* Shader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Shader.mm; sourceTree = "<group>"; };
 		31F4EECD6AB5AE27687FCDD0 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../common/Game.cpp; sourceTree = "<group>"; };
-		31F4EFE7B712A1F288ABF41D /* CRectangle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CRectangle.cpp; sourceTree = "<group>"; };
+		31F4EED7375F9F6783631C02 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
 		4A785AD617D0E3FB00CB9555 /* Asteroid Ninja.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Asteroid Ninja.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A785AD917D0E3FB00CB9555 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4A785ADB17D0E3FB00CB9555 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -107,33 +129,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		31F4E20A8E0C52DA0861485B /* log */ = {
+		31F4E2EF408E8C13CE600B9C /* log */ = {
 			isa = PBXGroup;
 			children = (
-				31F4E5DEE361EF1EF0F9564D /* Logger.cpp */,
-				31F4E104ECD9AD25623B39A0 /* Logger.h */,
+				31F4ED42269E31817CB586F7 /* Logger.h */,
+				31F4E9631CBC8B0248D3684F /* Logger.cpp */,
 			);
 			name = log;
-			path = ../../common/an/log;
+			path = ../../common/log;
 			sourceTree = "<group>";
 		};
-		31F4EE3A4A6ADD397A40577F /* Resources */ = {
+		31F4E60B320737CD0B815D72 /* shader */ = {
 			isa = PBXGroup;
 			children = (
-				31F4E5B473E9FC7AAD93C7D2 /* shader.fsh */,
-				31F4E962D9CC4CB20CA588CB /* shader.vsh */,
+				31F4EED7375F9F6783631C02 /* shader.fsh */,
+				31F4E26C320E8654FC3FFEBF /* shader.vsh */,
 			);
-			path = Resources;
+			name = shader;
+			path = ../../common/shader;
 			sourceTree = "<group>";
 		};
-		31F4EFC7C9587C97C8593291 /* common */ = {
+		31F4E9F3EB2AE36DD223485C /* space */ = {
 			isa = PBXGroup;
 			children = (
-				31F4E8F0EAF13C16AD7E7100 /* CRectangle.h */,
-				31F4EFE7B712A1F288ABF41D /* CRectangle.cpp */,
+				31F4E49D74A88B9F59954578 /* SpaceObject.cpp */,
+				31F4EB7F0E3BBD6D51EBEB6D /* SpaceObject.h */,
+				31F4E079A80F0DE812A5E484 /* SpacePainter.cpp */,
+				31F4E49D7CB61E4004D05D82 /* SpacePainter.h */,
+				31F4E3DAAE09017503A7FDDE /* Ship.cpp */,
+				31F4E4B15EA4FAA747CF9937 /* Ship.h */,
+				31F4E0F697341A57E2636D6D /* Laser.cpp */,
+				31F4EDD7F7E92C0338A7C099 /* Laser.h */,
+				31F4EC3816FFC103C757A169 /* Asteroid.cpp */,
+				31F4E11F0DD92E05FF871E5D /* Asteroid.h */,
 			);
-			name = common;
-			path = ../../common;
+			name = space;
+			path = ../../common/space;
 			sourceTree = "<group>";
 		};
 		4A785ACD17D0E3FB00CB9555 = {
@@ -173,8 +204,7 @@
 			children = (
 				4A785B1F17D4EFB200CB9555 /* Classes */,
 				4A785AE417D0E3FB00CB9555 /* Supporting Files */,
-				31F4EE3A4A6ADD397A40577F /* Resources */,
-				31F4EFC7C9587C97C8593291 /* common */,
+				31F4E60B320737CD0B815D72 /* shader */,
 			);
 			path = "Asteroid Ninja";
 			sourceTree = "<group>";
@@ -199,6 +229,10 @@
 				4A785B1417D0E3FC00CB9555 /* Asteroid_NinjaTests.h */,
 				4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */,
 				4A785B0F17D0E3FC00CB9555 /* Supporting Files */,
+				31F4EA857BA249D62F685ACB /* Math2DTest.h */,
+				31F4E0AEF547856665EE0535 /* Math2DTest.mm */,
+				31F4E13C3FE7D91717D176F2 /* SpaceObjectTest.h */,
+				31F4E4415055A880C37772EC /* SpaceObjectTest.mm */,
 			);
 			path = "Asteroid NinjaTests";
 			sourceTree = "<group>";
@@ -225,7 +259,11 @@
 				31F4E8D9F9625153C3E547D4 /* MainViewController.h */,
 				31F4EECD6AB5AE27687FCDD0 /* Game.cpp */,
 				31F4ED7DC2434772365C93DC /* Game.h */,
-				31F4E20A8E0C52DA0861485B /* log */,
+				31F4E2EF408E8C13CE600B9C /* log */,
+				31F4E9F3EB2AE36DD223485C /* space */,
+				31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */,
+				31F4E91FC262E87FA5860301 /* Math2D.h */,
+				31F4E6F84F2E36FB4B4A628A /* OpenGL.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -305,8 +343,8 @@
 				4A785AF017D0E3FB00CB9555 /* Default.png in Resources */,
 				4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */,
 				4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */,
-				31F4E699BB027260D88B9123 /* shader.fsh in Resources */,
-				31F4E05B5BD9B8DB3309E225 /* shader.vsh in Resources */,
+				31F4EADBBB5843C0D2694491 /* shader.fsh in Resources */,
+				31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,12 +381,17 @@
 			files = (
 				4A785AEA17D0E3FB00CB9555 /* main.m in Sources */,
 				4A785AEE17D0E3FB00CB9555 /* AppDelegate.mm in Sources */,
-				31F4E2381778527B6D0047F5 /* CRectangle.cpp in Sources */,
 				4A785B2217D4EFD000CB9555 /* MainView2D.mm in Sources */,
 				31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */,
 				31F4EC2890C9E082557053AA /* MainViewController.mm in Sources */,
 				31F4E4D89C5EBA5C17A977DE /* Game.cpp in Sources */,
-				31F4EA2FA41213F0746C48D2 /* Logger.cpp in Sources */,
+				31F4EF9065B79E467701570E /* Logger.cpp in Sources */,
+				31F4E4ED128D697BFFB42C4B /* SpaceObject.cpp in Sources */,
+				31F4E65A23E4FBA11387314B /* Math2D.cpp in Sources */,
+				31F4E53C5A1767403A4200CF /* SpacePainter.cpp in Sources */,
+				31F4E3575761C049199FB9A4 /* Ship.cpp in Sources */,
+				31F4E083AD18DC1741B04FC9 /* Laser.cpp in Sources */,
+				31F4EE57AF5AE8CA6983253A /* Asteroid.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +400,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A785B1617D0E3FC00CB9555 /* Asteroid_NinjaTests.m in Sources */,
+				31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */,
+				31F4E7C39885B623F59E302C /* SpaceObjectTest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

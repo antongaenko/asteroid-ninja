@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Anton Gaenko. All rights reserved.
 //
 
+// model view transformation
+uniform highp mat2 modelView;
+
 //the incoming vertex' position
 attribute vec2 position;
 
@@ -20,6 +23,8 @@ varying lowp vec3 colorVarying;
 //the shader entry point is the main method
 void main()
 {
+    //gl_PointSize = 5.0;
     colorVarying = color; //save the color for the fragment shader
-    gl_Position = vec4(position, 1.0, 1.0); //copy the position
+    gl_Position = vec4(modelView * position, 1.0, 1.0);
+    //gl_Position = vec4(position, 1.0, 1.0); //copy the position
 }
