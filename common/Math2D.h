@@ -21,30 +21,211 @@
  THE SOFTWARE.
  */
 
+
+
 #ifndef MATH2D_H
 #define MATH2D_H
 
-// Point in 2D space
-// TODO make fields const
-typedef struct point {
+#include <vector>
+#include <math.h>
+
+static const float PI = 3.141592;
+static const float DegreesToRadians = PI / 180;
+
+namespace math2d {
+
+  template <typename T, int Size>
+  class Array {
+  public:
+    Array() {}
+
+    T& operator [](const int index) {return a[index];}
+
+    T operator [](const int index) const {return a[index];}
+
+    // if copied array is bigger than copy only part
+    // if smaller set all remain elements to 0
+    template <int AnySize>Array& operator = (const Array<T, AnySize>& another) {
+      for (int i = 0; i < Size; i++) {
+        // set all above elements to 0
+        a[i] = i < another.getSize() ? another[i] : 0;
+      }
+      return *this;
+    }
+
+    bool operator==(const Array &another) const {
+      for (int i = 0; i < Size; i++) {
+        if (another[i] != a[i]) return false;
+      }
+      return true;
+    }
+
+    T *getArrayC() {return a;}
+
+    int getSize() const {return Size;};
+
+  protected:
+    T a[Size];
+  };
+
+
+  /**
+  * Square matrix [N][N].
+  * Is can be only Identity or Nil.
+  * And all transformations we do by multiplication.
+  * TODO Move out member definitions
+  */
+  template <class T, int Size>
+  class SquareMatrix {
+  public:
+    SquareMatrix(bool isIdentity = false) {
+      for (int i = 0; i < Size; i++) {
+        for (int j = 0; j < Size; j++) {
+          _m[i][j] = isIdentity && (i == j) ? 1 : 0;
+        }
+      }
+    }
+
+    // return all elements in one-dimension array row by row
+    Array<T, Size * Size> flat() {
+      Array<T, Size * Size> arrayToFill;
+      for (int i = 0; i < Size; i++) {
+        for (int j = 0; j < Size; j++) {
+          arrayToFill[i * Size + j] = _m[i][j];
+        }
+      }
+      return arrayToFill;
+    }
+
+    /**
+     * Multiply to other square matrix with the same size using the simplest algorithm with O(n^3).
+     * Return new matrix.
+     */
+    virtual SquareMatrix operator *(const SquareMatrix &on) {
+      SquareMatrix r;
+
+      for (int i = 0; i < Size; i++) {
+        for (int j = 0; j < Size; j++) {
+          r._m[i][j] = 0;
+          for (int k = 0; k < Size; k++) {
+            r._m[i][j] = r._m[i][j] + _m[i][k] * on._m[k][j];
+          }
+        }
+      }
+
+      return r;
+    }
+
+    int getSize() {return Size;}
+
+  protected:
+    // matrix[row][column]
+    T _m[Size][Size];
+
+  };
+
+  /**
+  * Matrix 3x3
+   */
+  template <class T>
+  class Matrix33 : public SquareMatrix<T, 3> {
+  public:
+    Matrix33(bool isIdentity = false):SquareMatrix<T, 3>(isIdentity) {}
+  };
+
+  /**
+  * Rotate matrix 3x3.
+  * User should set angle for transformations.
+  * Positive angle specify counter-clockwise rotation.
+  */
+  template <class T>
+  class RotateMatrix33 : public Matrix33<T> {
+    public:
+    RotateMatrix33(float angle):Matrix33<T>(true) {
+      this->_m[0][0] = cosf(angle);
+      this->_m[0][1] = sinf(angle);
+      this->_m[1][0] = -sinf(angle);
+      this->_m[1][1] = cosf(angle);
+    }
+  };
+
+  /**
+  * Translate matrix 3x3.
+  * It add dx to X and dy to Y coordinates.
+  * (1,1,1) * TranslateMatrix33(1,1) = (2,2,1)
+  */
+  template <class T>
+  class TranslateMatrix33 : public Matrix33<T> {
+    public:
+    TranslateMatrix33(float dx, float dy):Matrix33<T>(true) {
+      this->_m[2][0] = dx;
+      this->_m[2][1] = dy;
+    }
+  };
+
+  /**
+  * Scale matrix 3x3.
+  * (1,1,1) * ScaleMatrix33(2) = (1,1,1/2)
+  */
+  template <class T>
+  class ScaleMatrix33 : public Matrix33<T> {
+    public:
+    ScaleMatrix33(float scale):Matrix33<T>(true) {
+      // In homogeneous coordinates X and Y is dividing by this factor X/Z.
+      // It's why, here we use reverse value.
+      this->_m[2][2] = 1.0 / scale;
+    }
+  };
+
+  typedef Matrix33<float> Matrix;
+  typedef RotateMatrix33<float> RotateMatrix;
+  typedef TranslateMatrix33<float> TranslateMatrix;
+  typedef ScaleMatrix33<float> ScaleMatrix;
+  typedef Array<float, 9> FlatMatrix;
+
+
+  // Vector-row in homogeneous coordinates
+  class Vector3 {
+  public:
+    Vector3(float x, float y, float z = 1);
+
+    float operator [](int num) const;
+
+    float getX() const;
+
+    float getY() const;
+
+    float getZ() const;
+
+  private:
+    static const int size = 3;
+    float _x;
+    float _y;
+    float _z;
+  };
+
+  // Point in 2D space
+  // TODO make fields const
+  class Point2D {
+  public:
     float x;
     float y;
-} Point2D;
+  };
 
-// RGB color
-// TODO make fields const
-typedef struct colorRGB {
+  // RGB color
+  // TODO make fields const
+  typedef struct colorRGB {
     float r;
     float g;
     float b;
-} ColorRGB;
+  } ColorRGB;
 
-// TODO should it be const?
-static const struct colorRGB kBLUE = {0.0, 0.0, 1.0};
-static const struct colorRGB kRED = {1.0, 0.0, 0.0};
+  // TODO should it be const?
+  static const struct colorRGB kBLUE = {0.0, 0.0, 1.0};
+  static const struct colorRGB kRED = {1.0, 0.0, 0.0};
 
-// Viewport POD configuration for internal game objects and graphics recalculation
-typedef struct config {
+  // Viewport POD configuration for internal game objects and graphics recalculation
+  typedef struct config {
     const int width;
     const int height;
     // Developer can choose any resolution as default. And all game objects and graphics were calculated for that by designer.
@@ -55,34 +236,54 @@ typedef struct config {
     const float scale;
     const bool isKeptProportion;
 
-} ViewportConfig;
+  } ViewportConfig;
 
-/**
-* Matrix 2x2
-*/
-class Matrix2 {
-public:
+
+  /**
+  * Matrix 2x2
+  */
+  class Matrix2 {
+  public:
     Matrix2();
+
     // make this matrix identity
     void setIdentity();
+
     // return 4 elements in one-dimension array ([0][0],[0][1],[1][0],[1][1])
     void flat(float *arrayToFill);
 
     Matrix2 operator *(Matrix2 &on);
-    // allow to make [][] direct access
-    float* operator [](int index);
 
-private:
+    // allow to make [][] direct access
+    float *operator [](int index);
+
+  protected:
     // matrix[row][column]
     float _m[2][2];
-};
+  };
 
-// Rectangle
-class Rectangle {
-private:
+  /**
+  * Rotate matrix
+  */
+  class RotateMatrix2 : public Matrix2 {
+  public:
+    RotateMatrix2(float angle);
+  };
+
+  /**
+  * Translate matrix
+  */
+  class TranslateMatrix2 : public Matrix2 {
+  public:
+    TranslateMatrix2(float dx, float dy);
+  };
+
+  // Rectangle
+  class Rectangle {
+  private:
     Point2D _topleft;
     Point2D _bottomright;
-public:
+  public:
     Rectangle(Point2D &topleft, Point2D &bottomright);
 
     bool isIntersected(Rectangle &r);
@@ -92,7 +293,8 @@ public:
     Point2D &getTopLeft();
 
     Point2D &getBottomRight();
-};
+  };
+}
 
 #endif /* MATH2D_H */
 

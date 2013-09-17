@@ -22,67 +22,128 @@
  */
 
 #include "Math2D.h"
+#include "math.h"
+
+namespace math2d {
+
+/**
+* Vector3 implementation
+*/
+
+//Vector3::Vector3(Vector3& another):_x(another.getX()), _y(another.getY()), _z(another.getZ()) {}
+
+  Vector3::Vector3(float x, float y, float z):_x(x), _y(y), _z(z) {}
+
+  float Vector3::getX() const {
+    return _x;
+  }
+
+  float Vector3::getY() const {
+    return _y;
+  }
+
+  float Vector3::getZ() const {
+    return _z;
+  }
+
+  float Vector3::operator [](int num) const {
+    switch (num) {
+      case 0:
+        return _x;
+      case 1:
+        return _y;
+      case 2:
+        return _z;
+        // TODO throw error
+      default:
+        return 0;
+    }
+  }
 
 /**
 * Matrix implementation
 */
 // TODO don't like to work with array. Maybe allow to access directly flat array behind.
-Matrix2::Matrix2() {
+  Matrix2::Matrix2() {
     // Nil matrix
     _m[0][0] = 0;
     _m[0][1] = 0;
     _m[1][0] = 0;
     _m[1][1] = 0;
-}
+  }
 
-void Matrix2::setIdentity() {
+  void Matrix2::setIdentity() {
     _m[0][0] = 1;
     _m[0][1] = 0;
     _m[1][0] = 0;
     _m[1][1] = 1;
-}
+  }
 
-float *Matrix2::operator [](int index) {
+  float *Matrix2::operator [](int index) {
     return _m[index];
-}
+  }
 
-void Matrix2::flat(float *arrayToFill) {
+  void Matrix2::flat(float *arrayToFill) {
     arrayToFill[0] = _m[0][0];
     arrayToFill[1] = _m[0][1];
     arrayToFill[2] = _m[1][0];
     arrayToFill[3] = _m[1][1];
-}
+  }
 
-Matrix2 Matrix2::operator *(Matrix2& on) {
+  Matrix2 Matrix2::operator *(Matrix2& on) {
     Matrix2 result;
     result[0][0] = _m[0][0] * on[0][0] + _m[0][1] * on[1][0];
     result[0][1] = _m[0][0] * on[0][1] + _m[0][1] * on[1][1];
     result[1][0] = _m[1][0] * on[0][0] + _m[1][1] * on[1][0];
     result[1][1] = _m[1][0] * on[0][1] + _m[1][1] * on[1][1];
     return result;
-}
+  }
+
+/**
+* Rotate matrix implementation
+*/
+  RotateMatrix2::RotateMatrix2(float angle):Matrix2() {
+    _m[0][0] = cosf(angle);
+    _m[0][1] = sinf(angle);
+    _m[1][0] = -sinf(angle);
+    _m[1][1] = cosf(angle);
+  }
+
+/**
+* Translate matrix implementation
+*/
+  TranslateMatrix2::TranslateMatrix2(float dx, float dy):Matrix2() {
+    _m[0][0] = 1;
+    //_m[0][1] = dx;
+    //_m[1][0] = dy;
+    _m[1][1] = -1;
+  }
 
 /**
 * Rectangle implementation
 */
-bool Rectangle::isIntersected(Rectangle &r) {
+  bool Rectangle::isIntersected(Rectangle &r) {
     return isContained(r.getTopLeft()) || isContained(r.getBottomRight());
-}
+  }
 
-bool Rectangle::isContained(Point2D &p) {
+  bool Rectangle::isContained(Point2D &p) {
     return !(p.x < _topleft.x) && (p.x < _bottomright.x) &&
-            !(p.y < _topleft.y) && (p.y < _bottomright.y);
-}
+        !(p.y < _topleft.y) && (p.y < _bottomright.y);
+  }
 
-Point2D &Rectangle::getBottomRight() {
+  Point2D &Rectangle::getBottomRight() {
     return _bottomright;
-}
+  }
 
-Rectangle::Rectangle(Point2D& topleft, Point2D& bottomright):
-_topleft(topleft),
-_bottomright(bottomright) {
-}
+  Rectangle::Rectangle(Point2D& topleft, Point2D& bottomright):
+  _topleft(topleft),
+  _bottomright(bottomright) {
+  }
 
-Point2D &Rectangle::getTopLeft() {
+  Point2D &Rectangle::getTopLeft() {
     return _topleft;
+  }
+
 }
+
+
