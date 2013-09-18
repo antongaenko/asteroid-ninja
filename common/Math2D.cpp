@@ -32,33 +32,13 @@ namespace math2d {
 
 //Vector3::Vector3(Vector3& another):_x(another.getX()), _y(another.getY()), _z(another.getZ()) {}
 
-  Vector3::Vector3(float x, float y, float z):_x(x), _y(y), _z(z) {}
+bool isEqual(const Vector &v, const Vector &v2) {
+  return fabs(v.getX() - v2.getX()) < FLOAT_COMPARISON_PRECISION &&
+    fabs(v.getY() - v2.getY()) < FLOAT_COMPARISON_PRECISION &&
+    fabs(v.getZ() - v2.getZ()) < FLOAT_COMPARISON_PRECISION;
 
-  float Vector3::getX() const {
-    return _x;
-  }
+}
 
-  float Vector3::getY() const {
-    return _y;
-  }
-
-  float Vector3::getZ() const {
-    return _z;
-  }
-
-  float Vector3::operator [](int num) const {
-    switch (num) {
-      case 0:
-        return _x;
-      case 1:
-        return _y;
-      case 2:
-        return _z;
-        // TODO throw error
-      default:
-        return 0;
-    }
-  }
 
 /**
 * Matrix implementation

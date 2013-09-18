@@ -16,8 +16,8 @@ using namespace math2d;
 
 Matrix2 *one;
 Matrix2 *two;
-Vector3 *v1;
-Vector3 *v2;
+Vector *v1;
+Vector *v2;
 Matrix *m1;
 Matrix *m2;
 
@@ -26,8 +26,8 @@ Matrix *m2;
   [super setUp];
   one = new Matrix2();
   two = new Matrix2();
-  v1 = new Vector3(10, -10, 1);
-  v2 = new Vector3(5, -5, 1);
+  v1 = new Vector(10, -10, 1);
+  v2 = new Vector(5, -5, 1);
   m1 = new Matrix(true);
   m2 = new Matrix(false);
 }
@@ -113,11 +113,11 @@ Matrix *m2;
 
 // Test Vector3
 - (void)testVector3 {
-  Vector3 v3 = *v1;
+  Vector v3 = *v1;
   STAssertEquals(v3[0], v1->getX(), nil);
   STAssertEquals(v3[1], v1->getY(), nil);
   STAssertEquals(v3[2], v1->getZ(), nil);
-  Vector3 v4 (v2->getX(), v2->getY(), v2->getZ());
+  Vector v4 (v2->getX(), v2->getY(), v2->getZ());
   STAssertEquals(v4[0], v2->getX(), nil);
   STAssertEquals(v4[1], v2->getY(), nil);
   STAssertEquals(v4[2], v2->getZ(), nil);
@@ -160,17 +160,39 @@ Matrix *m2;
 // Nil (with all 0) * Any = Nil
 - (void)testMatrixNilMultiplication {
   Matrix &m = *m2;
-  STAssertEquals((RotateMatrix(10)*m).flat(),m.flat(),nil);
+  STAssertEquals((RotateMatrix(10) * m).flat(), m.flat(), nil);
 }
 
 // Any * Identity = Any
 - (void)testMatrixIdentityMultiplication {
   Matrix &m = *m1;
-  STAssertEquals((ScaleMatrix(10)*m).flat(),ScaleMatrix(10).flat(),nil);
+  STAssertEquals((ScaleMatrix(10) * m).flat(), ScaleMatrix(10).flat(), nil);
 }
 
-// Identity * Identity = Identity
-- (void)testMatrixMultiplication {
+// Vector * R * T * M = Vector
+- (void)testVectorMatrixMultiplication {
+  Vector v(-10, -10, 1);
+  Vector result = v * RotateMatrix(90, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(5);
+  STAssertEquals(isEqual(result, Vector(15, -5, 0.2)), true, nil);
+  result = v * RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50);
+  STAssertEquals(isEqual(result, Vector(5, -9.1421356, 50)), true, nil);
+}
+
+// Geometry * R * T * M = Geometry
+- (void)testGeometryMatrixMultiplication {
+  Vector v(-10, -10, 1);
+  Vector result = v * RotateMatrix(90, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(5);
+  STAssertEquals(isEqual(result, Vector(15, -5, 0.2)), true, nil);
+  result = v * RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50);
+  STAssertEquals(isEqual(result, Vector(5, -9.1421356, 50)), true, nil);
+
+  Geometry<float, 3> g = Geometry<float, 3>((Vector[]) {
+      Vector(-10, -10, 1),
+      Vector(10, -10, 1),
+      Vector(0, 10, 1)}) * (RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50));
+  STAssertEquals(isEqual(g[0], Vector(5, -9.1421356, 50)), true, nil);
+  STAssertEquals(isEqual(g[1], Vector(19.1421356, 5, 50)), true, nil);
+  STAssertEquals(isEqual(g[2], Vector(-2.0710678, 12.0710678, 50)), true, nil);
 
 }
 

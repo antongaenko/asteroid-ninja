@@ -28,20 +28,27 @@
 
 #include <vector>
 #include <math.h>
-
-static const float PI = 3.141592;
-static const float DegreesToRadians = PI / 180;
+#include <limits>
 
 namespace math2d {
+  static const float PI = 3.141592;
+  static const float FLOAT_COMPARISON_PRECISION = 1e-5;
+  static const float DegreesToRadians = PI / 180;
+  enum AngleMeasure {Degree, Radians};
 
+
+  /**
+   * Simple array with size and some useful operators.
+   * TODO Move out member definitions
+  */
   template <typename T, int Size>
   class Array {
   public:
     Array() {}
 
-    T& operator [](const int index) {return a[index];}
+    virtual T& operator [](const int index) {return a[index];}
 
-    T operator [](const int index) const {return a[index];}
+    virtual T operator [](const int index) const {return a[index];}
 
     // if copied array is bigger than copy only part
     // if smaller set all remain elements to 0
@@ -53,7 +60,7 @@ namespace math2d {
       return *this;
     }
 
-    bool operator==(const Array &another) const {
+    bool operator ==(const Array &another) const {
       for (int i = 0; i < Size; i++) {
         if (another[i] != a[i]) return false;
       }
@@ -68,6 +75,9 @@ namespace math2d {
     T a[Size];
   };
 
+  // TODO make all such declarations at the beginning
+  template <class T>
+  class Vector3;
 
   /**
   * Square matrix [N][N].
@@ -101,7 +111,7 @@ namespace math2d {
      * Multiply to other square matrix with the same size using the simplest algorithm with O(n^3).
      * Return new matrix.
      */
-    virtual SquareMatrix operator *(const SquareMatrix &on) {
+    virtual SquareMatrix<T,Size> operator *(const SquareMatrix<T,Size> &on) {
       SquareMatrix r;
 
       for (int i = 0; i < Size; i++) {
@@ -118,20 +128,24 @@ namespace math2d {
 
     int getSize() {return Size;}
 
+    // to allow * operator in Vector
+    friend Vector3<T>;
+
   protected:
     // matrix[row][column]
     T _m[Size][Size];
 
   };
 
+
+
   /**
   * Matrix 3x3
+  *
+  * TODO unknown type Vector3
    */
-  template <class T>
-  class Matrix33 : public SquareMatrix<T, 3> {
-  public:
-    Matrix33(bool isIdentity = false):SquareMatrix<T, 3>(isIdentity) {}
-  };
+  template<class T>
+  using Matrix33 = SquareMatrix<T, 3>;
 
   /**
   * Rotate matrix 3x3.
@@ -140,13 +154,15 @@ namespace math2d {
   */
   template <class T>
   class RotateMatrix33 : public Matrix33<T> {
-    public:
-    RotateMatrix33(float angle):Matrix33<T>(true) {
-      this->_m[0][0] = cosf(angle);
-      this->_m[0][1] = sinf(angle);
-      this->_m[1][0] = -sinf(angle);
-      this->_m[1][1] = cosf(angle);
+  public:
+    RotateMatrix33(float angle, AngleMeasure in = Radians):Matrix33<T>(true) {
+      float angleInRadians = in == Radians ? angle : angle * DegreesToRadians;
+      this->_m[0][0] = cosf(angleInRadians);
+      this->_m[0][1] = sinf(angleInRadians);
+      this->_m[1][0] = -sinf(angleInRadians);
+      this->_m[1][1] = cosf(angleInRadians);
     }
+
   };
 
   /**
@@ -156,7 +172,7 @@ namespace math2d {
   */
   template <class T>
   class TranslateMatrix33 : public Matrix33<T> {
-    public:
+  public:
     TranslateMatrix33(float dx, float dy):Matrix33<T>(true) {
       this->_m[2][0] = dx;
       this->_m[2][1] = dy;
@@ -169,7 +185,7 @@ namespace math2d {
   */
   template <class T>
   class ScaleMatrix33 : public Matrix33<T> {
-    public:
+  public:
     ScaleMatrix33(float scale):Matrix33<T>(true) {
       // In homogeneous coordinates X and Y is dividing by this factor X/Z.
       // It's why, here we use reverse value.
@@ -177,32 +193,91 @@ namespace math2d {
     }
   };
 
+  /**
+   * Vector-row in homogeneous coordinates
+   */
+  template <class T>
+  class Vector3 {
+  public:
+    Vector3(T x = 0, T y = 0, T z = 0):_x(x), _y(y), _z(z) {}
+
+    T getX() const {
+      return _x;
+    }
+
+    T getY() const {
+      return _y;
+    }
+
+    T getZ() const {
+      return _z;
+    }
+
+    T operator [](int num) const {
+      switch (num) {
+        case 0:
+          return _x;
+        case 1:
+          return _y;
+        case 2:
+          return _z;
+          // TODO throw error
+        default:
+          return 0;
+      }
+    }
+
+    Vector3<T> operator*(const SquareMatrix<T, 3> &m) {
+      return Vector3<T>(
+          getX() * m._m[0][0] + getY() * m._m[1][0] + getZ() * m._m[2][0],
+          getX() * m._m[0][1] + getY() * m._m[1][1] + getZ() * m._m[2][1],
+          getX() * m._m[0][2] + getY() * m._m[1][2] + getZ() * m._m[2][2]
+      );
+    };
+
+  private:
+    static const int size = 3;
+    T _x;
+    T _y;
+    T _z;
+  };
+
+
   typedef Matrix33<float> Matrix;
   typedef RotateMatrix33<float> RotateMatrix;
   typedef TranslateMatrix33<float> TranslateMatrix;
   typedef ScaleMatrix33<float> ScaleMatrix;
   typedef Array<float, 9> FlatMatrix;
+  typedef Vector3<float> Vector;
 
+  bool isEqual(const Vector &v, const Vector &v2);
 
-  // Vector-row in homogeneous coordinates
-  class Vector3 {
-  public:
-    Vector3(float x, float y, float z = 1);
+  /**
+  * Geometry is an array of Vector.
+  */
+  template <class T, int Size>
+  class Geometry : public Array<Vector3<T>, Size> {
+    public:
+    Geometry():Array<Vector3<T>, Size>() {}
 
-    float operator [](int num) const;
+    Geometry(const Vector3<T> arrayOfVectors[Size]):Array<Vector3<T>, Size>() {
+      for (int i =0; i<Size; i++) {
+        this->a[i] = arrayOfVectors[i];
+      }
+    }
 
-    float getX() const;
+    // it transforms all vectors in geometry
+    Geometry operator*(const Matrix33<T> &m) {
+      Geometry r;
+      for (int i = 0; i<Size; i++) {
+        r[i] = this->a[i] * m;
+      }
+      return r;
+    }
 
-    float getY() const;
-
-    float getZ() const;
-
-  private:
-    static const int size = 3;
-    float _x;
-    float _y;
-    float _z;
+    // TODO add rotate(), translate() and scale()
   };
+
 
   // Point in 2D space
   // TODO make fields const
