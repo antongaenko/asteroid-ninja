@@ -31,12 +31,14 @@ class Drawable;
 class Game {
 public:
   static const int FPS = 60;
+  // TODO maybe move ship speed to Space Architect
   static const int MAX_PLAYER_SPEED_PX = 10;
 
   Game();
   ~Game();
 
   void movePlayer(float dx, float dy, float curAngle);
+  void playerAttack();
   Drawable* getCanvas();
 
 private:

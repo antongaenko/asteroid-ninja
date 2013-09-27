@@ -26,9 +26,11 @@
 
 #include "SpaceObject.h"
 
-/*class Laser: public SpaceObject {
+class Laser : public SpaceObject<1> {
+public:
+  Laser(const Geometry<float, 1> &geometry, const ColorRGB &color, const Vector &initPos);
+};
 
-};*/
 
 #endif /* LASER_H */
 

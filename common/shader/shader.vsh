@@ -23,8 +23,8 @@ varying lowp vec3 colorVarying;
 //the _shader entry point is the main method
 void main()
 {
-    // for ship lasers
-    gl_PointSize = 5.0;
+    // for ship _lasers
+    gl_PointSize = 2.0;
     colorVarying = color; //save the color for the fragment _shader
     // we use Vector(x,y,w) so we need use W here to prevent Z scaling and set output W to 1.0
     vec3 tp = position * viewMatrix;

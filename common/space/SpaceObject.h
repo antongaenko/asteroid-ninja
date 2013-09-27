@@ -55,14 +55,14 @@ public:
   // apply to geometry all transformations
   void update();
 
-  void rotate(float angle);
+  void setAngleInRadians(float angle);
   void setVelocity(const Vector &value);
   // get object transformation matrix
   Matrix getTransformation();
 
   ~SpaceObject() {};
 
-private:
+protected:
   void bindBuffers();
 
   // initial 2D vertices of object
@@ -79,7 +79,7 @@ private:
   ColorRGB _color;
   // center of object. It changes each frame.
   Vector _position;
-  // rotation
+  // angle in Radians
   float _angle;
   // movement velocity in the Space
   Vector _velocity;
@@ -139,13 +139,17 @@ void SpaceObject<Size>::draw(const SpaceObjectShaderConf &conf) {
 
   if (glGetError()) error("space draw GLerror(%d)", glGetError());
   //initiate the drawing process, we want a triangle, start at index 0 and draw 3 vertices
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  if (Size == 1) {
+    glDrawArrays(GL_POINTS, 0, 1);
+  } else {
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+  }
   // TODO Use indicies and experiment with GL_LINES and LINES_STRIP
 
 };
 
 template <int Size>
-void SpaceObject<Size>::rotate(float angle) {
+void SpaceObject<Size>::setAngleInRadians(float angle) {
   _angle = angle;
 }
 

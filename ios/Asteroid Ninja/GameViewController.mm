@@ -97,7 +97,7 @@
 }
 
 - (IBAction)onFire:(id)sender {
-  NSLog(@"fire");
+  _game->playerAttack();
 }
 
 - (BOOL)prefersStatusBarHidden {

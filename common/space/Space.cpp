@@ -26,6 +26,7 @@ THE SOFTWARE.
 #include "SpaceArchitect.h"
 #include "Ship.h"
 #include "Shader.h"
+#include "Laser.h"
 
 void Space::compileShader(Shader *shader) {
   bool compilationResult = shader->compileAndLink();
@@ -75,9 +76,15 @@ void Space::draw(float msSinceLastUpdate) {
   }
 
   // TODO Add tick() for update and colision detection
-  _ship->update();
+
   glUniformMatrix3fv(_viewMatrixLocation, 1, 0, _viewMatrix.flat().getArrayC());
+  _ship->update();
   _ship->draw(_shaderConf);
+
+  for(std::vector<Laser>::iterator l = _lasers.begin(); l != _lasers.end(); ++l) {
+    l->update();
+    l->draw(_shaderConf);
+  }
 }
 
 Space::~Space() {
@@ -108,7 +115,7 @@ Space::Space(const int resolutionWidth, const int resolutionHeight) {
 
 void Space::moveShip(float dx, float dy, float curAngle) {
   _ship->setVelocity(Vector(dx, dy, 0));
-  _ship->rotate(curAngle);
+  _ship->setAngleInRadians(curAngle);
 }
 
 
@@ -116,4 +123,8 @@ void Space::setSize(int width, int height) {
   _viewMatrix = prepareViewMatrix(width, height);
   // TODO maybe place this outside
   glViewport(0, 0, width, height);
+}
+
+void Space::shipAttack() {
+  _lasers.push_back(_ship->piffPaff());
 }

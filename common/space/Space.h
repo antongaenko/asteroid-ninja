@@ -47,6 +47,7 @@ class Space : public Drawable {
 
 public:
   void moveShip(float dx, float dy, float curAngle);
+  void shipAttack();
   Space(const int resolutionWidth = -1, const int resolutionHeight = -1);
   ~Space();
 
@@ -62,7 +63,7 @@ protected:
 
 private:
   Ship *_ship;
-
+  std::vector<Laser> _lasers;
   Shader *_shader;
   SpaceObjectShaderConf _shaderConf;
   unsigned int _viewMatrixLocation;

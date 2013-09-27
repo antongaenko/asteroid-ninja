@@ -42,3 +42,7 @@ void Game::movePlayer(float dx, float dy, float curAngle) {
 Drawable *Game::getCanvas() {
   return _space;
 }
+
+void Game::playerAttack() {
+  _space->shipAttack();
+}

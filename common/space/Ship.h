@@ -26,11 +26,14 @@
 
 #include "SpaceObject.h"
 
+class Laser;
 
 class Ship : public SpaceObject<3> {
 public:
 
   Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vector & initPos);
+
+  Laser piffPaff();
 };
 
 #endif /* SHIP_H */

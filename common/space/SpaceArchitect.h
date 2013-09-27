@@ -43,7 +43,12 @@ class SpaceArchitect {
   // 13х13px (or 15х15 or 19х19 for choiсe) for resolution 1024x768 with kept proportions
   static const int GRAPHIC_RESOLUTION_WIDTH = 800;
   static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
+  // ship laser tower position
+  static Vector LASER_TURRET_POS;
+  static Vector LASER[1];
   static Vector SHIP[3];
+
+  static Vector LASER_VELOCITY;
 
 };
 
