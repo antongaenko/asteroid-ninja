@@ -25,12 +25,12 @@
 
 #include "SpaceArchitect.h"
 
-Vector SpaceArchitect::LASER_TURRET_POS = Vector(0, 20);
+Vector SpaceArchitect::PLASMOID_TURRET_POS = Vector(0, 20);
 
-Vector SpaceArchitect::LASER[1] = {LASER_TURRET_POS};
+Vector SpaceArchitect::LASER[1] = {PLASMOID_TURRET_POS};
 
-Vector SpaceArchitect::SHIP[3] = {LASER_TURRET_POS, Vector(-20,-20),Vector(20,-20)};
+Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, Vector(-20,-20),Vector(20,-20)};
 
 // TODO It should depend on Game FPS
-Vector SpaceArchitect::LASER_VELOCITY = Vector(0, 15, 0);
+Vector SpaceArchitect::PLASMOID_VELOCITY = Vector(0, 15, 0);
 

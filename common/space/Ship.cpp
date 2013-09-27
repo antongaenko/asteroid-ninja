@@ -24,7 +24,7 @@
 
 #include "Ship.h"
 #include "Logger.h"
-#include "Laser.h"
+#include "Plasmoid.h"
 #include "SpaceArchitect.h"
 
 Ship::Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vector & initPos):
@@ -33,13 +33,13 @@ Ship::Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vect
 }
 
 // TODO Destroy laser object in this class user
-Laser Ship::piffPaff() {
+Plasmoid Ship::piffPaff() {
   debug("Piff paff!");
-  Laser l(SpaceArchitect::LASER, kRED, _position);
+  Plasmoid l(SpaceArchitect::LASER, kRED, _position);
   // apply rotation to laser
   l.setAngleInRadians(_angle);
   // then apply rotation to velocity vector
-  Vector v = SpaceArchitect::LASER_VELOCITY * RotateMatrix(_angle, Radians);
+  Vector v = SpaceArchitect::PLASMOID_VELOCITY * RotateMatrix(_angle, Radians);
   l.setVelocity(v);
   return l;
 }

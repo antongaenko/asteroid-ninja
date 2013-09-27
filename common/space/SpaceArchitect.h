@@ -44,11 +44,11 @@ class SpaceArchitect {
   static const int GRAPHIC_RESOLUTION_WIDTH = 800;
   static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
   // ship laser tower position
-  static Vector LASER_TURRET_POS;
+  static Vector PLASMOID_TURRET_POS;
   static Vector LASER[1];
   static Vector SHIP[3];
 
-  static Vector LASER_VELOCITY;
+  static Vector PLASMOID_VELOCITY;
 
 };
 

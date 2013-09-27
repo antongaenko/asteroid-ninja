@@ -36,7 +36,7 @@ class Shader;
 
 class Ship;
 
-class Laser;
+class Plasmoid;
 
 
 /**
@@ -63,7 +63,7 @@ protected:
 
 private:
   Ship *_ship;
-  std::vector<Laser> _lasers;
+  std::vector<Plasmoid> _plasmoids;
   Shader *_shader;
   SpaceObjectShaderConf _shaderConf;
   unsigned int _viewMatrixLocation;

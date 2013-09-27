@@ -23,9 +23,7 @@
 
 
 
-#include "Laser.h"
+#include "Plasmoid.h"
 
-Laser::Laser(const Geometry<float, 1>& geometry, const ColorRGB& color, const Vector & initPos):
-SpaceObject(geometry, color, initPos) {
-  debug("------->");
-}
+Plasmoid::Plasmoid(const Geometry<float, 1>& geometry, const ColorRGB& color, const Vector & initPos):
+SpaceObject(geometry, color, initPos) {}

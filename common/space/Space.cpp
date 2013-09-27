@@ -26,7 +26,7 @@ THE SOFTWARE.
 #include "SpaceArchitect.h"
 #include "Ship.h"
 #include "Shader.h"
-#include "Laser.h"
+#include "Plasmoid.h"
 
 void Space::compileShader(Shader *shader) {
   bool compilationResult = shader->compileAndLink();
@@ -81,7 +81,7 @@ void Space::draw(float msSinceLastUpdate) {
   _ship->update();
   _ship->draw(_shaderConf);
 
-  for(std::vector<Laser>::iterator l = _lasers.begin(); l != _lasers.end(); ++l) {
+  for(std::vector<Plasmoid>::iterator l = _plasmoids.begin(); l != _plasmoids.end(); ++l) {
     l->update();
     l->draw(_shaderConf);
   }
@@ -126,5 +126,5 @@ void Space::setSize(int width, int height) {
 }
 
 void Space::shipAttack() {
-  _lasers.push_back(_ship->piffPaff());
+  _plasmoids.push_back(_ship->piffPaff());
 }

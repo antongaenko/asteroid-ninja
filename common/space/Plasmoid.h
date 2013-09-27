@@ -26,9 +26,9 @@
 
 #include "SpaceObject.h"
 
-class Laser : public SpaceObject<1> {
+class Plasmoid : public SpaceObject<1> {
 public:
-  Laser(const Geometry<float, 1> &geometry, const ColorRGB &color, const Vector &initPos);
+  Plasmoid(const Geometry<float, 1> &geometry, const ColorRGB &color, const Vector &initPos);
 };
 
 
