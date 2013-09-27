@@ -21,42 +21,32 @@
  THE SOFTWARE.
  */
 
+
+
+
+#ifndef __SpaceDesigner_H_
+#define __SpaceDesigner_H_
+
 #include "Math2D.h"
 
-namespace math2d {
-
-bool isEqual(const Vector &v, const Vector &v2) {
-  return fabs(v.getX() - v2.getX()) < FLOAT_COMPARISON_PRECISION &&
-    fabs(v.getY() - v2.getY()) < FLOAT_COMPARISON_PRECISION &&
-    fabs(v.getZ() - v2.getZ()) < FLOAT_COMPARISON_PRECISION;
-
-}
-
-/**
-* Rectangle implementation
-*/
-  bool Rectangle::isIntersected(Rectangle &r) {
-    return isContained(r.getTopLeft()) || isContained(r.getBottomRight());
-  }
-
-  bool Rectangle::isContained(Vector &p) {
-    return !(p.getX() < _topleft.getX()) && (p.getX() < _bottomright.getX()) &&
-        !(p.getY() < _topleft.getY()) && (p.getY() < _bottomright.getY());
-  }
-
-  Vector &Rectangle::getBottomRight() {
-    return _bottomright;
-  }
-
-  Rectangle::Rectangle(Vector& topleft, Vector& bottomright):
-  _topleft(topleft),
-  _bottomright(bottomright) {
-  }
-
-  Vector &Rectangle::getTopLeft() {
-    return _topleft;
-  }
-
-}
+using namespace math2d;
 
 
+
+class SpaceArchitect {
+  public:
+  // This parameters show which resolution we use for geometry.
+  // It helps us to scale geometry to device specific resolution.
+  //
+  // fe game object with size 10х10px for default resolution (fe 800x480) should be
+  // 13х19px for resolution 1024x768 without kept proportions
+  // 13х13px (or 15х15 or 19х19 for choiсe) for resolution 1024x768 with kept proportions
+  static const int GRAPHIC_RESOLUTION_WIDTH = 800;
+  static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
+  static Vector SHIP[3];
+
+};
+
+
+
+#endif //__SpaceDesigner_H_

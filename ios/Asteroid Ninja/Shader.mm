@@ -26,7 +26,7 @@
 #import <OpenGLES/ES2/glext.h>
 
 //constructor
-//initializes our member variables with default values and stores the shader file names
+//initializes our member variables with default values and stores the _shader file names
 Shader::Shader(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename):
     m_fragmentShader(0), m_vertexShader(0), m_shaderProgram(0),
     m_fragmentShaderFilename(fragmentShaderFilename),
@@ -58,18 +58,18 @@ void Shader::cleanup()
 	}
 }
 
-//returns the shader program id
+//returns the _shader program id
 unsigned int Shader::getProgram()
 {
     return m_shaderProgram;
 }
 
 //this methods invokes loading the files from disk, compiles the two shaders 
-//and combines them to one shader program.
+//and combines them to one _shader program.
 //returns false if errors occurred
 bool Shader::compileAndLink()
 {
-    //create the shader program
+    //create the _shader program
     m_shaderProgram = glCreateProgram();
     
     //load and compile the vertex and fragment shaders:
@@ -85,7 +85,7 @@ bool Shader::compileAndLink()
         return false; //if one of the shaders didn't load or compile, we return false
     }
     
-    //attach the vertex and fragment shader to our shader program
+    //attach the vertex and fragment _shader to our _shader program
     glAttachShader(m_shaderProgram, m_vertexShader);
     glAttachShader(m_shaderProgram, m_fragmentShader);
     
@@ -117,17 +117,17 @@ unsigned int Shader::loadAndCompileShaderFile(GLenum type, const std::string& fi
     //make sure that we were able to load the source code
 	if (!sources)
 	{
-		NSLog(@"Failed to load shader: %s", filename.c_str());
+		NSLog(@"Failed to load _shader: %s", filename.c_str());
 		return false;
 	}
 	
-    //create shader
+    //create _shader
     GLuint shader = glCreateShader(type);
     
-    //specify the loaded source code for this shader
+    //specify the loaded source code for this _shader
     glShaderSource(shader, 1, &sources, NULL);
     
-    //compile the shader
+    //compile the _shader
     glCompileShader(shader);
 	
     //now we check for any errors
@@ -136,9 +136,9 @@ unsigned int Shader::loadAndCompileShaderFile(GLenum type, const std::string& fi
     
     if (status == GL_FALSE) //we had errors
 	{
-		NSLog(@"Failed to compile shader: %s", filename.c_str());
+		NSLog(@"Failed to compile _shader: %s", filename.c_str());
         
-        //OpenGL provides us with an info log, which contains the compile errors
+        //OpenGL provides us with an info log, which isContained the compile errors
         //we first have to query its length and then allocate memory for the log message
         GLint logLength;
         glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);
@@ -158,18 +158,18 @@ unsigned int Shader::loadAndCompileShaderFile(GLenum type, const std::string& fi
             delete log;
         }
         
-        //return an invalid shader id to show that something went wrong
+        //return an invalid _shader id to show that something went wrong
         return 0;
 	}
 	
-    //no errors -> return the shader
+    //no errors -> return the _shader
 	return shader;
 }
 
-// link the shader program (binding the vertex and fragment shader together)
+// link the _shader program (binding the vertex and fragment _shader together)
 // so we can use it for rendering
 bool Shader::linkProgram() {
-	//link the program, which makes sure a vertex and fragment shader are present
+	//link the program, which makes sure a vertex and fragment _shader are present
     glLinkProgram(m_shaderProgram);
     
     //check for errors

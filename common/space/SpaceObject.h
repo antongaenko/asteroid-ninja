@@ -24,51 +24,147 @@
 #define SPACEOBJECT_H
 
 #include "Math2D.h"
+#include "OpenGL.h"
+#include "Logger.h"
 
-class SpaceObject {
+using namespace math2d;
+
+// We need to place it with SpaceObject because they know each other very closely.
+// So user of SpaceObject will understand what parameters in shader
+class SpaceObjectShaderConf {
 public:
-    // TODO It's better to use template for countPoints param if asteroid point count will be static
-    SpaceObject(unsigned int geomVboID, Point2D geometry[], int countPoints);
-    Point2D* getGeometry();
-    unsigned int getGeomBufferID();
-    unsigned int getColorBufferID();
-    void setColor(unsigned int colorBufferID, const ColorRGB &color);
-    // set object to position in 2D space
-    void setPosition(Point2D &pos);
-    // return flat array in model space (each point set in XY space)
-    void getFlatGeometryXY(float *arrToFill);
-    // convert points to other view space not model space
-    void getFlatGeometryWithScale(float *arrToFill, float xScale, float yScale);
-    // size = countPoints * 3 (because RGB)
-    void getFlatColorArray(float *arrToFill);
-    // return size of flat geometry array, which can hold geometry
-    int getFlatGeomSize();
-    // return size of flat color array, which can hold geometry
-    int getFlatColorSize();
-    ~SpaceObject();
-
+  SpaceObjectShaderConf(const int positionLocation = -1, const int colorLocation = -1);
+  void setPositionLoc(const unsigned int value);
+  unsigned int getPositionLoc() const;
+  void setColorLoc(const unsigned int value);
+  unsigned int getColorLoc() const;
 
 private:
-    // 2D vertices of object
-    Point2D *_geometry; /* Pointer to array of Point2D */
-    // count of points in geometry
-    int _countPoints;
-    // specify that our object geometry is attached to graphic buffer
-    unsigned int _geomVboID;
-    // specify that our object color is attached to graphic buffer
-    unsigned int _colorVboID;
-    // rectangle which contains this object geometry
-    Rectangle *_bounds;
-    // color for all points
-    // TODO make sure I use value OR reference for PODs in ALL places (like position and color and Rectangle)
-    ColorRGB _color;
-    // center of object. It changes each frame.
-    Point2D _position;
-    // rotation
-    float _angle;
-    // movement velocity in the SpacePainter
-    float _velocity;
+  int _positionLocation;
+  int _colorLocation;
+};
+
+
+template <int Size>
+class SpaceObject {
+public:
+  // TODO It's better to use template for countPoints param if asteroid point count will be static
+  SpaceObject(const Geometry<float, Size> &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
+
+  void draw(const SpaceObjectShaderConf &conf);
+  // apply to geometry all transformations
+  void update();
+
+  void rotate(float angle);
+  void setVelocity(const Vector &value);
+  // get object transformation matrix
+  Matrix getTransformation();
+
+  ~SpaceObject() {};
+
+private:
+  void bindBuffers();
+
+  // initial 2D vertices of object
+  Geometry<float, Size> _initialGeometry;
+  // geometry with applying all rotations and translations
+  Geometry<float, Size> _transformedGeometry;
+
+  // specify that our object geometry is attached to graphic buffer
+  unsigned int _geomVboID;
+
+  // specify that our object color is attached to graphic buffer
+  unsigned int _colorVboID;
+  // color for all points
+  ColorRGB _color;
+  // center of object. It changes each frame.
+  Vector _position;
+  // rotation
+  float _angle;
+  // movement velocity in the Space
+  Vector _velocity;
 
 };
+
+
+template <int Size>
+SpaceObject<Size>::SpaceObject(const Geometry<float, Size> &geometry, const ColorRGB &color, const Vector &initPos):
+_initialGeometry(geometry),
+_color(color),
+_position(initPos),
+_angle(0),
+_velocity(0, 0, 0),
+_geomVboID(0),
+_colorVboID(0) {};
+
+template <int Size>
+void SpaceObject<Size>::bindBuffers() {
+  // Geometry buffer we will set with data later
+  glGenBuffers(1, &_geomVboID);
+  // but colors here
+  glGenBuffers(1, &_colorVboID);
+  glBindBuffer(GL_ARRAY_BUFFER, _colorVboID);
+
+  float colors[Size * 3];
+  for (int i = 0; i < Size * 3; i += 3) {
+    colors[i] = _color.r;
+    colors[i + 1] = _color.g;
+    colors[i + 2] = _color.b;
+  }
+
+  // size = RGB * point count * sizeof(float)
+  glBufferData(GL_ARRAY_BUFFER, 3 * Size * sizeof(float), colors, GL_STATIC_DRAW);
+  if (glGetError()) error("space draw GLerror(%d)", glGetError());
+}
+
+template <int Size>
+void SpaceObject<Size>::draw(const SpaceObjectShaderConf &conf) {
+  if (_geomVboID == 0 && _colorVboID == 0) bindBuffers();
+
+  glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
+
+  glBufferData(GL_ARRAY_BUFFER, Size * Vector::Length * sizeof(float), _transformedGeometry.flat().getArrayC(), GL_STATIC_DRAW);
+
+  //glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
+  //point the position attribute to this buffer, being tuples of 4 floats for each vertex
+  //    glVertexAttribPointer(_positionLocation, 4, GL_FLOAT, GL_FALSE, 0, NULL);
+  glVertexAttribPointer(conf.getPositionLoc(), Vector::Length, GL_FLOAT, GL_FALSE, 0, NULL);
+
+  //bind the color VBO
+  glBindBuffer(GL_ARRAY_BUFFER, _colorVboID);
+  //this attribute is only 3 floats per vertex
+  //    glVertexAttribPointer(_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+  glVertexAttribPointer(conf.getColorLoc(), 3, GL_FLOAT, GL_FALSE, 0, NULL);
+
+
+  if (glGetError()) error("space draw GLerror(%d)", glGetError());
+  //initiate the drawing process, we want a triangle, start at index 0 and draw 3 vertices
+  glDrawArrays(GL_TRIANGLES, 0, 3);
+  // TODO Use indicies and experiment with GL_LINES and LINES_STRIP
+
+};
+
+template <int Size>
+void SpaceObject<Size>::rotate(float angle) {
+  _angle = angle;
+}
+
+template <int Size>
+void SpaceObject<Size>::setVelocity(const Vector &value) {
+  _velocity = value;
+}
+
+template <int Size>
+Matrix SpaceObject<Size>::getTransformation() {
+  return RotateMatrix(_angle) * TranslateMatrix(_position.getX(), _position.getY());
+}
+
+template <int Size>
+void SpaceObject<Size>::update() {
+  _position += _velocity;
+  _transformedGeometry = _initialGeometry.
+      rotate(_angle, Radians).
+      translate(_position.getX(), _position.getY());
+}
 
 #endif /* SPACEOBJECT_H */

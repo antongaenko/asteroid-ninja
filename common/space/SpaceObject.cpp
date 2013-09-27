@@ -21,76 +21,41 @@
  THE SOFTWARE.
  */
 
-#import <unistd.h>
 #include "SpaceObject.h"
 #include "Logger.h"
 
+/**
+* SpaceObjectShaderConf definition
+*/
+SpaceObjectShaderConf::SpaceObjectShaderConf(const int positionLocation, const int colorLocation):
+_positionLocation(positionLocation),
+_colorLocation(colorLocation) {}
 
-SpaceObject::SpaceObject(unsigned int geomVboID, Point2D geometry[], int countPoints):
-_geomVboID(geomVboID),
-_countPoints(countPoints),
-_color(kBLUE) {
-    _geometry = new Point2D[countPoints];
-    for (int i=0; i<countPoints; i++) _geometry[i] = geometry[i];
-    Point2D initPos = {0, 0};
-    _position = initPos;
-    debug("init space object with ID(%d)", geomVboID);
+unsigned int SpaceObjectShaderConf::getPositionLoc() const {
+  if (_positionLocation<0) {
+    error("position location hasn't been set yet");
+    return 0;
+  } else {
+    return static_cast<unsigned int>(_positionLocation);
+  }
 }
 
-void SpaceObject::setPosition(Point2D &pos) {
-    _position = Point2D(pos);
+void SpaceObjectShaderConf::setPositionLoc(const unsigned int value) {
+  _positionLocation = value;
 }
 
-void SpaceObject::setColor(unsigned int colorBufferID, const ColorRGB &color) {
-    _colorVboID = colorBufferID;
-    _color = ColorRGB(color);
+unsigned int SpaceObjectShaderConf::getColorLoc() const {
+  if (_colorLocation<0) {
+    error("color location hasn't been set yet");
+    return 0;
+  } else {
+    return static_cast<unsigned int>(_colorLocation);
+  }
 }
 
-// all points in RGB
-int SpaceObject::getFlatColorSize() {
-    return _countPoints * 3;
+void SpaceObjectShaderConf::setColorLoc(const unsigned int value) {
+  _colorLocation = value;
 }
 
-// each point set by (x,y), so return array is two times longer
-int SpaceObject::getFlatGeomSize() {
-    return _countPoints * 2;
-}
 
-// TODO I think that it's not good idea
-Point2D *SpaceObject::getGeometry() {
-    return _geometry;
-}
 
-unsigned int SpaceObject::getColorBufferID() {
-    return _colorVboID;
-}
-
-void SpaceObject::getFlatColorArray(float *arrToFill) {
-    // go through all points
-    for (int i = 0; i < _countPoints; i++) {
-        arrToFill[i*3] = _color.r;
-        arrToFill[i*3+1] = _color.g;
-        arrToFill[i*3+2] = _color.b;
-    }
-}
-
-SpaceObject::~SpaceObject() {
-    delete _geometry;
-}
-
-unsigned int SpaceObject::getGeomBufferID() {
-    return _geomVboID;
-}
-
-void SpaceObject::getFlatGeometryXY(float *arrToFill) {
-    getFlatGeometryWithScale(arrToFill, 1, 1);
-}
-
-void SpaceObject::getFlatGeometryWithScale(float *arrToFill, float xScale, float yScale) {
-    // go through all points
-    for (int i = 0; i < _countPoints; i++) {
-        // apply scale
-        arrToFill[i * 2] = _geometry[i].x * xScale;
-        arrToFill[i * 2 + 1] = _geometry[i].y * yScale;
-    }
-}

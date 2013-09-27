@@ -24,46 +24,46 @@
 #define _SHADER_H_
 
 #include <iostream>
+#include "OpenGL.h"
 
-//our shader class encapsulates all methods needed for loading and compiling shaders from a file
-class Shader
-{
+//our _shader class encapsulates all methods needed for loading and compiling shaders from a file
+class Shader {
 public:
-    
-    //create a shader with these fragment and vertex shaders
-    Shader(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
 
-    //destructor just calls cleanup()
-    ~Shader();
-    
-    //this methods invokes loading the files from disk, compiles the two shaders 
-    //and combines them to one shader program.
-    //returns false if errors occurred
-    bool compileAndLink();
-    
-    //returns the ID of the shader program which is needed to bind it etc
-    unsigned int getProgram();
-    
+  //create a _shader with these fragment and vertex shaders
+  Shader(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename);
+
+  //destructor just calls cleanup()
+  ~Shader();
+
+  //this methods invokes loading the files from disk, compiles the two shaders
+  //and combines them to one _shader program.
+  //returns false if errors occurred
+  bool compileAndLink();
+
+  //returns the ID of the _shader program which is needed to bind it etc
+  unsigned int getProgram();
+
 private:
-    
-    //cleans up the shaders, deletes them in the OpenGL context
-    void cleanup();
-    
-    //loads a file and compiles it to either a GL_VERTEX_SHADER or GL_FRAGMENT_SHADER
-    unsigned int loadAndCompileShaderFile(GLenum type, const std::string& filename);
-    
-    //links the program
-    bool linkProgram();
-    
-    //---------------------------------------------------------
-    //ids for the vertex and fragment shaders, and the final shader program
-    unsigned int m_fragmentShader;
-    unsigned int m_vertexShader;
-    unsigned int m_shaderProgram;
-    
-    //store the filenames for the shaders until we actually load them
-    std::string m_fragmentShaderFilename;
-    std::string m_vertexShaderFilename;
+
+  //cleans up the shaders, deletes them in the OpenGL context
+  void cleanup();
+
+  //loads a file and compiles it to either a GL_VERTEX_SHADER or GL_FRAGMENT_SHADER
+  unsigned int loadAndCompileShaderFile(GLenum type, const std::string& filename);
+
+  //links the program
+  bool linkProgram();
+
+  //---------------------------------------------------------
+  //ids for the vertex and fragment shaders, and the final _shader program
+  unsigned int m_fragmentShader;
+  unsigned int m_vertexShader;
+  unsigned int m_shaderProgram;
+
+  //store the filenames for the shaders until we actually load them
+  std::string m_fragmentShaderFilename;
+  std::string m_vertexShaderFilename;
 };
 
 #endif

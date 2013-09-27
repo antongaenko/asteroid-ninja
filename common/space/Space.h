@@ -21,42 +21,55 @@
  THE SOFTWARE.
  */
 
+#ifndef SPACE_H
+#define SPACE_H
+
+// TODO Try without SpaceObject
+#include "SpaceObject.h"
 #include "Math2D.h"
+#include "Drawable.h"
+#include <vector>
 
-namespace math2d {
+// Forward declarations
 
-bool isEqual(const Vector &v, const Vector &v2) {
-  return fabs(v.getX() - v2.getX()) < FLOAT_COMPARISON_PRECISION &&
-    fabs(v.getY() - v2.getY()) < FLOAT_COMPARISON_PRECISION &&
-    fabs(v.getZ() - v2.getZ()) < FLOAT_COMPARISON_PRECISION;
+class Shader;
 
-}
+class Ship;
+
+class Laser;
+
 
 /**
-* Rectangle implementation
-*/
-  bool Rectangle::isIntersected(Rectangle &r) {
-    return isContained(r.getTopLeft()) || isContained(r.getBottomRight());
-  }
+ * Main container and printer for all game objects.
+ * It rules who, when and how.
+ */
+class Space : public Drawable {
 
-  bool Rectangle::isContained(Vector &p) {
-    return !(p.getX() < _topleft.getX()) && (p.getX() < _bottomright.getX()) &&
-        !(p.getY() < _topleft.getY()) && (p.getY() < _bottomright.getY());
-  }
+public:
+  void moveShip(float dx, float dy, float curAngle);
+  Space(const int resolutionWidth = -1, const int resolutionHeight = -1);
+  ~Space();
 
-  Vector &Rectangle::getBottomRight() {
-    return _bottomright;
-  }
+  virtual void draw(float msSinceLastUpdate);
+  virtual void setSize(int width, int height);
 
-  Rectangle::Rectangle(Vector& topleft, Vector& bottomright):
-  _topleft(topleft),
-  _bottomright(bottomright) {
-  }
+protected:
+  Matrix prepareViewMatrix(const int resolutionWidth = -1, const int resolutionHeight = -1);
+  SpaceObjectShaderConf prepareShader();
+  void compileShader(Shader *shader);
+  SpaceObjectShaderConf useShader(Shader *shader);
 
-  Vector &Rectangle::getTopLeft() {
-    return _topleft;
-  }
 
-}
+private:
+  Ship *_ship;
+
+  Shader *_shader;
+  SpaceObjectShaderConf _shaderConf;
+  unsigned int _viewMatrixLocation;
+  // model view transformation ()
+  Matrix _viewMatrix;
+};
+
+#endif /* SPACE_H */
 
 

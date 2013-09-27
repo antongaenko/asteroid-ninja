@@ -21,46 +21,9 @@
  THE SOFTWARE.
  */
 
-#ifndef SPACE_H
-#define SPACE_H
-
-#include "Ship.h"
-#include "Laser.h"
-#include "Math2D.h"
-#include <vector>
-
-class Shader;
-
-/**
- * Main container and printer for all game objects.
- * It rules who, when and how.
- */
-class SpacePainter {
-private:
-    std::vector<SpaceObject> *_asteroids;
-    Ship *_ship;
-    std::vector<Laser> *_lasers;
-    Shader *_shader;
-    // shader position attribute binder
-    GLuint _positionLocation;
-    // shader color attribute binder
-    GLuint _colorLocation;
-    // shader uniform matrix binder
-    GLuint _mvLocation;
-    // model view transformation ()
-    Matrix2 _modelView;
-    // TODO contain viewport config for correct place of objects
-    ViewportConfig &_viewportConfig;
-protected:
-
-    void setShaderProgram();
-public:
-    //
-    void draw();
-    SpacePainter(ViewportConfig &viewportConfig);
-    ~SpacePainter();
-};
-
-#endif /* SPACE_H */
 
 
+#include "SpaceArchitect.h"
+
+
+Vector SpaceArchitect::SHIP[3] = {Vector(-20,-20),Vector(20,-20),Vector(0,20)};

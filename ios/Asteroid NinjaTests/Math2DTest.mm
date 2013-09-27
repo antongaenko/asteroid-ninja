@@ -189,11 +189,20 @@ Matrix *m2;
   Geometry<float, 3> g = Geometry<float, 3>((Vector[]) {
       Vector(-10, -10, 1),
       Vector(10, -10, 1),
-      Vector(0, 10, 1)}) * (RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50));
+      Vector(0, 10, 1)}) * RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50);
+
   STAssertEquals(isEqual(g[0], Vector(5, -9.1421356, 50)), true, nil);
   STAssertEquals(isEqual(g[1], Vector(19.1421356, 5, 50)), true, nil);
   STAssertEquals(isEqual(g[2], Vector(-2.0710678, 12.0710678, 50)), true, nil);
 
+  g = Geometry<float, 3>((Vector[]) {
+      Vector(-10, -10, 1),
+      Vector(10, -10, 1),
+      Vector(0, 10, 1)}).rotate(45, Degree).translate(5,5).scale(1.0f / 50);
+
+  STAssertEquals(isEqual(g[0], Vector(5, -9.1421356, 50)), true, nil);
+  STAssertEquals(isEqual(g[1], Vector(19.1421356, 5, 50)), true, nil);
+  STAssertEquals(isEqual(g[2], Vector(-2.0710678, 12.0710678, 50)), true, nil);
 }
 
 // Test Array

@@ -7,24 +7,26 @@
 //
 
 // model view transformation
-uniform highp mat2 modelView;
+uniform highp mat3 viewMatrix;
 
 //the incoming vertex' position
-attribute vec2 position;
+attribute vec3 position;
 
 //and its color
 attribute vec3 color;
 
-//the varying statement tells the shader pipeline that this variable
-//has to be passed on to the next stage (so the fragment shader)
+//the varying statement tells the _shader pipeline that this variable
+//has to be passed on to the next stage (so the fragment _shader)
 varying lowp vec3 colorVarying;
 
 
-//the shader entry point is the main method
+//the _shader entry point is the main method
 void main()
 {
-    //gl_PointSize = 5.0;
-    colorVarying = color; //save the color for the fragment shader
-    gl_Position = vec4(modelView * position, 1.0, 1.0);
-    //gl_Position = vec4(position, 1.0, 1.0); //copy the position
+    // for ship lasers
+    gl_PointSize = 5.0;
+    colorVarying = color; //save the color for the fragment _shader
+    // we use Vector(x,y,w) so we need use W here to prevent Z scaling and set output W to 1.0
+    vec3 tp = position * viewMatrix;
+    gl_Position = vec4(tp.x / tp.z, tp.y / tp.z, 0.0, 1.0);
 }

@@ -8,18 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		31F4E083AD18DC1741B04FC9 /* Laser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0F697341A57E2636D6D /* Laser.cpp */; };
+		31F4E1B84BE10B92B6EDFCEF /* GameView2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E21BCD5137779840F330 /* GameView2D.mm */; };
 		31F4E3575761C049199FB9A4 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E3DAAE09017503A7FDDE /* Ship.cpp */; };
 		31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0AEF547856665EE0535 /* Math2DTest.mm */; };
 		31F4E4D89C5EBA5C17A977DE /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EECD6AB5AE27687FCDD0 /* Game.cpp */; };
 		31F4E4ED128D697BFFB42C4B /* SpaceObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E49D74A88B9F59954578 /* SpaceObject.cpp */; };
-		31F4E53C5A1767403A4200CF /* SpacePainter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E079A80F0DE812A5E484 /* SpacePainter.cpp */; };
+		31F4E531E12BEE42BDA8E8E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31F4EC2407C131C4E48C56F4 /* Main.storyboard */; };
+		31F4E53C5A1767403A4200CF /* Space.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E079A80F0DE812A5E484 /* Space.cpp */; };
 		31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EEA73B747DF93993E514 /* Shader.mm */; };
 		31F4E65A23E4FBA11387314B /* Math2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */; };
-		31F4E7C39885B623F59E302C /* SpaceObjectTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E4415055A880C37772EC /* SpaceObjectTest.mm */; };
+		31F4E9848FC35AA5F02927AD /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EB1A28F15068CABD9381 /* AppDelegate.mm */; };
+		31F4EA088805C2B1F6E00BF3 /* SpaceArchitect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EBCBDCD405A399B50D2F /* SpaceArchitect.cpp */; };
 		31F4EADBBB5843C0D2694491 /* shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4EED7375F9F6783631C02 /* shader.fsh */; };
-		31F4EC2890C9E082557053AA /* MainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */; };
 		31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 31F4E26C320E8654FC3FFEBF /* shader.vsh */; };
 		31F4EE57AF5AE8CA6983253A /* Asteroid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EC3816FFC103C757A169 /* Asteroid.cpp */; };
+		31F4EF29961B6D130B8504B9 /* GameViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EB31693DC5AF863B8889 /* GameViewController.mm */; };
 		31F4EF9065B79E467701570E /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E9631CBC8B0248D3684F /* Logger.cpp */; };
 		4A785ADA17D0E3FB00CB9555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AD917D0E3FB00CB9555 /* UIKit.framework */; };
 		4A785ADC17D0E3FB00CB9555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADB17D0E3FB00CB9555 /* Foundation.framework */; };
@@ -27,7 +30,6 @@
 		4A785AE217D0E3FB00CB9555 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AE117D0E3FB00CB9555 /* OpenGLES.framework */; };
 		4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AE617D0E3FB00CB9555 /* InfoPlist.strings */; };
 		4A785AEA17D0E3FB00CB9555 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A785AE917D0E3FB00CB9555 /* main.m */; };
-		4A785AEE17D0E3FB00CB9555 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A785AED17D0E3FB00CB9555 /* AppDelegate.mm */; };
 		4A785AF017D0E3FB00CB9555 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AEF17D0E3FB00CB9555 /* Default.png */; };
 		4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AF117D0E3FB00CB9555 /* Default@2x.png */; };
 		4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A785AF317D0E3FB00CB9555 /* Default-568h@2x.png */; };
@@ -35,9 +37,11 @@
 		4A785B0A17D0E3FC00CB9555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785AD917D0E3FB00CB9555 /* UIKit.framework */; };
 		4A785B0B17D0E3FC00CB9555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADB17D0E3FB00CB9555 /* Foundation.framework */; };
 		4A785B1317D0E3FC00CB9555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A785B1117D0E3FC00CB9555 /* InfoPlist.strings */; };
-		4A785B1617D0E3FC00CB9555 /* Asteroid_NinjaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */; };
-		4A785B2217D4EFD000CB9555 /* MainView2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A785B2117D4EFD000CB9555 /* MainView2D.mm */; };
 		4A785B2917D5190A00CB9555 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785B2817D5190A00CB9555 /* QuartzCore.framework */; };
+		4AB6C2FF17ECB381008A2D67 /* atack_btn.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FC17ECB381008A2D67 /* atack_btn.png */; };
+		4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FD17ECB381008A2D67 /* joystick_field.png */; };
+		4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FE17ECB381008A2D67 /* joystick_body.png */; };
+		4AD7D14A17F036AC0055A1A8 /* Spacecraft-In-Space-646x970.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4AD7D14917F036AC0055A1A8 /* Spacecraft-In-Space-646x970.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,28 +55,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		31F4E079A80F0DE812A5E484 /* SpacePainter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpacePainter.cpp; sourceTree = "<group>"; };
+		31F4E079A80F0DE812A5E484 /* Space.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Space.cpp; sourceTree = "<group>"; };
 		31F4E0AEF547856665EE0535 /* Math2DTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Math2DTest.mm; sourceTree = "<group>"; };
 		31F4E0F697341A57E2636D6D /* Laser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Laser.cpp; sourceTree = "<group>"; };
+		31F4E11D3AFC55EE2A880FB6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		31F4E11F0DD92E05FF871E5D /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asteroid.h; sourceTree = "<group>"; };
-		31F4E13C3FE7D91717D176F2 /* SpaceObjectTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceObjectTest.h; sourceTree = "<group>"; };
+		31F4E21BCD5137779840F330 /* GameView2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameView2D.mm; sourceTree = "<group>"; };
 		31F4E26C320E8654FC3FFEBF /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
+		31F4E3AE106166E9861B5A6F /* GameView2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameView2D.h; sourceTree = "<group>"; };
 		31F4E3DAAE09017503A7FDDE /* Ship.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ship.cpp; sourceTree = "<group>"; };
-		31F4E4415055A880C37772EC /* SpaceObjectTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SpaceObjectTest.mm; sourceTree = "<group>"; };
+		31F4E47FE9163CAC557EE334 /* GameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameViewController.h; sourceTree = "<group>"; };
 		31F4E49D74A88B9F59954578 /* SpaceObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpaceObject.cpp; sourceTree = "<group>"; };
-		31F4E49D7CB61E4004D05D82 /* SpacePainter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpacePainter.h; sourceTree = "<group>"; };
+		31F4E49D7CB61E4004D05D82 /* Space.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Space.h; sourceTree = "<group>"; };
 		31F4E4B15EA4FAA747CF9937 /* Ship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ship.h; sourceTree = "<group>"; };
+		31F4E5E78B8447C8DE869924 /* Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Drawable.h; path = ../../common/Drawable.h; sourceTree = "<group>"; };
 		31F4E6F84F2E36FB4B4A628A /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGL.h; path = ../../common/OpenGL.h; sourceTree = "<group>"; };
 		31F4E6FC79EBD1AB09696328 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
-		31F4E8D9F9625153C3E547D4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		31F4E807890989FDBA528231 /* SpaceArchitect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceArchitect.h; sourceTree = "<group>"; };
 		31F4E91FC262E87FA5860301 /* Math2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Math2D.h; path = ../../common/Math2D.h; sourceTree = "<group>"; };
 		31F4E9631CBC8B0248D3684F /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		31F4EA857BA249D62F685ACB /* Math2DTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Math2DTest.h; sourceTree = "<group>"; };
+		31F4EB1A28F15068CABD9381 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
+		31F4EB31693DC5AF863B8889 /* GameViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameViewController.mm; sourceTree = "<group>"; };
 		31F4EB7F0E3BBD6D51EBEB6D /* SpaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceObject.h; sourceTree = "<group>"; };
+		31F4EBCBDCD405A399B50D2F /* SpaceArchitect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SpaceArchitect.cpp; sourceTree = "<group>"; };
+		31F4EC2407C131C4E48C56F4 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		31F4EC3816FFC103C757A169 /* Asteroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Asteroid.cpp; sourceTree = "<group>"; };
 		31F4ED42269E31817CB586F7 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		31F4ED7DC2434772365C93DC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../common/Game.h; sourceTree = "<group>"; };
-		31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainViewController.mm; sourceTree = "<group>"; };
 		31F4EDD7F7E92C0338A7C099 /* Laser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Laser.h; sourceTree = "<group>"; };
 		31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Math2D.cpp; path = ../../common/Math2D.cpp; sourceTree = "<group>"; };
 		31F4EEA73B747DF93993E514 /* Shader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Shader.mm; sourceTree = "<group>"; };
@@ -87,8 +97,6 @@
 		4A785AE717D0E3FB00CB9555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4A785AE917D0E3FB00CB9555 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4A785AEB17D0E3FB00CB9555 /* Asteroid Ninja-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Asteroid Ninja-Prefix.pch"; sourceTree = "<group>"; };
-		4A785AEC17D0E3FB00CB9555 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4A785AED17D0E3FB00CB9555 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4A785AEF17D0E3FB00CB9555 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		4A785AF117D0E3FB00CB9555 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4A785AF317D0E3FB00CB9555 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -96,11 +104,11 @@
 		4A785B0817D0E3FC00CB9555 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		4A785B1017D0E3FC00CB9555 /* Asteroid NinjaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Asteroid NinjaTests-Info.plist"; sourceTree = "<group>"; };
 		4A785B1217D0E3FC00CB9555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4A785B1417D0E3FC00CB9555 /* Asteroid_NinjaTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Asteroid_NinjaTests.h; sourceTree = "<group>"; };
-		4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Asteroid_NinjaTests.m; sourceTree = "<group>"; };
-		4A785B2017D4EFD000CB9555 /* MainView2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainView2D.h; sourceTree = "<group>"; };
-		4A785B2117D4EFD000CB9555 /* MainView2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainView2D.mm; sourceTree = "<group>"; };
 		4A785B2817D5190A00CB9555 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4AB6C2FC17ECB381008A2D67 /* atack_btn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atack_btn.png; sourceTree = "<group>"; };
+		4AB6C2FD17ECB381008A2D67 /* joystick_field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick_field.png; sourceTree = "<group>"; };
+		4AB6C2FE17ECB381008A2D67 /* joystick_body.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick_body.png; sourceTree = "<group>"; };
+		4AD7D14917F036AC0055A1A8 /* Spacecraft-In-Space-646x970.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Spacecraft-In-Space-646x970.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +147,20 @@
 			path = ../../common/log;
 			sourceTree = "<group>";
 		};
+		31F4E4323B6E84AD769CDA95 /* iClasses */ = {
+			isa = PBXGroup;
+			children = (
+				31F4E47FE9163CAC557EE334 /* GameViewController.h */,
+				31F4EB31693DC5AF863B8889 /* GameViewController.mm */,
+				31F4EC2407C131C4E48C56F4 /* Main.storyboard */,
+				31F4E21BCD5137779840F330 /* GameView2D.mm */,
+				31F4E3AE106166E9861B5A6F /* GameView2D.h */,
+				31F4EB1A28F15068CABD9381 /* AppDelegate.mm */,
+				31F4E11D3AFC55EE2A880FB6 /* AppDelegate.h */,
+			);
+			name = iClasses;
+			sourceTree = "<group>";
+		};
 		31F4E60B320737CD0B815D72 /* shader */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,14 +176,16 @@
 			children = (
 				31F4E49D74A88B9F59954578 /* SpaceObject.cpp */,
 				31F4EB7F0E3BBD6D51EBEB6D /* SpaceObject.h */,
-				31F4E079A80F0DE812A5E484 /* SpacePainter.cpp */,
-				31F4E49D7CB61E4004D05D82 /* SpacePainter.h */,
+				31F4E079A80F0DE812A5E484 /* Space.cpp */,
+				31F4E49D7CB61E4004D05D82 /* Space.h */,
 				31F4E3DAAE09017503A7FDDE /* Ship.cpp */,
 				31F4E4B15EA4FAA747CF9937 /* Ship.h */,
 				31F4E0F697341A57E2636D6D /* Laser.cpp */,
 				31F4EDD7F7E92C0338A7C099 /* Laser.h */,
 				31F4EC3816FFC103C757A169 /* Asteroid.cpp */,
 				31F4E11F0DD92E05FF871E5D /* Asteroid.h */,
+				31F4EBCBDCD405A399B50D2F /* SpaceArchitect.cpp */,
+				31F4E807890989FDBA528231 /* SpaceArchitect.h */,
 			);
 			name = space;
 			path = ../../common/space;
@@ -202,6 +226,7 @@
 		4A785AE317D0E3FB00CB9555 /* Asteroid Ninja */ = {
 			isa = PBXGroup;
 			children = (
+				4AB6C2FB17ECB381008A2D67 /* assets */,
 				4A785B1F17D4EFB200CB9555 /* Classes */,
 				4A785AE417D0E3FB00CB9555 /* Supporting Files */,
 				31F4E60B320737CD0B815D72 /* shader */,
@@ -226,13 +251,9 @@
 		4A785B0E17D0E3FC00CB9555 /* Asteroid NinjaTests */ = {
 			isa = PBXGroup;
 			children = (
-				4A785B1417D0E3FC00CB9555 /* Asteroid_NinjaTests.h */,
-				4A785B1517D0E3FC00CB9555 /* Asteroid_NinjaTests.m */,
 				4A785B0F17D0E3FC00CB9555 /* Supporting Files */,
 				31F4EA857BA249D62F685ACB /* Math2DTest.h */,
 				31F4E0AEF547856665EE0535 /* Math2DTest.mm */,
-				31F4E13C3FE7D91717D176F2 /* SpaceObjectTest.h */,
-				31F4E4415055A880C37772EC /* SpaceObjectTest.mm */,
 			);
 			path = "Asteroid NinjaTests";
 			sourceTree = "<group>";
@@ -249,14 +270,8 @@
 		4A785B1F17D4EFB200CB9555 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4A785B2017D4EFD000CB9555 /* MainView2D.h */,
-				4A785B2117D4EFD000CB9555 /* MainView2D.mm */,
-				4A785AEC17D0E3FB00CB9555 /* AppDelegate.h */,
-				4A785AED17D0E3FB00CB9555 /* AppDelegate.mm */,
 				31F4E6FC79EBD1AB09696328 /* Shader.h */,
 				31F4EEA73B747DF93993E514 /* Shader.mm */,
-				31F4EDBA0FAC1B3A7A8685D0 /* MainViewController.mm */,
-				31F4E8D9F9625153C3E547D4 /* MainViewController.h */,
 				31F4EECD6AB5AE27687FCDD0 /* Game.cpp */,
 				31F4ED7DC2434772365C93DC /* Game.h */,
 				31F4E2EF408E8C13CE600B9C /* log */,
@@ -264,8 +279,22 @@
 				31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */,
 				31F4E91FC262E87FA5860301 /* Math2D.h */,
 				31F4E6F84F2E36FB4B4A628A /* OpenGL.h */,
+				31F4E5E78B8447C8DE869924 /* Drawable.h */,
+				31F4E4323B6E84AD769CDA95 /* iClasses */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		4AB6C2FB17ECB381008A2D67 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				4AD7D14917F036AC0055A1A8 /* Spacecraft-In-Space-646x970.jpg */,
+				4AB6C2FC17ECB381008A2D67 /* atack_btn.png */,
+				4AB6C2FD17ECB381008A2D67 /* joystick_field.png */,
+				4AB6C2FE17ECB381008A2D67 /* joystick_body.png */,
+			);
+			name = assets;
+			path = ../../assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -341,10 +370,15 @@
 			files = (
 				4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */,
 				4A785AF017D0E3FB00CB9555 /* Default.png in Resources */,
+				4AD7D14A17F036AC0055A1A8 /* Spacecraft-In-Space-646x970.jpg in Resources */,
 				4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */,
 				4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */,
 				31F4EADBBB5843C0D2694491 /* shader.fsh in Resources */,
 				31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */,
+				4AB6C2FF17ECB381008A2D67 /* atack_btn.png in Resources */,
+				4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */,
+				4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */,
+				31F4E531E12BEE42BDA8E8E0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,18 +414,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A785AEA17D0E3FB00CB9555 /* main.m in Sources */,
-				4A785AEE17D0E3FB00CB9555 /* AppDelegate.mm in Sources */,
-				4A785B2217D4EFD000CB9555 /* MainView2D.mm in Sources */,
 				31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */,
-				31F4EC2890C9E082557053AA /* MainViewController.mm in Sources */,
 				31F4E4D89C5EBA5C17A977DE /* Game.cpp in Sources */,
 				31F4EF9065B79E467701570E /* Logger.cpp in Sources */,
 				31F4E4ED128D697BFFB42C4B /* SpaceObject.cpp in Sources */,
 				31F4E65A23E4FBA11387314B /* Math2D.cpp in Sources */,
-				31F4E53C5A1767403A4200CF /* SpacePainter.cpp in Sources */,
+				31F4E53C5A1767403A4200CF /* Space.cpp in Sources */,
 				31F4E3575761C049199FB9A4 /* Ship.cpp in Sources */,
 				31F4E083AD18DC1741B04FC9 /* Laser.cpp in Sources */,
 				31F4EE57AF5AE8CA6983253A /* Asteroid.cpp in Sources */,
+				31F4EA088805C2B1F6E00BF3 /* SpaceArchitect.cpp in Sources */,
+				31F4EF29961B6D130B8504B9 /* GameViewController.mm in Sources */,
+				31F4E1B84BE10B92B6EDFCEF /* GameView2D.mm in Sources */,
+				31F4E9848FC35AA5F02927AD /* AppDelegate.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,9 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A785B1617D0E3FC00CB9555 /* Asteroid_NinjaTests.m in Sources */,
 				31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */,
-				31F4E7C39885B623F59E302C /* SpaceObjectTest.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
