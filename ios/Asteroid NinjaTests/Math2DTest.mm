@@ -151,4 +151,41 @@ Matrix *m2;
   }
 }
 
+// test rectangle-point intersection
+- (void)testRectangleInsideOutside {
+  Rectangle r(Vector(-10, 10), Vector(10,-10));
+  STAssertEquals(r.isInside(Vector(0,0)), true, nil);
+  STAssertEquals(r.isInside(Vector(5,5)), true, nil);
+  STAssertEquals(r.isInside(Vector(-5,-5)), true, nil);
+  STAssertEquals(r.isOutside(Vector(-11,0)), true, nil);
+  STAssertEquals(r.isOutside(Vector(0,11)), true, nil);
+  STAssertEquals(r.isOutside(Vector(11,0)), true, nil);
+  STAssertEquals(r.isOutside(Vector(0,-11)), true, nil);
+  // check the edges
+  STAssertEquals(r.isInside(Vector(10,10)), true, nil);
+  STAssertEquals(r.isInside(Vector(-10,10)), true, nil);
+  STAssertEquals(r.isInside(Vector(-10,-10)), true, nil);
+  STAssertEquals(r.isInside(Vector(10,-10)), true, nil);
+}
+
+// test rectangle-rectangle intersection
+- (void)testRectanglesIntersection {
+  Rectangle r(Vector(-10, 10), Vector(10,-10));
+  Rectangle r2(Vector(-5,5), Vector(15,-15));
+  STAssertEquals(r.isIntersected(r2), true, nil);
+  // and on the contrary
+  STAssertEquals(r2.isIntersected(r), true, nil);
+
+  Rectangle r3(Vector(11,10), Vector(31,-15));
+  STAssertEquals(r.isIntersected(r3), false, nil);
+  // and on the contrary
+  STAssertEquals(r3.isIntersected(r), false, nil);
+
+  // check an intersection by a vertex
+  Rectangle r4(Vector(10,10), Vector(30,-15));
+  STAssertEquals(r.isIntersected(r4), true, nil);
+  // and on the contrary
+  STAssertEquals(r4.isIntersected(r), true, nil);
+}
+
 @end

@@ -343,20 +343,20 @@ namespace math2d {
   static const struct colorRGB kGREEN = {0.0, 1.0, 0.0};
 
   // Rectangle
-  class Rectangle {
+  class Rectangle: public Geometry<float, 4> {
   private:
-    Vector _topleft;
-    Vector _bottomright;
+    Vector *_topleft;
+    Vector *_bottomright;
+    Vector *_bottomleft;
+    Vector *_topright;
   public:
-    Rectangle(Vector &topleft, Vector &bottomright);
+    Rectangle(Vector topleft = Vector(0,0), Vector bottomright = Vector(0,0));
 
     bool isIntersected(Rectangle &r);
 
-    bool isContained(Vector &p);
+    bool isInside(Vector p);
+    bool isOutside(Vector p);
 
-    Vector &getTopLeft();
-
-    Vector &getBottomRight();
   };
 }
 

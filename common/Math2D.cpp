@@ -25,38 +25,63 @@
 
 namespace math2d {
 
-bool isEqual(const Vector &v, const Vector &v2) {
-  return fabs(v.getX() - v2.getX()) < FLOAT_COMPARISON_PRECISION &&
-    fabs(v.getY() - v2.getY()) < FLOAT_COMPARISON_PRECISION &&
-    fabs(v.getZ() - v2.getZ()) < FLOAT_COMPARISON_PRECISION;
+  // compare two floats
+  bool isEqual(const float one, const float two) {
+    return fabs(one - two) < FLOAT_COMPARISON_PRECISION &&
+        fabs(one - two) < FLOAT_COMPARISON_PRECISION &&
+        fabs(one - two) < FLOAT_COMPARISON_PRECISION;
+  }
 
-}
+  // check if value is in range (include confines)
+  bool isInRange(const float what, const float low, const float high) {
+    bool isEqualLow = isEqual(what, low);
+    bool isEqualHigh = isEqual(what, high);
+    return (what > low || isEqualLow || isEqual(what, low)) && (what < high || isEqualHigh || isEqual(what, high));
+  }
 
-/**
-* Rectangle implementation
-*/
+  // check two float vectors on equality with the simplest float comparision method
+  bool isEqual(const Vector &v, const Vector &v2) {
+    return isEqual(v.getX(), v2.getX()) &&
+        isEqual(v.getY(), v2.getY()) &&
+        isEqual(v.getZ(), v2.getZ());
+  }
+
+  /**
+  * Rectangle implementation
+  */
+  Rectangle::Rectangle(Vector topleft, Vector bottomright):Geometry<float,4>() {
+    a[0] = topleft;
+    a[1] = bottomright;
+    a[2] = Vector(bottomright.getX());
+    a[3] = Vector(topleft.getX(), bottomright.getY());
+
+    // get points
+    _topleft = &a[0];
+    _bottomright = &a[1];
+    _topright = &a[2];
+    _bottomleft = &a[3];
+
+    // check right rectangle initialization and orientation
+    if (_topleft->getX() > _bottomright->getX() || _topleft->getY() < _bottomright->getY()) {
+      error("Incorrect rectangle. Check Top-Left and Bottom-Right parameters.");
+    }
+  }
+
+  // check all vertexes on inersection with other rectangle
   bool Rectangle::isIntersected(Rectangle &r) {
-    return isContained(r.getTopLeft()) || isContained(r.getBottomRight());
+    return isInside(*r._topleft) || isInside(*r._bottomright) ||
+        isInside(*r._topright) || isInside(*r._bottomleft);
   }
 
-  bool Rectangle::isContained(Vector &p) {
-    return !(p.getX() < _topleft.getX()) && (p.getX() < _bottomright.getX()) &&
-        !(p.getY() < _topleft.getY()) && (p.getY() < _bottomright.getY());
+  // include the edges
+  bool Rectangle::isInside(Vector p) {
+    return isInRange(p.getX(), _topleft->getX(), _bottomright->getX()) &&
+        isInRange(p.getY(), _bottomright->getY(), _topleft->getY());
   }
 
-  Vector &Rectangle::getBottomRight() {
-    return _bottomright;
+  bool Rectangle::isOutside(Vector p) {
+    return !isInside(p);
   }
-
-  Rectangle::Rectangle(Vector& topleft, Vector& bottomright):
-  _topleft(topleft),
-  _bottomright(bottomright) {
-  }
-
-  Vector &Rectangle::getTopLeft() {
-    return _topleft;
-  }
-
 }
 
 
