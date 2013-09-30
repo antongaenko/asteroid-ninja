@@ -29,6 +29,7 @@
 #include <cstddef>
 #include <math.h>
 #include "Logger.h"
+#include <type_traits>
 
 namespace math2d {
   static const float PI = 3.141592;
@@ -43,6 +44,7 @@ namespace math2d {
   */
   template <typename T, int Size>
   class Array {
+  static_assert(Size > 0, "Bad array size.");
   public:
     Array() {}
 
@@ -87,6 +89,7 @@ namespace math2d {
   */
   template <class T, int Size>
   class SquareMatrix {
+  static_assert(Size > 0, "Bad matrix size.");
   public:
     SquareMatrix(bool isIdentity = false) {
       for (int i = 0; i < Size; i++) {
@@ -344,15 +347,15 @@ namespace math2d {
 
   // Rectangle
   class Rectangle: public Geometry<float, 4> {
-  private:
-    Vector *_topleft;
-    Vector *_bottomright;
-    Vector *_bottomleft;
-    Vector *_topright;
   public:
     Rectangle(Vector topleft = Vector(0,0), Vector bottomright = Vector(0,0));
 
     bool isIntersected(Rectangle &r);
+
+    const Vector& getTopLeft() const;
+    const Vector& getTopRight() const;
+    const Vector& getBottomLeft() const;
+    const Vector& getBottomRight() const;
 
     bool isInside(Vector p);
     bool isOutside(Vector p);

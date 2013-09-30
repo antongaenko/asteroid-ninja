@@ -50,33 +50,44 @@ namespace math2d {
   * Rectangle implementation
   */
   Rectangle::Rectangle(Vector topleft, Vector bottomright):Geometry<float,4>() {
+    // calculate all points
     a[0] = topleft;
-    a[1] = bottomright;
-    a[2] = Vector(bottomright.getX());
+    a[1] = Vector(bottomright.getX(), topleft.getY());
+    a[2] = bottomright;
     a[3] = Vector(topleft.getX(), bottomright.getY());
 
-    // get points
-    _topleft = &a[0];
-    _bottomright = &a[1];
-    _topright = &a[2];
-    _bottomleft = &a[3];
-
     // check right rectangle initialization and orientation
-    if (_topleft->getX() > _bottomright->getX() || _topleft->getY() < _bottomright->getY()) {
+    if (topleft.getX() > bottomright.getX() || topleft.getY() < bottomright.getY()) {
       error("Incorrect rectangle. Check Top-Left and Bottom-Right parameters.");
     }
   }
 
+  const Vector &Rectangle::getTopLeft() const {
+    return a[0];
+  }
+
+  const Vector &Rectangle::getTopRight() const {
+    return a[1];
+  }
+
+  const Vector &Rectangle::getBottomRight() const {
+    return a[2];
+  }
+
+  const Vector &Rectangle::getBottomLeft() const {
+    return a[3];
+  }
+
   // check all vertexes on inersection with other rectangle
   bool Rectangle::isIntersected(Rectangle &r) {
-    return isInside(*r._topleft) || isInside(*r._bottomright) ||
-        isInside(*r._topright) || isInside(*r._bottomleft);
+    return isInside(r.getTopLeft()) || isInside(r.getBottomRight()) ||
+        isInside(r.getTopRight()) || isInside(r.getBottomLeft());
   }
 
   // include the edges
   bool Rectangle::isInside(Vector p) {
-    return isInRange(p.getX(), _topleft->getX(), _bottomright->getX()) &&
-        isInRange(p.getY(), _bottomright->getY(), _topleft->getY());
+    return isInRange(p.getX(), getTopLeft().getX(), getBottomRight().getX()) &&
+        isInRange(p.getY(), getBottomRight().getY(), getTopLeft().getY());
   }
 
   bool Rectangle::isOutside(Vector p) {
