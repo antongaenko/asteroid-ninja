@@ -29,6 +29,8 @@
 #include "Math2D.h"
 #include "Drawable.h"
 #include <vector>
+#include <memory>
+#include <iostream>
 
 // Forward declarations
 
@@ -48,25 +50,25 @@ class Space : public Drawable {
 public:
   void moveShip(float dx, float dy, float curAngle);
   void shipAttack();
-  Space(const int resolutionWidth = -1, const int resolutionHeight = -1);
+  Space();
   ~Space();
 
-  virtual void draw(float msSinceLastUpdate);
-  virtual void setSize(int width, int height);
+  virtual void draw(float msSinceLastUpdate) override;
+  virtual void setSize(int width, int height) override;
 
 protected:
-  Matrix prepareViewMatrix(const int resolutionWidth = -1, const int resolutionHeight = -1);
+  Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
   SpaceObjectShaderConf prepareShader();
-  void compileShader(Shader *shader);
-  SpaceObjectShaderConf useShader(Shader *shader);
-
+  void compileShader();
+  SpaceObjectShaderConf useShader();
 
 private:
-  Ship *_ship;
-  std::vector<Plasmoid> _plasmoids;
-  Shader *_shader;
+  std::unique_ptr<Ship> _ship;
+  std::vector<std::unique_ptr<Plasmoid>> _plasmoids;
+  std::unique_ptr<Shader> _shader;
   SpaceObjectShaderConf _shaderConf;
   unsigned int _viewMatrixLocation;
+  Rectangle _bounds;
   // model view transformation ()
   Matrix _viewMatrix;
 };

@@ -33,13 +33,13 @@ Ship::Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vect
 }
 
 // TODO Destroy laser object in this class user
-Plasmoid Ship::piffPaff() {
+std::unique_ptr<Plasmoid> Ship::piffPaff() {
   debug("Piff paff!");
-  Plasmoid l(SpaceArchitect::LASER, kRED, _position);
+  auto p = std::unique_ptr<Plasmoid>(new Plasmoid(SpaceArchitect::LASER, kRED, _position));
   // apply rotation to laser
-  l.setAngleInRadians(_angle);
+  p->setAngleInRadians(_angle);
   // then apply rotation to velocity vector
   Vector v = SpaceArchitect::PLASMOID_VELOCITY * RotateMatrix(_angle, Radians);
-  l.setVelocity(v);
-  return l;
+  p->setVelocity(v);
+  return std::move(p);
 }

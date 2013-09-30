@@ -28,7 +28,7 @@
 #define __Drawable_H_
 
 
-virtual class Drawable {
+class Drawable {
 public:
   virtual void draw(float msSinceLastUpdate) = 0;
   virtual void setSize(int width, int height) = 0;

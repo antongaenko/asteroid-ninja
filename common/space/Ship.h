@@ -25,6 +25,7 @@
 #define SHIP_H
 
 #include "SpaceObject.h"
+#include <memory>
 
 class Plasmoid;
 
@@ -33,7 +34,7 @@ public:
 
   Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vector & initPos);
 
-  Plasmoid piffPaff();
+  std::unique_ptr<Plasmoid> piffPaff();
 };
 
 #endif /* SHIP_H */

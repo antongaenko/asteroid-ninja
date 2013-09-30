@@ -29,6 +29,19 @@
 class Plasmoid : public SpaceObject<1> {
 public:
   Plasmoid(const Geometry<float, 1> &geometry, const ColorRGB &color, const Vector &initPos);
+  /*Plasmoid operator=(const Plasmoid a) {
+    _initialGeometry = a._initialGeometry;
+    _transformedGeometry = a._transformedGeometry;
+    _color = a._color;
+    _position = a._position;
+    _angle = a._angle;
+    _geomVboID = a._geomVboID;
+    _colorVboID = a._colorVboID;
+    _velocity = a._velocity;
+    return *this;
+
+  } */
+  ~Plasmoid();
 };
 
 

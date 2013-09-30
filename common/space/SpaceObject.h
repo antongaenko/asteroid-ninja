@@ -57,8 +57,8 @@ public:
 
   void setAngleInRadians(float angle);
   void setVelocity(const Vector &value);
-  // get object transformation matrix
-  Matrix getTransformation();
+  Vector getPosition() const;
+  void setPosition(const Vector& newPos);
 
   ~SpaceObject() {};
 
@@ -159,8 +159,13 @@ void SpaceObject<Size>::setVelocity(const Vector &value) {
 }
 
 template <int Size>
-Matrix SpaceObject<Size>::getTransformation() {
-  return RotateMatrix(_angle) * TranslateMatrix(_position.getX(), _position.getY());
+Vector SpaceObject<Size>::getPosition() const {
+  return _position;
+}
+
+template <int Size>
+void SpaceObject<Size>::setPosition(const Vector& newPos) {
+  _position = newPos;
 }
 
 template <int Size>
