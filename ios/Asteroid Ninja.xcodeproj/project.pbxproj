@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		31F4E083AD18DC1741B04FC9 /* Laser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0F697341A57E2636D6D /* Laser.cpp */; };
+		31F4E083AD18DC1741B04FC9 /* Plasmoid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0F697341A57E2636D6D /* Plasmoid.cpp */; };
 		31F4E1B84BE10B92B6EDFCEF /* GameView2D.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E21BCD5137779840F330 /* GameView2D.mm */; };
 		31F4E3575761C049199FB9A4 /* Ship.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E3DAAE09017503A7FDDE /* Ship.cpp */; };
 		31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E0AEF547856665EE0535 /* Math2DTest.mm */; };
@@ -57,7 +57,7 @@
 /* Begin PBXFileReference section */
 		31F4E079A80F0DE812A5E484 /* Space.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Space.cpp; sourceTree = "<group>"; };
 		31F4E0AEF547856665EE0535 /* Math2DTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Math2DTest.mm; sourceTree = "<group>"; };
-		31F4E0F697341A57E2636D6D /* Laser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Laser.cpp; sourceTree = "<group>"; };
+		31F4E0F697341A57E2636D6D /* Plasmoid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Plasmoid.cpp; sourceTree = "<group>"; };
 		31F4E11D3AFC55EE2A880FB6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		31F4E11F0DD92E05FF871E5D /* Asteroid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Asteroid.h; sourceTree = "<group>"; };
 		31F4E21BCD5137779840F330 /* GameView2D.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameView2D.mm; sourceTree = "<group>"; };
@@ -83,7 +83,7 @@
 		31F4EC3816FFC103C757A169 /* Asteroid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Asteroid.cpp; sourceTree = "<group>"; };
 		31F4ED42269E31817CB586F7 /* Logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Logger.h; sourceTree = "<group>"; };
 		31F4ED7DC2434772365C93DC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../../common/Game.h; sourceTree = "<group>"; };
-		31F4EDD7F7E92C0338A7C099 /* Laser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Laser.h; sourceTree = "<group>"; };
+		31F4EDD7F7E92C0338A7C099 /* Plasmoid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plasmoid.h; sourceTree = "<group>"; };
 		31F4EE2ABD25D9750CB1B29C /* Math2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Math2D.cpp; path = ../../common/Math2D.cpp; sourceTree = "<group>"; };
 		31F4EEA73B747DF93993E514 /* Shader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Shader.mm; sourceTree = "<group>"; };
 		31F4EECD6AB5AE27687FCDD0 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../common/Game.cpp; sourceTree = "<group>"; };
@@ -180,8 +180,8 @@
 				31F4E49D7CB61E4004D05D82 /* Space.h */,
 				31F4E3DAAE09017503A7FDDE /* Ship.cpp */,
 				31F4E4B15EA4FAA747CF9937 /* Ship.h */,
-				31F4E0F697341A57E2636D6D /* Laser.cpp */,
-				31F4EDD7F7E92C0338A7C099 /* Laser.h */,
+				31F4E0F697341A57E2636D6D /* Plasmoid.cpp */,
+				31F4EDD7F7E92C0338A7C099 /* Plasmoid.h */,
 				31F4EC3816FFC103C757A169 /* Asteroid.cpp */,
 				31F4E11F0DD92E05FF871E5D /* Asteroid.h */,
 				31F4EBCBDCD405A399B50D2F /* SpaceArchitect.cpp */,
@@ -421,7 +421,7 @@
 				31F4E65A23E4FBA11387314B /* Math2D.cpp in Sources */,
 				31F4E53C5A1767403A4200CF /* Space.cpp in Sources */,
 				31F4E3575761C049199FB9A4 /* Ship.cpp in Sources */,
-				31F4E083AD18DC1741B04FC9 /* Laser.cpp in Sources */,
+				31F4E083AD18DC1741B04FC9 /* Plasmoid.cpp in Sources */,
 				31F4EE57AF5AE8CA6983253A /* Asteroid.cpp in Sources */,
 				31F4EA088805C2B1F6E00BF3 /* SpaceArchitect.cpp in Sources */,
 				31F4EF29961B6D130B8504B9 /* GameViewController.mm in Sources */,
@@ -529,6 +529,9 @@
 		4A785B1A17D0E3FC00CB9555 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
 				INFOPLIST_FILE = "Asteroid Ninja/Asteroid Ninja-Info.plist";
@@ -540,6 +543,9 @@
 		4A785B1B17D0E3FC00CB9555 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
 				INFOPLIST_FILE = "Asteroid Ninja/Asteroid Ninja-Info.plist";
