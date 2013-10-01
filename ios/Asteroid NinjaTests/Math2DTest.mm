@@ -188,4 +188,27 @@ Matrix *m2;
   STAssertEquals(r4.isIntersected(r), true, nil);
 }
 
+// test rectangle widht and height
+- (void)testRectangleDimensions {
+  Rectangle r(Vector(-10, 10), Vector(10,-10));
+  STAssertEquals(r.getWidth(), 20, nil);
+  STAssertEquals(r.getHeight(), 20, nil);
+  
+  Rectangle r2(Vector(-10, 10), Vector(-5,5));
+  STAssertEquals(r2.getWidth(), 5, nil);
+  STAssertEquals(r2.getHeight(), 5, nil);
+  
+}
+
+// test bounds of free geometry
+-(void)testRectangleBoundsOfGeometry {
+  Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
+  auto g = Geometry<float, 6>(geomArr);
+  auto b = getBounds<6>(g);
+  STAssertEquals(b.getTopLeft().getX(), -12.0f, nil);
+  STAssertEquals(b.getTopLeft().getY(), 10.0f, nil);
+    STAssertEquals(b.getBottomRight().getX(), 15.0f, nil);
+    STAssertEquals(b.getBottomRight().getY(), -7.0f, nil);
+}
+
 @end

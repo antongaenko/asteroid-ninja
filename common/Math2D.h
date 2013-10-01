@@ -330,12 +330,12 @@ namespace math2d {
     Geometry scale(float scale) { return (*this)*ScaleMatrix(scale); }
     Geometry rotate(float angle, AngleMeasure unit = Radians) { return (*this)*RotateMatrix(angle, unit); }
     Geometry translate(float dx, float dy) { return (*this)*TranslateMatrix(dx, dy); }
-
-    // TODO Add Rect getBounds()
   };
 
   // RGB color
   typedef struct colorRGB {
+    colorRGB() {};
+    colorRGB(float r, float g, float b): r(r), g(g), b(b) {};
     float r;
     float g;
     float b;
@@ -344,6 +344,8 @@ namespace math2d {
   static const struct colorRGB kBLUE = {0.0, 0.0, 1.0};
   static const struct colorRGB kRED = {1.0, 0.0, 0.0};
   static const struct colorRGB kGREEN = {0.0, 1.0, 0.0};
+  
+
 
   // Rectangle
   class Rectangle: public Geometry<float, 4> {
@@ -356,11 +358,26 @@ namespace math2d {
     const Vector& getTopRight() const;
     const Vector& getBottomLeft() const;
     const Vector& getBottomRight() const;
+    const int getWidth() const;
+    const int getHeight() const;
 
     bool isInside(Vector p);
     bool isOutside(Vector p);
 
   };
+  
+  template <int Size>
+  Rectangle getBounds(const Geometry<float, Size>& geom) {
+    float minX = geom[0].getX(), maxX = geom[0].getX(), minY = geom[0].getY(), maxY = geom[0].getY();
+    for (int i=0; i<Size; i++) {
+      if (geom[i].getX() < minX) minX = geom[i].getX();
+      if (geom[i].getX() > maxX) maxX = geom[i].getX();
+      if (geom[i].getY() < minY) minY = geom[i].getY();
+      if (geom[i].getY() > maxY) maxY = geom[i].getY();
+    }
+    
+    return Rectangle(Vector(minX, maxY), Vector(maxX, minY));
+  }
 }
 
 #endif /* MATH2D_H */

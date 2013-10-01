@@ -77,6 +77,15 @@ namespace math2d {
   const Vector &Rectangle::getBottomLeft() const {
     return a[3];
   }
+  
+  const int Rectangle::getWidth() const {
+    return getTopRight().getX() - getTopLeft().getX();
+  };
+  
+  const int Rectangle::getHeight() const {
+    return getTopRight().getY() - getBottomRight().getY();
+  };
+
 
   // check all vertexes on inersection with other rectangle
   bool Rectangle::isIntersected(Rectangle &r) {
