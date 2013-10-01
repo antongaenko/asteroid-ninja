@@ -28,7 +28,7 @@
 #include "SpaceObject.h"
 #include "Math2D.h"
 #include "Drawable.h"
-#include <vector>
+#include <list>
 #include <memory>
 #include <iostream>
 
@@ -39,6 +39,13 @@ class Shader;
 class Ship;
 
 class Plasmoid;
+
+class Asteroid;
+
+enum class SpaceEvent {
+  SHIP_ASTEROID_COLLISION,
+  PLASMOID_ASTEROID_COLLISION
+};
 
 
 /**
@@ -53,8 +60,11 @@ public:
   Space();
   ~Space();
 
-  virtual void draw(float msSinceLastUpdate) override;
+  virtual void draw() override;
+  virtual void update(float msSinceLastUpdate) override;
   virtual void setSize(int width, int height) override;
+
+  void setListener(std::function<void(SpaceEvent)> l);
 
 protected:
   Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
@@ -64,13 +74,15 @@ protected:
 
 private:
   std::unique_ptr<Ship> _ship;
-  std::vector<std::unique_ptr<Plasmoid>> _plasmoids;
+  std::list<std::unique_ptr<Plasmoid>> _plasmoids;
+  std::list<std::unique_ptr<Asteroid>> _asteroids;
   std::unique_ptr<Shader> _shader;
   SpaceObjectShaderConf _shaderConf;
   unsigned int _viewMatrixLocation;
   Rectangle _bounds;
   // model view transformation ()
   Matrix _viewMatrix;
+  std::function<void(SpaceEvent)> onSpaceEvent;
 };
 
 #endif /* SPACE_H */

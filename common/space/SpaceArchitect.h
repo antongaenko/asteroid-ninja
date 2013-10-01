@@ -50,6 +50,12 @@ class SpaceArchitect {
 
   static Vector PLASMOID_VELOCITY;
 
+  static const int ASTEROID_VERTEX_COUNT = 3;
+  static const int ASTEROID_BIG_RADIUS = 60;
+  static const int ASTEROID_SMALL_RADIUS = 20;
+
+  static Geometry<float, ASTEROID_VERTEX_COUNT> generateAsteroid(const int maxRadius);
+
 };
 
 

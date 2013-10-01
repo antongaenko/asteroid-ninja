@@ -27,6 +27,8 @@ THE SOFTWARE.
 #include "Ship.h"
 #include "Shader.h"
 #include "Plasmoid.h"
+#include "Asteroid.h"
+#include "Collider.h"
 #include <algorithm>
 #include <iostream>
 #include <cctype>
@@ -71,58 +73,100 @@ SpaceObjectShaderConf Space::prepareShader() {
   return useShader();
 }
 
-class OutOfBoundsChecker : public std::unary_function<Plasmoid, bool> {
-public:
-  OutOfBoundsChecker(Rectangle &bounds):_bounds(bounds) {}
-
-  bool operator ()(const Plasmoid p) {
-      bool oob = _bounds.isOutside(p.getPosition());
-      debug("out of bounds %b",oob);
-    return _bounds.isOutside(p.getPosition());
+// if object escapes the Space it will be moved to another edge
+Vector teleport(const Vector &pos, const Rectangle &bounds) {
+  float newX = pos.getX(), newY = pos.getY();
+  if (pos.getX() < bounds.getTopLeft().getX()) {
+    newX = bounds.getTopRight().getX();
+  } else if (pos.getX() > bounds.getTopRight().getX()) {
+    newX = bounds.getTopLeft().getX();
   }
-private:
-  Rectangle &_bounds;
-};
 
-bool op(Plasmoid p) {return true;}
+  if (pos.getY() < bounds.getBottomLeft().getY()) {
+    newY = bounds.getTopLeft().getY();
+  } else if (pos.getY() > bounds.getTopRight().getY()) {
+    newY = bounds.getBottomRight().getY();
+  }
+
+  return Vector(newX, newY);
+}
+
+
+/**
+ * Update scene, check lifecycle and check space collisions
+ * TODO Add frameRate, startTime and currentFrame and use msSinseLastUpdate for correct animation
+ * - update all positions, apply all effects and ...
+ * - ... check out of bounds of the space for each object
+ * - ... if (out of bounds) remove plasmoids and teleport other objects to counter-side edge (180 degree rotation)
+ * - check the collisions with using externally set collider
+ * - ... if (collision) we use collider callback to tell about that
+ */
+void Space::update(float msSinceLastUpdate) {
+  // update ship
+  _ship->update();
+  // teleport it if it's out of space
+  if (_bounds.isOutside(_ship->getPosition())) {
+    _ship->setPosition(teleport(_ship->getPosition(), _bounds));
+  }
+  // update asteroids and check collision between space ship and asteroids
+  for (auto &a : _asteroids) {
+    a->update();
+    // teleport each if it's out of space
+    if (_bounds.isOutside(a->getPosition())) {
+      a->setPosition(teleport(a->getPosition(), _bounds));
+    }
+    // check collision with space
+    if (Collider::isCollision(_ship->getCurrentGeometry(), a->getCurrentGeometry())) {
+      debug("crash!");
+      _ship->setBumped();
+      a->setBumped();
+      onSpaceEvent(SpaceEvent::SHIP_ASTEROID_COLLISION);
+      break;
+    }
+  }
+
+  // TODO check collisions between asteroids too
+
+  // TODO split the space on smaller areas and check collisions in them
+  // update plasmoids and check collision between plasmoids and asteroids
+  for (auto &p : _plasmoids) {
+    p->update();
+    for (auto &a : _asteroids) {
+      if (Collider::isCollision(p->getCurrentGeometry(), a->getCurrentGeometry())) {
+        debug("bang!");
+        p->setBumped();
+        a->setBumped();
+        onSpaceEvent(SpaceEvent::PLASMOID_ASTEROID_COLLISION);
+        // plasmoid can kill only one asteroid
+        break;
+      }
+    }
+  }
+
+  // remove out of space OR bumped plasmoids
+  _plasmoids.erase(std::remove_if(_plasmoids.begin(), _plasmoids.end(),
+      [this](std::unique_ptr<Plasmoid> &p) {
+        return p->isBumped() || _bounds.isOutside(p->getPosition());
+      }), _plasmoids.end());
+
+  // remove bumped asteroids
+  _asteroids.erase(std::remove_if(_asteroids.begin(), _asteroids.end(),
+      [](std::unique_ptr<Asteroid> &a) {
+        return a->isBumped();
+      }), _asteroids.end());
+}
 
 
 /**
 * Update and draw the scene and all space objects
 * TODO Add frameRate, startTime and currentFrame and use msSinseLastUpdate for correct animation
-* - update all positions, apply all effects and ...
-* - ... check out of bounds of the space for each object
-* - ... if (out of bounds) remove plasmoids and teleport other objects to counter-side edge (180 degree rotation)
-* - check the collisions with using externally set collider
-* - ... if (collision) we use collider callback to tell about that
-*
 * - set universal viewMatrix (ScaleMatrix at this case)
-* - draw all of remaining objects
+* - draw all space objects
 */
-void Space::draw(float msSinceLastUpdate) {
+void Space::draw() {
   if (!_shader) {
     _shaderConf = prepareShader();
   }
-
-  // TODO Add tick() for update and collision detection
-  _ship->update();
-  Vector shipPos = _ship->getPosition();
-  if (_bounds.isOutside(shipPos)) {
-    // TODO subtract width or height
-    Vector newPos = shipPos * RotateMatrix(180, Degree);
-    _ship->setPosition(newPos);
-  }
-
-  // update plasmoids
-  for (auto &p : _plasmoids) p->update();
-
-  // set remove list from plasmoids out of space
-  auto removed = std::remove_if(_plasmoids.begin(), _plasmoids.end(),
-      [this](std::unique_ptr<Plasmoid>& p) {
-        return this->_bounds.isOutside(p->getPosition());
-      });
-  // remove out of space plasmoids
-  _plasmoids.erase(removed, _plasmoids.end());
 
   // set view matrix one time for all objects
   glUniformMatrix3fv(_viewMatrixLocation, 1, 0, _viewMatrix.flat().getArrayC());
@@ -130,6 +174,7 @@ void Space::draw(float msSinceLastUpdate) {
   // draw all stuff
   _ship->draw(_shaderConf);
   for (auto &p : _plasmoids) p->draw(_shaderConf);
+  for (auto &a : _asteroids) a->draw(_shaderConf);
 }
 
 Space::~Space() {
@@ -154,14 +199,34 @@ Matrix Space::prepareViewMatrix(const int resolutionWidth, const int resolutionH
 // TODO Make Enable method which on/off glUseProgram
 Space::Space() {
   _ship = std::unique_ptr<Ship>(new Ship(SpaceArchitect::SHIP, kRED, Vector(10, 10)));
+  // add random asteroids
+  // TODO generate them with time interval
+  for (int i = 0; i < 5; i++) {
+    // rand position
+    int xRand = rand() % 520;
+    int yRand = rand() % 320;
+
+    // rand velocity
+    int xVelocityRand = rand() % 2;
+    int yVelocityRand = rand() % 2;
+    Asteroid *a = new Asteroid(2,
+        SpaceArchitect::generateAsteroid(SpaceArchitect::ASTEROID_BIG_RADIUS),
+        ColorRGB(.5, .5, .5),
+        Vector(xRand, yRand));
+    a->setVelocity(Vector(xVelocityRand, yVelocityRand, 0));
+    a->setAngularFrequencyRadians(rand() % 2 * DegreesToRadians);
+
+    _asteroids.push_front(std::unique_ptr<Asteroid>(a));
+  }
 }
 
+// move ship by player
 void Space::moveShip(float dx, float dy, float curAngle) {
   _ship->setVelocity(Vector(dx, dy, 0));
   _ship->setAngleInRadians(curAngle);
 }
 
-
+// set space canvas size
 void Space::setSize(int width, int height) {
   _viewMatrix = prepareViewMatrix(width, height);
   // set space bounds
@@ -171,6 +236,11 @@ void Space::setSize(int width, int height) {
   glViewport(0, 0, width, height);
 }
 
+// a trigger on an attack command from player
 void Space::shipAttack() {
-  _plasmoids.push_back(std::move(_ship->piffPaff()));
+  _plasmoids.push_front(std::move(_ship->piffPaff()));
+}
+
+void Space::setListener(std::function<void (SpaceEvent)> l) {
+  onSpaceEvent = l;
 }

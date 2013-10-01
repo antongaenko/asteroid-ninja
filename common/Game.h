@@ -24,6 +24,8 @@ THE SOFTWARE.
 #ifndef GAME_H
 #define GAME_H
 
+#include <memory>
+
 class Shader;
 class Space;
 class Drawable;
@@ -42,7 +44,7 @@ public:
   Drawable* getCanvas();
 
 private:
-  Space *_space;
+  std::unique_ptr<Space> _space;
 };
 
 #endif /* GAME_H */

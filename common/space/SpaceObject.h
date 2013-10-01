@@ -51,14 +51,23 @@ public:
   // TODO It's better to use template for countPoints param if asteroid point count will be static
   SpaceObject(const Geometry<float, Size> &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
 
-  void draw(const SpaceObjectShaderConf &conf);
+  virtual void draw(const SpaceObjectShaderConf conf);
   // apply to geometry all transformations
-  void update();
+  virtual void update();
+
 
   void setAngleInRadians(float angle);
   void setVelocity(const Vector &value);
   Vector getPosition() const;
   void setPosition(const Vector& newPos);
+
+  // instruct that this object is bumped by another
+  void setBumped();
+  // check if object is bumped
+  bool isBumped() const;
+
+  // methods to work with inside geometry
+  const Geometry<float, Size>& getCurrentGeometry() const;
 
   ~SpaceObject() {};
 
@@ -84,6 +93,9 @@ protected:
   // movement velocity in the Space
   Vector _velocity;
 
+  // flag to instruct that this object is bumped by another object
+  bool _isBumped;
+
 };
 
 
@@ -95,7 +107,8 @@ _position(initPos),
 _angle(0),
 _velocity(0, 0, 0),
 _geomVboID(0),
-_colorVboID(0) {};
+_colorVboID(0),
+_isBumped(false) {};
 
 template <int Size>
 void SpaceObject<Size>::bindBuffers() {
@@ -118,7 +131,7 @@ void SpaceObject<Size>::bindBuffers() {
 }
 
 template <int Size>
-void SpaceObject<Size>::draw(const SpaceObjectShaderConf &conf) {
+void SpaceObject<Size>::draw(const SpaceObjectShaderConf conf) {
   if (_geomVboID == 0 && _colorVboID == 0) bindBuffers();
 
   glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
@@ -138,11 +151,14 @@ void SpaceObject<Size>::draw(const SpaceObjectShaderConf &conf) {
 
 
   if (glGetError()) error("space draw GLerror(%d)", glGetError());
+  // TODO move it to virtual drawInternal()
   //initiate the drawing process, we want a triangle, start at index 0 and draw 3 vertices
   if (Size == 1) {
-    glDrawArrays(GL_POINTS, 0, 1);
+    glDrawArrays(GL_POINTS, 0, Size);
+  } else if (Size == 3) {
+    glDrawArrays(GL_TRIANGLES, 0, Size);
   } else {
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_POINTS, 0, Size);
   }
   // TODO Use indicies and experiment with GL_LINES and LINES_STRIP
 
@@ -169,11 +185,26 @@ void SpaceObject<Size>::setPosition(const Vector& newPos) {
 }
 
 template <int Size>
+const Geometry<float, Size>& SpaceObject<Size>::getCurrentGeometry() const {
+  return _transformedGeometry;
+};
+
+template <int Size>
 void SpaceObject<Size>::update() {
   _position += _velocity;
   _transformedGeometry = _initialGeometry.
       rotate(_angle, Radians).
       translate(_position.getX(), _position.getY());
+}
+
+template <int Size>
+void SpaceObject<Size>::setBumped() {
+  _isBumped = true;
+}
+
+template <int Size>
+bool SpaceObject<Size>::isBumped() const {
+  return _isBumped;
 }
 
 #endif /* SPACEOBJECT_H */

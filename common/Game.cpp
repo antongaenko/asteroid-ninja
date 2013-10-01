@@ -27,20 +27,21 @@
 Game::Game() {
   info("Start game initialization...");
   // TODO init in list, delete params
-  _space = new Space();
+  _space = std::unique_ptr<Space>(new Space());
+  _space->setListener([](SpaceEvent e) {
+    debug("event occuried %d", e);
+  });
   info("Finish game initialization.");
 }
 
-Game::~Game() {
-  delete _space;
-}
+Game::~Game() {}
 
 void Game::movePlayer(float dx, float dy, float curAngle) {
   _space->moveShip(dx, dy, curAngle);
 }
 
 Drawable *Game::getCanvas() {
-  return _space;
+  return _space.get();
 }
 
 void Game::playerAttack() {

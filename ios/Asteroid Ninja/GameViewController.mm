@@ -23,6 +23,7 @@
 
 #import "GameViewController.h"
 #import "Game.h"
+#import "Drawable.h"
 
 @interface GameViewController ()
 
@@ -49,6 +50,7 @@
 
 - (void)update:(CADisplayLink *)displayLink {
   // TODO Count here time sinse last update
+  _game->getCanvas()->update(0);
   [glView renderWithCanvas:_game->getCanvas()];
 }
 

@@ -24,16 +24,26 @@
 
 
 
-#ifndef __Drawable_H_
-#define __Drawable_H_
+#ifndef __Collider_H_
+#define __Collider_H_
 
+#include "Math2D.h"
 
-class Drawable {
+using namespace math2d;
+
+class Collider {
 public:
-  virtual void draw() = 0;
-  virtual void setSize(int width, int height) = 0;
-  virtual void update(float msSinceLastUpdate) = 0;
+  template<int SizeFirst, int SizeSecond>
+  static bool isCollision(const Geometry<float, SizeFirst> &g1, const Geometry<float, SizeSecond> &g2) {
+    Rectangle r = getBounds(g1);
+    Rectangle r2 = getBounds(g2);
+    // check on single points
+    if (SizeFirst == 1) return r2.isInside(g1[0]);
+    if (SizeSecond == 1) return r.isInside(g2[0]);
+    // TODO add more clearer algo
+    return r.isIntersected(r2);
+  }
 };
 
 
-#endif //__Drawable_H_
+#endif //__Collider_H_

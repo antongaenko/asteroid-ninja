@@ -25,11 +25,22 @@
 #define ASTEROID_H
 
 #include "SpaceObject.h"
+#include "SpaceArchitect.h"
 
-/*class Asteroid: public SpaceObject {
 
-    //Asteroid(Point2D & geometry [], Point2D *initPosition);
-};*/
+class Asteroid : public SpaceObject<SpaceArchitect::ASTEROID_VERTEX_COUNT> {
+public:
+  Asteroid(const int hitsCount, const Geometry<float, SpaceArchitect::ASTEROID_VERTEX_COUNT> &geometry, const ColorRGB &color, const Vector &initPos);
+  
+  // set angular speed in radians
+  void setAngularFrequencyRadians(const float angularFrequency);
+  virtual void update() override;
+private:
+  // hits count is lives indicator
+  int _hitsCount;
+  // it influences on model rotation about it's center
+  float _angularFrequency;
+};
 
 #endif /* ASTEROID_H */
 

@@ -23,17 +23,9 @@
 
 
 
+#include "Collider.h"
 
-#ifndef __Drawable_H_
-#define __Drawable_H_
-
-
-class Drawable {
-public:
-  virtual void draw() = 0;
-  virtual void setSize(int width, int height) = 0;
-  virtual void update(float msSinceLastUpdate) = 0;
-};
-
-
-#endif //__Drawable_H_
+bool Collider::check(Geometry<float, SizeFirst> &g1, Geometry<float, SizeSecond> &g2) {
+  // TODO implement point for geometry
+  return 0;
+}

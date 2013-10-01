@@ -130,7 +130,7 @@
     glClear(GL_COLOR_BUFFER_BIT);
 
     // TODO use time sinse last update for correct animation
-    canvas->draw(0);
+    canvas->draw();
 
     [_context presentRenderbuffer:GL_RENDERBUFFER];
   } else {
