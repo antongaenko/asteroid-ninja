@@ -120,7 +120,7 @@ void Space::update(float msSinceLastUpdate) {
       debug("crash!");
       _ship->setBumped();
       a->setBumped();
-      onSpaceEvent(SpaceEvent::SHIP_ASTEROID_COLLISION);
+      onSpaceEvent(SpaceEvent::SHIP_CRASH);
       break;
     }
   }
@@ -136,7 +136,7 @@ void Space::update(float msSinceLastUpdate) {
         debug("bang!");
         p->setBumped();
         a->setBumped();
-        onSpaceEvent(SpaceEvent::PLASMOID_ASTEROID_COLLISION);
+        onSpaceEvent(SpaceEvent::ASTEROID_CRACK);
         // plasmoid can kill only one asteroid
         break;
       }

@@ -24,6 +24,7 @@
 #import "GameViewController.h"
 #import "Game.h"
 #import "Drawable.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface GameViewController ()
 
@@ -35,6 +36,27 @@
   self = [super initWithCoder:coder];
   if (self) {
     _game = new Game();
+    _game->setListener([self](GameEvent e) {
+      switch (e) {
+        case GameEvent::SCORE_CHANGES:
+          scoreField.text = [NSString stringWithFormat:@"%d", _game->getCurrentScore()];
+          break;
+          
+        case GameEvent::SHIP_CRASH:
+          [self playForKey:@"crash" andPath:[[NSBundle mainBundle] pathForResource:@"crash" ofType:@"m4a"]];
+          break;
+        
+        case GameEvent::ASTEROID_BANG:
+          [self playForKey:@"asteroid_bang" andPath:[[NSBundle mainBundle] pathForResource:@"asteroid_bang" ofType:@"m4a"]];
+          break;
+          
+        default:
+          break;
+      }
+      
+       });
+
+    _sounds = [[NSCache alloc] init];
   }
 
   return self;
@@ -98,8 +120,37 @@
 
 }
 
+// return AVAudioPlayer for specific path
+-(AVAudioPlayer*) getForPath:(NSString*) path {
+  NSURL *urlPath= [NSURL fileURLWithPath:path];
+  AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:urlPath error:nil];
+  // TODO get system volume
+  player.volume = 0.5;
+  [player prepareToPlay];
+  return player;
+}
+
+// get player from cache and use or create new player
+-(void)playForKey:(id)key andPath:(NSString*) path {
+  if ([_sounds objectForKey:key]) {
+    AVAudioPlayer* player = [_sounds objectForKey:key];
+    [player play];
+  } else {
+    AVAudioPlayer* player = [self getForPath:path];
+    [player play];
+    [_sounds setObject:player forKey:key];
+  }
+}
+
+// AVAudioPlayer delegate method
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
+  // set the player ready to play for the next time
+  if (flag) [player prepareToPlay];
+}
+
 - (IBAction)onFire:(id)sender {
   _game->playerAttack();
+  [self playForKey:@"fire" andPath:[[NSBundle mainBundle] pathForResource:@"plasmoid" ofType:@"m4a"]];
 }
 
 - (BOOL)prefersStatusBarHidden {

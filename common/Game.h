@@ -25,26 +25,51 @@ THE SOFTWARE.
 #define GAME_H
 
 #include <memory>
+#include <functional>
+#include <map>
 
 class Shader;
 class Space;
 class Drawable;
+enum class SpaceEvent;
+
+enum class GameEvent {
+  ASTEROID_BANG,
+  SHIP_CRASH,
+  SCORE_CHANGES,
+  LIVES_CHANGES,
+  PAUSE,
+  END
+};
 
 class Game {
 public:
   static const int FPS = 60;
+  static const int SCORE_FOR_SHIP_CRASH = -50;
+  static const int SCORE_FOR_ASTEROID_CRACK = 50;
+  static const int SCORE_FOR_ASTEROID_DESTRUCTION = 100;
   // TODO maybe move ship speed to Space Architect
   static const int MAX_PLAYER_SPEED_PX = 10;
 
   Game();
   ~Game();
 
+  int getCurrentLives();
+  int getCurrentScore();
   void movePlayer(float dx, float dy, float curAngle);
   void playerAttack();
   Drawable* getCanvas();
+  
+  void setListener(std::function<void(GameEvent)> l);
 
 private:
+  // player lives
+  int _lives;
+  // game score
+  int _score;
   std::unique_ptr<Space> _space;
+  // external listener for game events
+  std::function<void(GameEvent)> _onGameEvent;
 };
 
 #endif /* GAME_H */

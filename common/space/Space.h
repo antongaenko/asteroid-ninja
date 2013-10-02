@@ -43,8 +43,9 @@ class Plasmoid;
 class Asteroid;
 
 enum class SpaceEvent {
-  SHIP_ASTEROID_COLLISION,
-  PLASMOID_ASTEROID_COLLISION
+  SHIP_CRASH,
+  ASTEROID_CRACK,
+  ASTEROID_DESTROYED
 };
 
 
@@ -55,19 +56,23 @@ enum class SpaceEvent {
 class Space : public Drawable {
 
 public:
-  void moveShip(float dx, float dy, float curAngle);
-  void shipAttack();
   Space();
   ~Space();
+  
+  // external instructions to move or to attack
+  void moveShip(float dx, float dy, float curAngle);
+  void shipAttack();
 
   virtual void draw() override;
   virtual void update(float msSinceLastUpdate) override;
   virtual void setSize(int width, int height) override;
-
+  
+  // set external listener for space events
   void setListener(std::function<void(SpaceEvent)> l);
 
 protected:
   Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
+  // prepare shader for drawing
   SpaceObjectShaderConf prepareShader();
   void compileShader();
   SpaceObjectShaderConf useShader();
@@ -78,10 +83,12 @@ private:
   std::list<std::unique_ptr<Asteroid>> _asteroids;
   std::unique_ptr<Shader> _shader;
   SpaceObjectShaderConf _shaderConf;
+  // for shader
   unsigned int _viewMatrixLocation;
   Rectangle _bounds;
   // model view transformation ()
   Matrix _viewMatrix;
+  // listener on internal space event such as asteroid collision, space collision and etc
   std::function<void(SpaceEvent)> onSpaceEvent;
 };
 

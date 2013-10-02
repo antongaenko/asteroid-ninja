@@ -18,6 +18,8 @@ class Game;
   Game* _game;
 
   CADisplayLink* _displayLink;
+  
+  NSCache *_sounds;
 
   IBOutlet GameView2D * glView;
   __weak IBOutlet UILabel *scoreField;
