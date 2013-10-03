@@ -102,6 +102,12 @@ namespace math2d {
   bool Rectangle::isOutside(Vector p) {
     return !isInside(p);
   }
+  
+  int crossProduct2D(const Vector& begin, const Vector& end, const Vector testedPoint) {
+    // (x2 - x1)(y3 - y1) - (y2 - y1)(x3 - x1)
+    return (end.getX() - begin.getX()) * (testedPoint.getY() - begin.getY()) -
+    (end.getY() - begin.getY()) * (testedPoint.getX() - begin.getX());
+  }
 }
 
 

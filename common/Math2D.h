@@ -303,6 +303,8 @@ namespace math2d {
         this->a[i] = arrayOfVectors[i];
       }
     }
+    
+    int getSize() const { return Size; }
 
     // it transforms all vectors in geometry and returns NEW geometry
     Geometry operator*(const Matrix33<T> &m) {
@@ -378,6 +380,23 @@ namespace math2d {
     
     return Rectangle(Vector(minX, maxY), Vector(maxX, minY));
   }
+  
+  // simple calculation of centroid for polygons
+  template <int Size>
+  Vector getCentroid(const Geometry<float, Size> &geom) {
+    float xSum = 0, ySum = 0;
+    for (int i=0; i < Size; i++) {
+      xSum += geom[i].getX();
+      ySum += geom[i].getY();
+    }
+    return Vector(xSum / Size, ySum / Size);
+  }
+  
+  // return cross-product of two vectors in XY dimension (Z isn't used)
+  // in geometrical sense positive value means that tested point lies to the left of the vector,
+  // negative - to the right of the vector
+  // and 0 that tested point lays on vector's straight
+  int crossProduct2D(const Vector& begin, const Vector& end, const Vector testedPoint); 
 }
 
 #endif /* MATH2D_H */

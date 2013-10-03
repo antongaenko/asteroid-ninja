@@ -211,4 +211,55 @@ Matrix *m2;
     STAssertEquals(b.getBottomRight().getY(), -7.0f, nil);
 }
 
+// test getting center of geometry
+-(void)testCenterOfGeometry {
+  // test for one point
+  Vector oneGeomArr[] = { Vector(10.5, -1.2) };
+  auto onePointGeom = Geometry<float, 1>(oneGeomArr);
+  STAssertEquals(isEqual(Vector(10.5, -1.2), getCentroid(onePointGeom)), true, nil);
+  
+  // test for free geometry
+  Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
+  auto g = Geometry<float, 6>(geomArr);
+  auto c = getCentroid(g);
+  STAssertEquals(isEqual(Vector(1.5, 1.5),c), true, nil);
+}
+
+// test algorithm to check if point is inside free polygon. It uses point orientation relatively each polygon side
+-(void)testInsideOutsideWithFreeGeometry {
+  const int Size = 6;
+  Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
+  auto g = Geometry<float, Size>(geomArr);
+  int orientationCenter, orientationInside, orientationOutside;
+  
+  // then check point which is inside geometry
+  for (int i = 0; i < Size; i++) {
+    orientationCenter = crossProduct2D(g[i % Size], g[(i+1) % Size], getCentroid(g));
+    orientationInside = crossProduct2D(g[i % Size], g[(i+1) % Size], Vector(-9, 8));
+    // orientation should have equal signs
+    STAssertEquals(orientationCenter * orientationInside > 0, true, nil);
+  }
+  
+  bool isDifferent = false;
+  // then check point which is outside geometry
+  for (int i = 0; i < Size; i++) {
+    orientationCenter = crossProduct2D(g[i % Size], g[(i+1) % Size], getCentroid(g));
+    orientationOutside = crossProduct2D(g[i % Size], g[(i+1) % Size], Vector(-10, -5));
+    if (orientationCenter * orientationOutside < 0) {
+      isDifferent = true;
+      break;
+    }
+  }
+  // orientation should be different for some sides
+  STAssertEquals(isDifferent, true, nil);
+  
+  // then check point which is part of geometry
+  for (int i = 0; i < Size; i++) {
+    orientationCenter = crossProduct2D(g[i % Size], g[(i+1) % Size], getCentroid(g));
+    orientationOutside = crossProduct2D(g[i % Size], g[(i+1) % Size], Vector(-5, -5));
+    // orientation should have equal signs or be zero
+    STAssertEquals(orientationCenter * orientationInside > 0, true, nil);
+  }
+}
+
 @end

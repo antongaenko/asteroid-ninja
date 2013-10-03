@@ -33,15 +33,36 @@ using namespace math2d;
 
 class Collider {
 public:
+  // Check the orientation of each point of first polygon relatively each side of second polygon.
+  // If we find any point which have equal orientation with the center of second polygon for ALL sides
+  // than we have a collision.
+  // Also there is an exceptional case when a point can lay on a side of second polygon.
+  // We consider it.
   template<int SizeFirst, int SizeSecond>
-  static bool isCollision(const Geometry<float, SizeFirst> &g1, const Geometry<float, SizeSecond> &g2) {
-    Rectangle r = getBounds(g1);
-    Rectangle r2 = getBounds(g2);
-    // check on single points
-    if (SizeFirst == 1) return r2.isInside(g1[0]);
-    if (SizeSecond == 1) return r.isInside(g2[0]);
-    // TODO add more clearer algo
-    return r.isIntersected(r2);
+  static bool isCollision(const Geometry<float, SizeFirst> &what, const Geometry<float, SizeSecond> &with) {
+    Vector center = getCentroid(with);
+    
+    int centerCP, pointCP;
+    bool isInside = true;
+    // for all vertices of FIRST polygon
+    for (int i = 0; i < SizeFirst; i++) {
+      isInside = true;
+      // for all vertices of SECOND polygon
+      for (int k = 0; k < SizeSecond; k++) {
+        centerCP = crossProduct2D(with[k % SizeSecond], with[(k+1) % SizeSecond], center);
+        pointCP = crossProduct2D(with[k % SizeSecond], with[(k+1) % SizeSecond], what[i]);
+        // if for ANY side we have different signs (orientation) than this point is outside of polygon
+        if (centerCP * pointCP < 0) {
+          isInside = false;
+          break;
+        }
+      }
+      if (isInside) {
+        break;
+      }
+    }
+    
+    return isInside;
   }
 };
 
