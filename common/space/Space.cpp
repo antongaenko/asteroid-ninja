@@ -42,9 +42,8 @@ void Space::compileShader() {
   }
 }
 
-SpaceObjectShaderConf Space::useShader() {
+void Space::useShader() {
   glUseProgram(_shader->getProgram());
-  SpaceObjectShaderConf conf;
 
   //get the attachment points for the attributes position and color
   int resultPosAllocation = glGetAttribLocation(_shader->getProgram(), "position");
@@ -55,22 +54,16 @@ SpaceObjectShaderConf Space::useShader() {
   if (resultPosAllocation < 0 || resultColorAllocation < 0 || resultViewMatrixAllocation < 0) {
     error("Could not query attribute locations");
   } else {
-    conf.setPositionLoc(static_cast<unsigned int>(resultPosAllocation));
-    conf.setColorLoc(static_cast<unsigned int>(resultColorAllocation));
-    // it's for internal use
+    _shaderAttributePosition = static_cast<unsigned int>(resultPosAllocation);
+    _shaderAttributeColor = static_cast<unsigned int>(resultColorAllocation);
     _viewMatrixLocation = static_cast<unsigned int>(resultViewMatrixAllocation);
-    // it allows us to bind VBO to shaders attributes
-    glEnableVertexAttribArray(conf.getPositionLoc());
-    glEnableVertexAttribArray(conf.getColorLoc());
   }
-
-  return conf;
 }
 
-SpaceObjectShaderConf Space::prepareShader() {
+void Space::prepareShader() {
   _shader = std::unique_ptr<Shader>(new Shader("shader.vsh", "shader.fsh"));
   compileShader();
-  return useShader();
+  useShader();
 }
 
 // if object escapes the Space it will be moved to another edge
@@ -156,25 +149,123 @@ void Space::update(float msSinceLastUpdate) {
       }), _asteroids.end());
 }
 
+// collect colors for ALL vertexes for ALL space objects
+void Space::prepareColorVBO(const unsigned int& shaderAttributeColor) {
+  int vertexCount = Ship::SIZE + _plasmoids.size() * Plasmoid::SIZE + _asteroids.size() * Asteroid::SIZE;
+  float colors[vertexCount * 3];
+  // we increment offset on each step so we set -1 to be 0 on first iteration
+  int offset = -1;
+  // get ship color for all vertices (because we should set color for ALL vertices in VBO for ship)
+  for (int i = 0; i < Ship::SIZE; i++) {
+    colors[++offset] = _ship->getColor().r;
+    colors[++offset] = _ship->getColor().g;
+    colors[++offset] = _ship->getColor().b;
+  }
+  
+  // get plasmoid color
+  for (auto &p : _plasmoids) {
+    // we should set color for all vertices in VBO
+    for (int i = 0; i < Plasmoid::SIZE; i++) {
+      colors[++offset] = p->getColor().r;
+      colors[++offset] = p->getColor().g;
+      colors[++offset] = p->getColor().b;
+    }
+  }
+  
+  // get asteroid color
+  for (auto &a : _asteroids) {
+    // we should set color for all vertices in VBO
+    for (int i = 0; i < Asteroid::SIZE; i++) {
+      colors[++offset] = a->getColor().r;
+      colors[++offset] = a->getColor().g;
+      colors[++offset] = a->getColor().b;
+    }
+  }
+  
+  if (!_colorVboID) glGenBuffers(1, &_colorVboID);
+  glBindBuffer(GL_ARRAY_BUFFER, _colorVboID);
+  // TODO try to SubBufferData
+  
+  // transfer new data to VBO
+  // size = RGB * vertex count * sizeof(float)
+  glBufferData(GL_ARRAY_BUFFER, vertexCount * ColorRGB::SIZE * sizeof(float), colors, GL_DYNAMIC_DRAW);
+  // point the shader's "color" attribute to this buffer
+  glVertexAttribPointer(shaderAttributeColor, ColorRGB::SIZE, GL_FLOAT, GL_FALSE, 0, NULL);
+}
+
+// Get all space objects coordinates and transfer them to Geometry VBO then bind shader "position" parameter to this buffer
+void Space::prepareGeomVBO(const unsigned int& shaderAttributeGeom) {
+  int vertexCount = getAllVertexCount();
+  
+  float rawGeometry[vertexCount * Vector::Length];
+
+  int offset = 0;
+  auto shipG = _ship->getCurrentGeometry().flat();
+  // for all ship points coordinates
+  for (int i = 0; i < shipG.getSize(); i++) {
+    rawGeometry[offset++] = shipG[i];
+  }
+  
+  // for all plasmoids
+  for (auto& p : _plasmoids) {
+    auto plasmoidG = p->getCurrentGeometry().flat();
+    // for it's all points coordinates
+    for (int i = 0; i < plasmoidG.getSize(); i++) {
+      rawGeometry[offset++] = plasmoidG[i];
+    }
+  }
+
+  // for all asteroids
+  for (auto& a : _asteroids) {
+    auto asteroidG = a->getCurrentGeometry().flat();
+    // for it's all points coordinates
+    for (int i = 0; i < asteroidG.getSize(); i++) {
+      rawGeometry[offset++] = asteroidG[i];
+    }
+  }
+  
+  if (!_geomVboID) glGenBuffers(1, &_geomVboID);
+  glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
+  // transfer new data to VBO
+  glBufferData(GL_ARRAY_BUFFER, vertexCount * Vector::Length * sizeof(float), rawGeometry, GL_DYNAMIC_DRAW);
+
+  // point the shader's "position" attribute to this buffer
+  glVertexAttribPointer(shaderAttributeGeom, Vector::Length, GL_FLOAT, GL_FALSE, 0, NULL);
+}
+
 
 /**
-* Update and draw the scene and all space objects
-* TODO Add frameRate, startTime and currentFrame and use msSinseLastUpdate for correct animation
-* - set universal viewMatrix (ScaleMatrix at this case)
-* - draw all space objects
+* Collect ALL space objects colors and geometries, transfer them to VBO.
+* And draw all scene.
+* FYI we use only two VBO (color and geometry) for all objects.
 */
 void Space::draw() {
   if (!_shader) {
-    _shaderConf = prepareShader();
+    prepareShader();
+    glEnableVertexAttribArray(_shaderAttributeColor);
+    glEnableVertexAttribArray(_shaderAttributePosition);
   }
-
+  
   // set view matrix one time for all objects
   glUniformMatrix3fv(_viewMatrixLocation, 1, 0, _viewMatrix.flat().getArrayC());
+  
+  prepareColorVBO(_shaderAttributeColor);
+  prepareGeomVBO(_shaderAttributePosition);
+  
+  int offset = 0;
+  // draw the ship
+  glDrawArrays(GL_TRIANGLES, offset, Ship::SIZE);
+  offset += Ship::SIZE;
 
-  // draw all stuff
-  _ship->draw(_shaderConf);
-  for (auto &p : _plasmoids) p->draw(_shaderConf);
-  for (auto &a : _asteroids) a->draw(_shaderConf);
+  // draw plasmoids
+  glDrawArrays(GL_POINTS, offset, _plasmoids.size() * Plasmoid::SIZE);
+  offset += _plasmoids.size() * Plasmoid::SIZE;
+
+  // draw asteroids
+  for (int i = 0; i < _asteroids.size(); i++) {
+    glDrawArrays(GL_LINE_LOOP, offset, Asteroid::SIZE);
+    offset += Asteroid::SIZE;
+  }
 }
 
 Space::~Space() {
@@ -201,7 +292,7 @@ Space::Space() {
   _ship = std::unique_ptr<Ship>(new Ship(SpaceArchitect::SHIP, kRED, Vector(10, 10)));
   // add random asteroids
   // TODO generate them with time interval
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 2; i++) {
     // rand position
     int xRand = rand() % 520;
     int yRand = rand() % 320;
@@ -218,6 +309,16 @@ Space::Space() {
 
     _asteroids.push_front(std::unique_ptr<Asteroid>(a));
   }
+}
+
+// return count of ALL space objects
+int Space::getObjCount() const {
+  // 1 for ship
+  return 1 + _plasmoids.size() + _asteroids.size();
+}
+
+int Space::getAllVertexCount() const {
+  return Ship::SIZE + _plasmoids.size() * Plasmoid::SIZE + _asteroids.size() * Asteroid::SIZE;
 }
 
 // move ship by player

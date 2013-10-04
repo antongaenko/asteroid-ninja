@@ -24,8 +24,6 @@
 #ifndef SPACE_H
 #define SPACE_H
 
-// TODO Try without SpaceObject
-#include "SpaceObject.h"
 #include "Math2D.h"
 #include "Drawable.h"
 #include <list>
@@ -67,29 +65,46 @@ public:
   virtual void update(float msSinceLastUpdate) override;
   virtual void setSize(int width, int height) override;
   
+  // return count of ALL space objects
+  int getObjCount() const;
+  
+  // return count of ALL space objects vertexes
+  int getAllVertexCount() const;
+  
   // set external listener for space events
   void setListener(std::function<void(SpaceEvent)> l);
 
 protected:
-  Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
+  math2d::Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
   // prepare shader for drawing
-  SpaceObjectShaderConf prepareShader();
+  void prepareShader();
   void compileShader();
-  SpaceObjectShaderConf useShader();
+  void useShader();
+  // prepare buffers and bind them to shader input
+  void prepareColorVBO(const unsigned int& shaderAttributeColor);
+  void prepareGeomVBO(const unsigned int& shaderAttributePosition);
 
 private:
   std::unique_ptr<Ship> _ship;
   std::list<std::unique_ptr<Plasmoid>> _plasmoids;
   std::list<std::unique_ptr<Asteroid>> _asteroids;
   std::unique_ptr<Shader> _shader;
-  SpaceObjectShaderConf _shaderConf;
+  
+  // get them from shader and use for binding VBOs to them
+  unsigned int _shaderAttributePosition;
+  unsigned int _shaderAttributeColor;
+  
   // for shader
   unsigned int _viewMatrixLocation;
-  Rectangle _bounds;
+  math2d::Rectangle _bounds;
   // model view transformation ()
-  Matrix _viewMatrix;
+  math2d::Matrix _viewMatrix;
   // listener on internal space event such as asteroid collision, space collision and etc
   std::function<void(SpaceEvent)> onSpaceEvent;
+  
+  // TODO temporary code
+  unsigned int _geomVboID;
+  unsigned int _colorVboID;
 };
 
 #endif /* SPACE_H */

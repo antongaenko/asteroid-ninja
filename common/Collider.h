@@ -57,6 +57,7 @@ public:
           break;
         }
       }
+      // if any point is inside polygon then there is a collision
       if (isInside) {
         break;
       }

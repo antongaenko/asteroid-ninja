@@ -318,12 +318,12 @@ namespace math2d {
       return r;
     }
 
-    Array<T, Size * 3> flat() const {
-      Array<T, Size * 3> arrayToFill;
+    Array<T, Size * Vector3<T>::Length> flat() const {
+      Array<T, Size * Vector3<T>::Length> arrayToFill;
       for (int i = 0; i < Size; i++) {
-        arrayToFill[i * Size] = this->a[i].getX();
-        arrayToFill[i * Size + 1] = this->a[i].getY();
-        arrayToFill[i * Size + 2] = this->a[i].getZ();
+        arrayToFill[i * Vector3<T>::Length] = this->a[i].getX();
+        arrayToFill[i * Vector3<T>::Length + 1] = this->a[i].getY();
+        arrayToFill[i * Vector3<T>::Length + 2] = this->a[i].getZ();
       }
       return arrayToFill;
     }
@@ -336,6 +336,7 @@ namespace math2d {
 
   // RGB color
   typedef struct colorRGB {
+    static const int SIZE = 3;
     colorRGB() {};
     colorRGB(float r, float g, float b): r(r), g(g), b(b) {};
     float r;

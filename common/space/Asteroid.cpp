@@ -29,7 +29,7 @@ Asteroid::Asteroid(
     const Geometry<float, SpaceArchitect::ASTEROID_VERTEX_COUNT> &geometry,
     const ColorRGB &color,
     const Vector &initPos):SpaceObject(geometry, color, initPos), _hitsCount(hitsCount) {
-  debug("Asteroid on radar, sir!");
+  debug("Radar detects asteroid, sir!");
 }
 
 void Asteroid::setAngularFrequencyRadians(const float angularFrequency) {

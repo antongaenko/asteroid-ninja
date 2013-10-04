@@ -29,29 +29,14 @@
 
 using namespace math2d;
 
-// We need to place it with SpaceObject because they know each other very closely.
-// So user of SpaceObject will understand what parameters in shader
-class SpaceObjectShaderConf {
-public:
-  SpaceObjectShaderConf(const int positionLocation = -1, const int colorLocation = -1);
-  void setPositionLoc(const unsigned int value);
-  unsigned int getPositionLoc() const;
-  void setColorLoc(const unsigned int value);
-  unsigned int getColorLoc() const;
-
-private:
-  int _positionLocation;
-  int _colorLocation;
-};
-
-
 template <int Size>
 class SpaceObject {
 public:
+  static const int SIZE = Size;
+  
   // TODO It's better to use template for countPoints param if asteroid point count will be static
   SpaceObject(const Geometry<float, Size> &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
 
-  virtual void draw(const SpaceObjectShaderConf conf);
   // apply to geometry all transformations
   virtual void update();
 
@@ -59,6 +44,7 @@ public:
   void setAngleInRadians(float angle);
   void setVelocity(const Vector &value);
   Vector getPosition() const;
+  ColorRGB& getColor();
   void setPosition(const Vector& newPos);
 
   // instruct that this object is bumped by another
@@ -78,12 +64,6 @@ protected:
   Geometry<float, Size> _initialGeometry;
   // geometry with applying all rotations and translations
   Geometry<float, Size> _transformedGeometry;
-
-  // specify that our object geometry is attached to graphic buffer
-  unsigned int _geomVboID;
-
-  // specify that our object color is attached to graphic buffer
-  unsigned int _colorVboID;
   // color for all points
   ColorRGB _color;
   // center of object. It changes each frame.
@@ -106,63 +86,10 @@ _color(color),
 _position(initPos),
 _angle(0),
 _velocity(0, 0, 0),
-_geomVboID(0),
-_colorVboID(0),
 _isBumped(false) {};
 
 template <int Size>
-void SpaceObject<Size>::bindBuffers() {
-  // Geometry buffer we will set with data later
-  glGenBuffers(1, &_geomVboID);
-  // but colors here
-  glGenBuffers(1, &_colorVboID);
-  glBindBuffer(GL_ARRAY_BUFFER, _colorVboID);
-
-  float colors[Size * 3];
-  for (int i = 0; i < Size * 3; i += 3) {
-    colors[i] = _color.r;
-    colors[i + 1] = _color.g;
-    colors[i + 2] = _color.b;
-  }
-
-  // size = RGB * point count * sizeof(float)
-  glBufferData(GL_ARRAY_BUFFER, 3 * Size * sizeof(float), colors, GL_STATIC_DRAW);
-  if (glGetError()) error("space draw GLerror(%d)", glGetError());
-}
-
-template <int Size>
-void SpaceObject<Size>::draw(const SpaceObjectShaderConf conf) {
-  if (_geomVboID == 0 && _colorVboID == 0) bindBuffers();
-
-  glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
-
-  glBufferData(GL_ARRAY_BUFFER, Size * Vector::Length * sizeof(float), _transformedGeometry.flat().getArrayC(), GL_STATIC_DRAW);
-
-  //glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
-  //point the position attribute to this buffer, being tuples of 4 floats for each vertex
-  //    glVertexAttribPointer(_positionLocation, 4, GL_FLOAT, GL_FALSE, 0, NULL);
-  glVertexAttribPointer(conf.getPositionLoc(), Vector::Length, GL_FLOAT, GL_FALSE, 0, NULL);
-
-  //bind the color VBO
-  glBindBuffer(GL_ARRAY_BUFFER, _colorVboID);
-  //this attribute is only 3 floats per vertex
-  //    glVertexAttribPointer(_colorLocation, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-  glVertexAttribPointer(conf.getColorLoc(), 3, GL_FLOAT, GL_FALSE, 0, NULL);
-
-
-  if (glGetError()) error("space draw GLerror(%d)", glGetError());
-  // TODO move it to virtual drawInternal()
-  //initiate the drawing process, we want a triangle, start at index 0 and draw 3 vertices
-  if (Size == 1) {
-    glDrawArrays(GL_POINTS, 0, Size);
-  } else if (Size == 3) {
-    glDrawArrays(GL_TRIANGLES, 0, Size);
-  } else {
-    glDrawArrays(GL_POINTS, 0, Size);
-  }
-  // TODO Use indicies and experiment with GL_LINES and LINES_STRIP
-
-};
+void SpaceObject<Size>::bindBuffers() {}
 
 template <int Size>
 void SpaceObject<Size>::setAngleInRadians(float angle) {
@@ -180,6 +107,11 @@ Vector SpaceObject<Size>::getPosition() const {
 }
 
 template <int Size>
+ColorRGB& SpaceObject<Size>::getColor() {
+  return _color;
+}
+
+template <int Size>
 void SpaceObject<Size>::setPosition(const Vector& newPos) {
   _position = newPos;
 }
@@ -194,7 +126,7 @@ void SpaceObject<Size>::update() {
   _position += _velocity;
   _transformedGeometry = _initialGeometry.
       rotate(_angle, Radians).
-      translate(_position.getX(), _position.getY());
+      translate(_position.getX(), _position.getY()); 
 }
 
 template <int Size>

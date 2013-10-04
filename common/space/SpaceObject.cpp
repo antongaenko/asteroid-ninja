@@ -22,40 +22,4 @@
  */
 
 #include "SpaceObject.h"
-#include "Logger.h"
-
-/**
-* SpaceObjectShaderConf definition
-*/
-SpaceObjectShaderConf::SpaceObjectShaderConf(const int positionLocation, const int colorLocation):
-_positionLocation(positionLocation),
-_colorLocation(colorLocation) {}
-
-unsigned int SpaceObjectShaderConf::getPositionLoc() const {
-  if (_positionLocation<0) {
-    error("position location hasn't been set yet");
-    return 0;
-  } else {
-    return static_cast<unsigned int>(_positionLocation);
-  }
-}
-
-void SpaceObjectShaderConf::setPositionLoc(const unsigned int value) {
-  _positionLocation = value;
-}
-
-unsigned int SpaceObjectShaderConf::getColorLoc() const {
-  if (_colorLocation<0) {
-    error("color location hasn't been set yet");
-    return 0;
-  } else {
-    return static_cast<unsigned int>(_colorLocation);
-  }
-}
-
-void SpaceObjectShaderConf::setColorLoc(const unsigned int value) {
-  _colorLocation = value;
-}
-
-
 

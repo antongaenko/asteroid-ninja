@@ -44,13 +44,15 @@ Geometry<float, SpaceArchitect::ASTEROID_VERTEX_COUNT> SpaceArchitect::generateA
   debug("angle diff %f", angleDiff);
   // set first vertex
   newGeom[0] = Vector(0, initialRadius, 1);
-  newGeom[1] = newGeom[0] * RotateMatrix(90, Degree);
-  newGeom[2] = newGeom[0] * RotateMatrix(270, Degree);
+  //newGeom[1] = newGeom[0] * RotateMatrix(90, Degree);
+  //newGeom[2] = newGeom[0] * RotateMatrix(270, Degree);
     
   // then rotate it to produce all vertexes
-  /*for (int i = 1; i < ASTEROID_VERTEX_COUNT; i++) {
+  for (int i = 1; i < ASTEROID_VERTEX_COUNT; i++) {
     newGeom[i] = newGeom[i-1] * RotateMatrix(angleDiff);
-  }*/
+  }
+  
+  debugArray("asteroid", newGeom.flat().getArrayC(), 12, 3);
 
   return newGeom;
 }
