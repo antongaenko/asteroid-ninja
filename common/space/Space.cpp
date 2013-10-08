@@ -25,14 +25,16 @@ THE SOFTWARE.
 #include "Space.h"
 #include "SpaceArchitect.h"
 #include "Ship.h"
+#include "SpaceObject.cpp"
 #include "Shader.h"
 #include "Plasmoid.h"
 #include "Asteroid.h"
-#include "Collider.h"
+
 #include <algorithm>
 #include <iostream>
 #include <cctype>
 #include <functional>
+#include "../Collider.cpp"
 
 void Space::compileShader() {
   bool compilationResult = _shader->compileAndLink();
@@ -149,39 +151,43 @@ void Space::update(float msSinceLastUpdate) {
       }), _asteroids.end());
 }
 
+// set raw color by space object colors
+template <int Size>
+void fillByColor(const SpaceObject<Size>* obj, float* arr, int& offset) {
+  // we should set color for all vertices in VBO
+  for (int i = 0; i < Size; i++) {
+    arr[++offset] = obj->getColor().r;
+    arr[++offset] = obj->getColor().g;
+    arr[++offset] = obj->getColor().b;
+  }
+}
+
+// set raw geometry by space object geometry
+template <int Size>
+void fillByGeom(const SpaceObject<Size>* obj, float* arr, int& offset) {
+  auto soGeom = obj->getCurrentGeometry().flat();
+  // for all ship points coordinates
+  for (int i = 0; i < soGeom.getSize(); i++) {
+    arr[offset++] = soGeom[i];
+  }
+
+}
+
 // collect colors for ALL vertexes for ALL space objects
 void Space::prepareColorVBO(const unsigned int& shaderAttributeColor) {
   int vertexCount = Ship::SIZE + _plasmoids.size() * Plasmoid::SIZE + _asteroids.size() * Asteroid::SIZE;
   float colors[vertexCount * 3];
   // we increment offset on each step so we set -1 to be 0 on first iteration
   int offset = -1;
-  // get ship color for all vertices (because we should set color for ALL vertices in VBO for ship)
-  for (int i = 0; i < Ship::SIZE; i++) {
-    colors[++offset] = _ship->getColor().r;
-    colors[++offset] = _ship->getColor().g;
-    colors[++offset] = _ship->getColor().b;
-  }
+  // get ship color for all vertices
+  fillByColor(_ship.get(), colors, offset);
   
-  // get plasmoid color
-  for (auto &p : _plasmoids) {
-    // we should set color for all vertices in VBO
-    for (int i = 0; i < Plasmoid::SIZE; i++) {
-      colors[++offset] = p->getColor().r;
-      colors[++offset] = p->getColor().g;
-      colors[++offset] = p->getColor().b;
-    }
-  }
+  // get plasmoid color for ALL plasmoids
+  for (auto &p : _plasmoids) fillByColor(p.get(), colors, offset);
   
-  // get asteroid color
-  for (auto &a : _asteroids) {
-    // we should set color for all vertices in VBO
-    for (int i = 0; i < Asteroid::SIZE; i++) {
-      colors[++offset] = a->getColor().r;
-      colors[++offset] = a->getColor().g;
-      colors[++offset] = a->getColor().b;
-    }
-  }
-  
+  // get asteroid color for ALL asteroids
+  for (auto &a : _asteroids) fillByColor(a.get(), colors, offset);
+
   if (!_colorVboID) glGenBuffers(1, &_colorVboID);
   glBindBuffer(GL_ARRAY_BUFFER, _colorVboID);
   // TODO try to SubBufferData
@@ -200,30 +206,15 @@ void Space::prepareGeomVBO(const unsigned int& shaderAttributeGeom) {
   float rawGeometry[vertexCount * Vector::Length];
 
   int offset = 0;
-  auto shipG = _ship->getCurrentGeometry().flat();
-  // for all ship points coordinates
-  for (int i = 0; i < shipG.getSize(); i++) {
-    rawGeometry[offset++] = shipG[i];
-  }
+  // get ship geometry
+  fillByGeom(_ship.get(), rawGeometry, offset);
   
   // for all plasmoids
-  for (auto& p : _plasmoids) {
-    auto plasmoidG = p->getCurrentGeometry().flat();
-    // for it's all points coordinates
-    for (int i = 0; i < plasmoidG.getSize(); i++) {
-      rawGeometry[offset++] = plasmoidG[i];
-    }
-  }
+  for (auto& p : _plasmoids) fillByGeom(p.get(), rawGeometry, offset);
 
   // for all asteroids
-  for (auto& a : _asteroids) {
-    auto asteroidG = a->getCurrentGeometry().flat();
-    // for it's all points coordinates
-    for (int i = 0; i < asteroidG.getSize(); i++) {
-      rawGeometry[offset++] = asteroidG[i];
-    }
-  }
-  
+  for (auto& a : _asteroids) fillByGeom(a.get(), rawGeometry, offset);
+
   if (!_geomVboID) glGenBuffers(1, &_geomVboID);
   glBindBuffer(GL_ARRAY_BUFFER, _geomVboID);
   // transfer new data to VBO
@@ -256,7 +247,7 @@ void Space::draw() {
   // draw the ship
   glDrawArrays(GL_TRIANGLES, offset, Ship::SIZE);
   offset += Ship::SIZE;
-
+  
   // draw plasmoids
   glDrawArrays(GL_POINTS, offset, _plasmoids.size() * Plasmoid::SIZE);
   offset += _plasmoids.size() * Plasmoid::SIZE;
@@ -289,7 +280,7 @@ Matrix Space::prepareViewMatrix(const int resolutionWidth, const int resolutionH
 
 // TODO Make Enable method which on/off glUseProgram
 Space::Space() {
-  _ship = std::unique_ptr<Ship>(new Ship(SpaceArchitect::SHIP, kRED, Vector(10, 10)));
+  _ship = std::unique_ptr<Ship>(new Ship(SpaceArchitect::SHIP, kRED, Vector(0, 0)));
   // add random asteroids
   // TODO generate them with time interval
   for (int i = 0; i < 2; i++) {
@@ -304,7 +295,7 @@ Space::Space() {
         SpaceArchitect::generateAsteroid(SpaceArchitect::ASTEROID_BIG_RADIUS),
         ColorRGB(.5, .5, .5),
         Vector(xRand, yRand));
-    a->setVelocity(Vector(xVelocityRand, yVelocityRand, 0));
+    a->setVelocity(Vector(xVelocityRand, yVelocityRand));
     a->setAngularFrequencyRadians(rand() % 2 * DegreesToRadians);
 
     _asteroids.push_front(std::unique_ptr<Asteroid>(a));
@@ -323,7 +314,7 @@ int Space::getAllVertexCount() const {
 
 // move ship by player
 void Space::moveShip(float dx, float dy, float curAngle) {
-  _ship->setVelocity(Vector(dx, dy, 0));
+  _ship->setVelocity(Vector(dx, dy));
   _ship->setAngleInRadians(curAngle);
 }
 

@@ -42,6 +42,7 @@ class Asteroid;
 
 enum class SpaceEvent {
   SHIP_CRASH,
+  // when plasmoid split asteroid
   ASTEROID_CRACK,
   ASTEROID_DESTROYED
 };
@@ -61,6 +62,7 @@ public:
   void moveShip(float dx, float dy, float curAngle);
   void shipAttack();
 
+  // Drawable interface
   virtual void draw() override;
   virtual void update(float msSinceLastUpdate) override;
   virtual void setSize(int width, int height) override;
@@ -85,24 +87,27 @@ protected:
   void prepareGeomVBO(const unsigned int& shaderAttributePosition);
 
 private:
+  // space objects
   std::unique_ptr<Ship> _ship;
   std::list<std::unique_ptr<Plasmoid>> _plasmoids;
   std::list<std::unique_ptr<Asteroid>> _asteroids;
-  std::unique_ptr<Shader> _shader;
   
-  // get them from shader and use for binding VBOs to them
-  unsigned int _shaderAttributePosition;
-  unsigned int _shaderAttributeColor;
-  
-  // for shader
-  unsigned int _viewMatrixLocation;
   math2d::Rectangle _bounds;
   // model view transformation ()
   math2d::Matrix _viewMatrix;
   // listener on internal space event such as asteroid collision, space collision and etc
   std::function<void(SpaceEvent)> onSpaceEvent;
   
-  // TODO temporary code
+  std::unique_ptr<Shader> _shader;
+  
+  // use this index to pass view matrix to shader
+  unsigned int _viewMatrixLocation;
+  
+  // get them from shader and use for binding VBOs to them
+  unsigned int _shaderAttributePosition;
+  unsigned int _shaderAttributeColor;
+  
+  // VBO indexes
   unsigned int _geomVboID;
   unsigned int _colorVboID;
 };

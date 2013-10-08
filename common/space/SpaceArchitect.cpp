@@ -26,30 +26,28 @@
 #import <stdlib.h>
 #include "SpaceArchitect.h"
 
-Vector SpaceArchitect::PLASMOID_TURRET_POS = Vector(0, 20);
+const Vector SpaceArchitect::PLASMOID_TURRET_POS = Vector(0, 20);
 
 Vector SpaceArchitect::LASER[1] = {PLASMOID_TURRET_POS};
 
 Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, Vector(-20,-20),Vector(20,-20)};
 
 // TODO It should depend on Game FPS
-Vector SpaceArchitect::PLASMOID_VELOCITY = Vector(0, 15, 0);
+Vector SpaceArchitect::PLASMOID_VELOCITY = Vector(0, 15);
 
 Geometry<float, SpaceArchitect::ASTEROID_VERTEX_COUNT> SpaceArchitect::generateAsteroid(const int maxRadius) {
   Geometry<float, ASTEROID_VERTEX_COUNT> newGeom;
   // random initial radius
   int initialRadius = rand() % (int)(maxRadius * .5) + (int)(maxRadius * .5);
   float angleDiff = 2 * PI / ASTEROID_VERTEX_COUNT;
-  debug("initial radius %d", initialRadius);
-  debug("angle diff %f", angleDiff);
+  
   // set first vertex
   newGeom[0] = Vector(0, initialRadius, 1);
-  //newGeom[1] = newGeom[0] * RotateMatrix(90, Degree);
-  //newGeom[2] = newGeom[0] * RotateMatrix(270, Degree);
-    
+  
   // then rotate it to produce all vertexes
   for (int i = 1; i < ASTEROID_VERTEX_COUNT; i++) {
-    newGeom[i] = newGeom[i-1] * RotateMatrix(angleDiff);
+    float scaleFactor = .5 + (float)rand()/((float)RAND_MAX);
+    newGeom[i] = newGeom[i-1] * RotateMatrix(angleDiff) * ScaleMatrix(scaleFactor, scaleFactor);
   }
   
   debugArray("asteroid", newGeom.flat().getArrayC(), 12, 3);

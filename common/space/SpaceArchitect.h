@@ -44,13 +44,13 @@ class SpaceArchitect {
   static const int GRAPHIC_RESOLUTION_WIDTH = 800;
   static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
   // ship laser tower position
-  static Vector PLASMOID_TURRET_POS;
+  static const Vector PLASMOID_TURRET_POS;
   static Vector LASER[1];
   static Vector SHIP[3];
 
   static Vector PLASMOID_VELOCITY;
 
-  static const int ASTEROID_VERTEX_COUNT = 4;
+  static const int ASTEROID_VERTEX_COUNT = 12;
   static const int ASTEROID_BIG_RADIUS = 60;
   static const int ASTEROID_SMALL_RADIUS = 20;
 

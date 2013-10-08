@@ -26,6 +26,7 @@
 #include "Logger.h"
 #include "Plasmoid.h"
 #include "SpaceArchitect.h"
+#include "SpaceObject.cpp"
 
 Ship::Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vector & initPos):
   SpaceObject(geometry, color, initPos) {

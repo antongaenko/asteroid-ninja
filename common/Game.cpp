@@ -26,8 +26,11 @@
 
 Game::Game():_lives(3), _score(0) {
   info("Start game initialization...");
-  // TODO init in list, delete params
   _space = std::unique_ptr<Space>(new Space());
+  
+  // seed random
+  std::srand((unsigned)time(0));
+  
   // bind space events to external listeners
   _space->setListener([&](SpaceEvent e) {
     switch (e) {

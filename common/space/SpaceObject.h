@@ -44,7 +44,7 @@ public:
   void setAngleInRadians(float angle);
   void setVelocity(const Vector &value);
   Vector getPosition() const;
-  ColorRGB& getColor();
+  ColorRGB getColor() const;
   void setPosition(const Vector& newPos);
 
   // instruct that this object is bumped by another
@@ -91,10 +91,10 @@ _isBumped(false) {};
 template <int Size>
 void SpaceObject<Size>::bindBuffers() {}
 
-template <int Size>
-void SpaceObject<Size>::setAngleInRadians(float angle) {
+/*template <int Size>
+void SpaceObject<Size>::setAngleInRadians(float angle);/* {
   _angle = angle;
-}
+}*/
 
 template <int Size>
 void SpaceObject<Size>::setVelocity(const Vector &value) {
@@ -107,7 +107,7 @@ Vector SpaceObject<Size>::getPosition() const {
 }
 
 template <int Size>
-ColorRGB& SpaceObject<Size>::getColor() {
+ColorRGB SpaceObject<Size>::getColor() const {
   return _color;
 }
 
@@ -121,13 +121,13 @@ const Geometry<float, Size>& SpaceObject<Size>::getCurrentGeometry() const {
   return _transformedGeometry;
 };
 
-template <int Size>
+/*template <int Size>
 void SpaceObject<Size>::update() {
   _position += _velocity;
   _transformedGeometry = _initialGeometry.
       rotate(_angle, Radians).
       translate(_position.getX(), _position.getY()); 
-}
+}*/
 
 template <int Size>
 void SpaceObject<Size>::setBumped() {

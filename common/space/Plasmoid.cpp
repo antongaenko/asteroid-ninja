@@ -24,6 +24,7 @@
 
 
 #include "Plasmoid.h"
+#include "SpaceObject.cpp"
 
 Plasmoid::Plasmoid(const Geometry<float, 1>& geometry, const ColorRGB& color, const Vector & initPos):
 SpaceObject(geometry, color, initPos) {}

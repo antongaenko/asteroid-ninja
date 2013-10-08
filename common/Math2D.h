@@ -33,7 +33,7 @@
 
 namespace math2d {
   static const float PI = 3.141592;
-  static const float FLOAT_COMPARISON_PRECISION = 1e-5;
+  static const float FLOAT_COMPARISON_PRECISION = 1e-4;
   static const float DegreesToRadians = PI / 180;
   enum AngleMeasure {Degree, Radians};
 
@@ -211,33 +211,33 @@ namespace math2d {
   class Vector3 {
   public:
     static const int Length = 3;
-    Vector3(T x = 0, T y = 0, T z = 1):_x(x), _y(y), _z(z) {
+    Vector3(T x = 0, T y = 0, T w = 1):_x(x), _y(y), _w(w) {
       //debug("constructor");
     }
     Vector3(const Vector3& another) {
       //debug("copy constructor");
       _x = another._x;
       _y = another._y;
-      _z = another._z;
+      _w = another._w;
     }
-    Vector3& operator=(const Vector3& another) {
+    Vector3& operator=(const Vector3& another); /*{
       //debug("assignment");
       _x = another._x;
       _y = another._y;
-      _z = another._z;
+      _w = another._w;
       return *this;
-    }
+    }*/
 
-    T getX() const {
+    T getX() const; /* {
       return _x;
-    }
+    }*/
 
     T getY() const {
       return _y;
     }
 
-    T getZ() const {
-      return _z;
+    T getW() const {
+      return _w;
     }
 
     T operator [](int num) const {
@@ -247,37 +247,57 @@ namespace math2d {
         case 1:
           return _y;
         case 2:
-          return _z;
+          return _w;
           // TODO throw error
         default:
           return 0;
       }
     }
 
-    Vector3<T> operator+(const Vector3<T> v) const {
-      return Vector3<T>(_x + v._x, _y + v._y, _z + v._z);
+    // it divide X and Y on scale factor W
+    Vector3<T> applyScale() const {
+      if (_w == 0) return Vector3<T>(0, 0, 1);
+      else return Vector3<T>(_x / _w, _y / _w, 1);
     }
 
+    // it doesn't sum W. It applies it as scale factor for second Vector firstly.
+    Vector3<T> operator+(const Vector3<T> v) const {
+      auto withScale = v.applyScale();
+      if (_w == 0) return Vector3<T>(withScale._x, withScale._y, 1);
+      else return Vector3<T>(_x / _w + withScale._x, _y / _w + withScale._y, 1);
+    }
+
+    // it doesn't sum W. It applies it as scale factor for second Vector firstly.
     void operator+=(const Vector3<T> v) {
-      _x += v._x;
-      _y += v._y;
-      _z += v._z;
+      auto withScale = v.applyScale();
+      if (_w == 0) {
+        _x = 0;
+        _y = 0;
+      } else {
+        _x = _x / _w;
+        _y = _y / _w;
+      }
+      _x += withScale._x;
+      _y += withScale._y;
     }
 
     // multiply on matrix and return NEW transformed vector
     Vector3<T> operator*(const SquareMatrix<T, 3> &m) {
+      // in homogeneous coordinates W our vector (x, y, W = 1)
+      // after multiplying it's W = m[2][2]
+      // W is like scale factor for both X and Y. So we apply scaling here.
+
       return Vector3<T>(
-          getX() * m._m[0][0] + getY() * m._m[1][0] + getZ() * m._m[2][0],
-          getX() * m._m[0][1] + getY() * m._m[1][1] + getZ() * m._m[2][1],
-          getX() * m._m[0][2] + getY() * m._m[1][2] + getZ() * m._m[2][2]
+          getX() * m._m[0][0] + getY() * m._m[1][0] + getW() * m._m[2][0],
+          getX() * m._m[0][1] + getY() * m._m[1][1] + getW() * m._m[2][1],
+          getX() * m._m[0][2] + getY() * m._m[1][2] + getW() * m._m[2][2]
       );
     };
 
   private:
-    static const int size = 3;
     T _x;
     T _y;
-    T _z;
+    T _w;
   };
 
 
@@ -323,7 +343,7 @@ namespace math2d {
       for (int i = 0; i < Size; i++) {
         arrayToFill[i * Vector3<T>::Length] = this->a[i].getX();
         arrayToFill[i * Vector3<T>::Length + 1] = this->a[i].getY();
-        arrayToFill[i * Vector3<T>::Length + 2] = this->a[i].getZ();
+        arrayToFill[i * Vector3<T>::Length + 2] = this->a[i].getW();
       }
       return arrayToFill;
     }
@@ -393,11 +413,21 @@ namespace math2d {
     return Vector(xSum / Size, ySum / Size);
   }
   
-  // return cross-product of two vectors in XY dimension (Z isn't used)
-  // in geometrical sense positive value means that tested point lies to the left of the vector,
+  float min(float f, float s);
+  float max(float f, float s);
+  
+  // return cross-product of two vectors in XY dimension (W isn't used)
+  // in geometrical sense positive value means that tested point (end2) lies to the left of the vector,
   // negative - to the right of the vector
   // and 0 that tested point lays on vector's straight
-  int crossProduct2D(const Vector& begin, const Vector& end, const Vector testedPoint); 
+  int crossProduct2D(const Vector& center, const Vector& end1, const Vector& end2);
+
+  // check two floats with precision
+  bool isEqual(const float one, const float two, const float precision);
+
+  // check if value is in range (include confines)
+  // it also check reverse intervals [-1; -3] correctly
+  bool isInRange(const float what, const float from, const float to);
 }
 
 #endif /* MATH2D_H */

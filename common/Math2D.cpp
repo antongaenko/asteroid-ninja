@@ -24,26 +24,31 @@
 #include "Math2D.h"
 
 namespace math2d {
-
-  // compare two floats
-  bool isEqual(const float one, const float two) {
-    return fabs(one - two) < FLOAT_COMPARISON_PRECISION &&
-        fabs(one - two) < FLOAT_COMPARISON_PRECISION &&
-        fabs(one - two) < FLOAT_COMPARISON_PRECISION;
+  
+  float min(float f, float s) {
+    return f < s ? f : s;
+  }
+  
+  float max(float f, float s) {
+    return f > s ? f : s;
   }
 
-  // check if value is in range (include confines)
-  bool isInRange(const float what, const float low, const float high) {
-    bool isEqualLow = isEqual(what, low);
-    bool isEqualHigh = isEqual(what, high);
-    return (what > low || isEqualLow || isEqual(what, low)) && (what < high || isEqualHigh || isEqual(what, high));
+  bool isEqual(const float one, const float two, const float precision = FLOAT_COMPARISON_PRECISION) {
+    return fabs(one - two) < precision &&
+        fabs(one - two) < precision &&
+        fabs(one - two) < precision;
+  }
+
+  bool isInRange(const float what, const float from, const float to) {
+    // we use XOR for correct checking reverse intervals [-1; -3] (from right to left)
+    return ((what > from) ^ (what > to)) || isEqual(what, from) || isEqual(what, to);
   }
 
   // check two float vectors on equality with the simplest float comparision method
   bool isEqual(const Vector &v, const Vector &v2) {
     return isEqual(v.getX(), v2.getX()) &&
         isEqual(v.getY(), v2.getY()) &&
-        isEqual(v.getZ(), v2.getZ());
+        isEqual(v.getW(), v2.getW());
   }
 
   /**
@@ -79,11 +84,11 @@ namespace math2d {
   }
   
   const int Rectangle::getWidth() const {
-    return getTopRight().getX() - getTopLeft().getX();
+    return static_cast<int>(getTopRight().getX() - getTopLeft().getX());
   };
   
   const int Rectangle::getHeight() const {
-    return getTopRight().getY() - getBottomRight().getY();
+    return static_cast<int>(getTopRight().getY() - getBottomRight().getY());
   };
 
 
@@ -102,12 +107,31 @@ namespace math2d {
   bool Rectangle::isOutside(Vector p) {
     return !isInside(p);
   }
-  
-  int crossProduct2D(const Vector& begin, const Vector& end, const Vector testedPoint) {
+
+  // return cross-product of two vectors in XY dimension (W isn't used)
+  // in geometrical sense positive value means that tested point lies to the left of the vector,
+  // negative - to the right of the vector
+  // and 0 that tested point lays on vector's straight
+  int crossProduct2D(const Vector&center, const Vector&end1, const Vector& end2) {
     // (x2 - x1)(y3 - y1) - (y2 - y1)(x3 - x1)
-    return (end.getX() - begin.getX()) * (testedPoint.getY() - begin.getY()) -
-    (end.getY() - begin.getY()) * (testedPoint.getX() - begin.getX());
+    return static_cast<int>((end1.getX() - center.getX()) * (end2.getY() - center.getY()) -
+    (end1.getY() - center.getY()) * (end2.getX() - center.getX()));
   }
+  
+  template <class T>
+  T Vector3<T>::getX() const {
+    return _x;
+  }
+  
+  template <class T>
+  Vector3<T>& Vector3<T>::operator=(const Vector3& another) {
+    //debug("assignment");
+    _x = another._x;
+    _y = another._y;
+    _w = another._w;
+    return *this;
+  }
+  
 }
 
 

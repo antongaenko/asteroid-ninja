@@ -6,10 +6,16 @@
 //  Copyright (c) 2013 Anton Gaenko. All rights reserved.
 //
 
-#import "Math2DTest.h"
+
+#import <SenTestingKit/SenTestingKit.h>
 #import "Math2D.h"
 
 using namespace math2d;
+
+@interface Math2DTest : SenTestCase
+
+@end
+
 
 // TODO Write cross-platfrom tests
 @implementation Math2DTest
@@ -41,15 +47,15 @@ Matrix *m2;
   Vector v3 = *v1;
   STAssertEquals(v3[0], v1->getX(), nil);
   STAssertEquals(v3[1], v1->getY(), nil);
-  STAssertEquals(v3[2], v1->getZ(), nil);
-  Vector v4 (v2->getX(), v2->getY(), v2->getZ());
+  STAssertEquals(v3[2], v1->getW(), nil);
+  Vector v4 (v2->getX(), v2->getY(), v2->getW());
   STAssertEquals(v4[0], v2->getX(), nil);
   STAssertEquals(v4[1], v2->getY(), nil);
-  STAssertEquals(v4[2], v2->getZ(), nil);
+  STAssertEquals(v4[2], v2->getW(), nil);
   v4 = v3;
   STAssertEquals(v4[0], v1->getX(), nil);
   STAssertEquals(v4[1], v1->getY(), nil);
-  STAssertEquals(v4[2], v1->getZ(), nil);
+  STAssertEquals(v4[2], v1->getW(), nil);
 }
 
 // Test SquareMatrix initialization
@@ -222,7 +228,7 @@ Matrix *m2;
   Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
   auto g = Geometry<float, 6>(geomArr);
   auto c = getCentroid(g);
-  STAssertEquals(isEqual(Vector(1.5, 1.5),c), true, nil);
+  STAssertEquals(isEqual(Vector(-2.0/6, 3.0/6),c), true, nil);
 }
 
 // test algorithm to check if point is inside free polygon. It uses point orientation relatively each polygon side

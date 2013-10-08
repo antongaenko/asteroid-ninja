@@ -23,3 +23,18 @@
 
 #include "SpaceObject.h"
 
+
+template <int Size>
+void SpaceObject<Size>::update() {
+  _position += _velocity;
+  _transformedGeometry = _initialGeometry.
+  rotate(_angle, Radians).
+  translate(_position.getX(), _position.getY());
+}
+
+template <int Size>
+void SpaceObject<Size>::setAngleInRadians(float angle) {
+      _angle = angle;
+}
+
+

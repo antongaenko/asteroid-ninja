@@ -23,6 +23,7 @@
 
 
 #include "Asteroid.h"
+#include "SpaceObject.cpp"
 
 Asteroid::Asteroid(
     const int hitsCount,
