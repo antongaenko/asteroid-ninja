@@ -27,27 +27,30 @@
 #ifndef __Collider_H_
 #define __Collider_H_
 
-#include "Math2D.h"
+#include "LAlgebra.h"
 
-using namespace math2d;
+using namespace lalgebra;
 
+// Y - ray intersects the edge
+// N - ray DOESN'T intersect the edge
+// VERTEX - ray casting intersects edge in vertex
+// MEMBER - tested point belongs an edge
+enum class Intersection { Y, N, VERTEX, MEMBER};
+
+// Ray-casting algo. It works for convex and non-convex polygons, also with holes.
+// If tested point lies on polygon's border then we think about collision.
 class Collider {
 public:
-  // Ray-casting
-  // Return 2 if ray intersects a vertex of the edge
-  // Return 1 if ray from point to positive X intersects the edge B-E
-  // 0 if point belong the edge
-  // -1 if point is on the right of the edge
-  
-  static bool isPointAtLeftOfEdge(Vector point, Vector begin, Vector end);
-  
-  static int isIntersectionRayCastingWithEdge(const Vector point, Vector begin, Vector end);
+  // check collision between two geometries
+  static bool isCollision(const Geometry &what, const Geometry &with);
 
-  template<int Size>
-  static bool isCollision(const Vector point, const Geometry<float, Size> &with);
+  // check collision between point and geometry
+  static bool isCollision(const Vector point, const Geometry &with);
 
-  template<int SizeFirst, int SizeSecond>
-  static bool isCollision(const Geometry<float, SizeFirst> &what, const Geometry<float, SizeSecond> &with);
+  // cast ray from point to positive X axis and check it's intersection with an edge
+  static Intersection getIntersectionRayCastingWithEdge(const Vector point, const Vector begin, const Vector end);
+
+
 };
 
 

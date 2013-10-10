@@ -27,12 +27,12 @@
 #ifndef __SpaceDesigner_H_
 #define __SpaceDesigner_H_
 
-#include "Math2D.h"
+#include "LAlgebra.h"
 
-using namespace math2d;
+using namespace lalgebra;
 
 
-
+// TODO make config
 class SpaceArchitect {
   public:
   // This parameters show which resolution we use for geometry.
@@ -45,7 +45,7 @@ class SpaceArchitect {
   static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
   // ship laser tower position
   static const Vector PLASMOID_TURRET_POS;
-  static Vector LASER[1];
+  static Vector LASER;
   static Vector SHIP[3];
 
   static Vector PLASMOID_VELOCITY;
@@ -54,7 +54,7 @@ class SpaceArchitect {
   static const int ASTEROID_BIG_RADIUS = 60;
   static const int ASTEROID_SMALL_RADIUS = 20;
 
-  static Geometry<float, ASTEROID_VERTEX_COUNT> generateAsteroid(const int maxRadius);
+  static Geometry generateAsteroid(const int maxRadius);
 
 };
 

@@ -23,17 +23,60 @@
 
 #include "SpaceObject.h"
 
+SpaceObject::SpaceObject(const Geometry &geometry, const ColorRGB &color, const Vector &initPos):
+_initialGeometry(geometry),
+_transformedGeometry(geometry),
+_color(color),
+_position(initPos),
+_angle(0),
+_velocity(0, 0, 0),
+_isBumped(false) {};
 
-template <int Size>
-void SpaceObject<Size>::update() {
+void SpaceObject::update() {
   _position += _velocity;
   _transformedGeometry = _initialGeometry.
-  rotate(_angle, Radians).
-  translate(_position.getX(), _position.getY());
+      rotate(_angle, Radians).
+      translate(_position.getX(), _position.getY());
 }
 
-template <int Size>
-void SpaceObject<Size>::setAngleInRadians(float angle) {
+int SpaceObject::getVertexCount() const {
+  return _initialGeometry.getSize();
+}
+
+void SpaceObject::setVelocity(const Vector &value) {
+  _velocity = value;
+}
+
+
+Vector SpaceObject::getPosition() const {
+  return _position;
+}
+
+
+ColorRGB SpaceObject::getColor() const {
+  return _color;
+}
+
+
+void SpaceObject::setPosition(const Vector& newPos) {
+  _position = newPos;
+}
+
+
+const Geometry& SpaceObject::getCurrentGeometry() const {
+  return _transformedGeometry;
+};
+
+void SpaceObject::setBumped() {
+  _isBumped = true;
+}
+
+
+bool SpaceObject::isBumped() const {
+  return _isBumped;
+}
+
+void SpaceObject::setAngleInRadians(float angle) {
       _angle = angle;
 }
 

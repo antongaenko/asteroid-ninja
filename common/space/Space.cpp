@@ -25,16 +25,16 @@ THE SOFTWARE.
 #include "Space.h"
 #include "SpaceArchitect.h"
 #include "Ship.h"
-#include "SpaceObject.cpp"
 #include "Shader.h"
 #include "Plasmoid.h"
 #include "Asteroid.h"
+#include "Collider.h"
+#include "Logger.h"
 
 #include <algorithm>
 #include <iostream>
 #include <cctype>
 #include <functional>
-#include "../Collider.cpp"
 
 void Space::compileShader() {
   bool compilationResult = _shader->compileAndLink();
@@ -152,10 +152,9 @@ void Space::update(float msSinceLastUpdate) {
 }
 
 // set raw color by space object colors
-template <int Size>
-void fillByColor(const SpaceObject<Size>* obj, float* arr, int& offset) {
+void fillByColor(const SpaceObject* obj, float* arr, int& offset) {
   // we should set color for all vertices in VBO
-  for (int i = 0; i < Size; i++) {
+  for (int i = 0; i < obj->getVertexCount(); i++) {
     arr[++offset] = obj->getColor().r;
     arr[++offset] = obj->getColor().g;
     arr[++offset] = obj->getColor().b;
@@ -163,19 +162,14 @@ void fillByColor(const SpaceObject<Size>* obj, float* arr, int& offset) {
 }
 
 // set raw geometry by space object geometry
-template <int Size>
-void fillByGeom(const SpaceObject<Size>* obj, float* arr, int& offset) {
+void fillByGeom(const SpaceObject* obj, float* arr, int& offset) {
   auto soGeom = obj->getCurrentGeometry().flat();
-  // for all ship points coordinates
-  for (int i = 0; i < soGeom.getSize(); i++) {
-    arr[offset++] = soGeom[i];
-  }
-
+  for (auto& c : soGeom) arr[offset++] = c;
 }
 
 // collect colors for ALL vertexes for ALL space objects
 void Space::prepareColorVBO(const unsigned int& shaderAttributeColor) {
-  int vertexCount = Ship::SIZE + _plasmoids.size() * Plasmoid::SIZE + _asteroids.size() * Asteroid::SIZE;
+  int vertexCount = getAllVertexCount();
   float colors[vertexCount * 3];
   // we increment offset on each step so we set -1 to be 0 on first iteration
   int offset = -1;
@@ -236,26 +230,29 @@ void Space::draw() {
     glEnableVertexAttribArray(_shaderAttributeColor);
     glEnableVertexAttribArray(_shaderAttributePosition);
   }
-  
+
+  std::vector<float> flatM = _viewMatrix.flat();
   // set view matrix one time for all objects
-  glUniformMatrix3fv(_viewMatrixLocation, 1, 0, _viewMatrix.flat().getArrayC());
+  glUniformMatrix3fv(_viewMatrixLocation, 1, 0, &flatM[0]);
   
   prepareColorVBO(_shaderAttributeColor);
   prepareGeomVBO(_shaderAttributePosition);
   
   int offset = 0;
   // draw the ship
-  glDrawArrays(GL_TRIANGLES, offset, Ship::SIZE);
-  offset += Ship::SIZE;
+  glDrawArrays(GL_TRIANGLES, offset, _ship->getVertexCount());
+  offset += _ship->getVertexCount();
   
   // draw plasmoids
-  glDrawArrays(GL_POINTS, offset, _plasmoids.size() * Plasmoid::SIZE);
-  offset += _plasmoids.size() * Plasmoid::SIZE;
+  for (auto& p : _plasmoids) {
+    glDrawArrays(GL_POINTS, offset, p->getVertexCount());
+    offset += p->getVertexCount();
+  }
 
   // draw asteroids
-  for (int i = 0; i < _asteroids.size(); i++) {
-    glDrawArrays(GL_LINE_LOOP, offset, Asteroid::SIZE);
-    offset += Asteroid::SIZE;
+  for (auto& a : _asteroids) {
+    glDrawArrays(GL_LINE_LOOP, offset, a->getVertexCount());
+    offset += a->getVertexCount();
   }
 }
 
@@ -280,7 +277,7 @@ Matrix Space::prepareViewMatrix(const int resolutionWidth, const int resolutionH
 
 // TODO Make Enable method which on/off glUseProgram
 Space::Space() {
-  _ship = std::unique_ptr<Ship>(new Ship(SpaceArchitect::SHIP, kRED, Vector(0, 0)));
+  _ship = std::unique_ptr<Ship>(new Ship({SpaceArchitect::SHIP[0], SpaceArchitect::SHIP[1], SpaceArchitect::SHIP[2]} , kRED, Vector(0, 0)));
   // add random asteroids
   // TODO generate them with time interval
   for (int i = 0; i < 2; i++) {
@@ -309,7 +306,10 @@ int Space::getObjCount() const {
 }
 
 int Space::getAllVertexCount() const {
-  return Ship::SIZE + _plasmoids.size() * Plasmoid::SIZE + _asteroids.size() * Asteroid::SIZE;
+  int count = _ship->getVertexCount();
+  for (auto& p : _plasmoids) count += p->getVertexCount();
+  for (auto& a : _asteroids) count += a->getVertexCount();
+  return count;
 }
 
 // move ship by player

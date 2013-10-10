@@ -29,10 +29,10 @@
 
 class Plasmoid;
 
-class Ship : public SpaceObject<3> {
+class Ship : public SpaceObject {
 public:
 
-  Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vector & initPos);
+  Ship(const Geometry& geometry, const ColorRGB& color, const Vector & initPos);
 
   std::unique_ptr<Plasmoid> piffPaff();
 };

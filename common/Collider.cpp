@@ -26,98 +26,63 @@
 
 #include "Collider.h"
 
-template<int SizeFirst, int SizeSecond>
-bool Collider::isCollision(const Geometry<float, SizeFirst> &what, const Geometry<float, SizeSecond> &with) {
+bool Collider::isCollision(const Geometry &what, const Geometry &with) {
   // for all vertices of FIRST polygon
-  for (int i = 0; i < SizeFirst; i++) {
+  for (int i = 0; i < what.getSize(); i++) {
     if (isCollision(what[i], with)) return true;
   }
   return false;
 }
 
-template<int Size>
-bool Collider::isCollision(const Vector point, const Geometry<float, Size> &with) {
-  int intersectionCounter = 0;
-  float shift = 0;
-  // for ALL edges of polygon
-  for (int b = 0; b < Size; b++) {
-    int e = (b +1) % Size;
-    
-    int r = isIntersectionRayCastingWithEdge(point + Vector(0, shift), with[b], with[e]);
-    // point belong the edge. INSIDE
-    if (r == 0) {
-      return true;
-    } else if (r == 1) {
-      intersectionCounter++;
-    } else if (r == 2) {
-      // special case when ray intersects vertex of polygon. Count and shift ray to prevent intersection with this vertex again.
-      intersectionCounter++;
-      // we should shift the ray inside the polygon NOT outside
-      if (isEqual(point.getY() + shift, with[b].getY())) {
-        // we shift ray to with[e]
-        if (with[e].getY() > with[b].getY()) shift += FLOAT_COMPARISON_PRECISION * 2;
-        else shift -= FLOAT_COMPARISON_PRECISION * 2;
-      } else {
-        // it means equality with[e], shift to with[b]
-        if (with[b].getY() > with[e].getY()) shift += FLOAT_COMPARISON_PRECISION * 2;
-        else shift -= FLOAT_COMPARISON_PRECISION * 2;
-      }
-    }
-    // if r < 0 NOTHING
+// get the small shift for ray depending on vertex ray intersected before and orientation of begin and end
+static float getShiftInsideForPointAndEdge(const float pointY, const Vector begin, const Vector end) {
+  if (isEqual(pointY, begin.getY())) {
+    // we shift ray to with[e]
+    return (end.getY() > begin.getY()) ? FLOAT_COMPARISON_PRECISION * 2 : -FLOAT_COMPARISON_PRECISION * 2;
+  } else {
+    // it means equality with[e], shift to with[b]
+    return (begin.getY() > end.getY()) ? FLOAT_COMPARISON_PRECISION * 2 : -FLOAT_COMPARISON_PRECISION * 2;
   }
-  if (intersectionCounter % 2 == 1) return true;
-  else return false;
 }
 
-bool Collider::isPointAtLeftOfEdge(Vector point, Vector begin, Vector end) {
-  // Here we know that point X is in range of two vertices of the edge.
-  // Now we should know if point is at the left OR at the right of edge.
-  // It means: do we have INTERSECTION of the ray with the edge or NOT.
+bool Collider::isCollision(const Vector point, const Geometry &with) {
+  int intersectionCounter = 0;
+  float shift = 0;
 
-  // To know that we can calculate the angle (k) between the edge B-E (where By > Ey) and X axis ...
-  // ... and the angle between P-E and X axis (where P is a tested point).
-
-  // calculate B-E-X angle coef
-  float edgeAngleCoef = 0;
-  if (! isEqual(begin.getX(), end.getX(), FLOAT_COMPARISON_PRECISION)) {
-    edgeAngleCoef = (begin.getY() - end.getY()) / (begin.getX() - end.getX());
-  } else {
-    edgeAngleCoef = MAXFLOAT;
+  int size = with.getSize();
+  // for ALL edges of polygon
+  for (int b = 0; b < size; b++) {
+    int e = (b +1) % size;
+    
+    Intersection r = getIntersectionRayCastingWithEdge(point + Vector(0, shift), with[b], with[e]);
+    switch (r) {
+      case Intersection::MEMBER:
+        // point belong the edge. INSIDE
+        return true;
+      case Intersection::Y:
+        intersectionCounter++;
+        break;
+      case Intersection::VERTEX:
+        // special case when ray intersects vertex of polygon. Count and shift ray to prevent intersection with this vertex again.
+        intersectionCounter++;
+        // we should shift the ray inside the polygon NOT outside
+        shift += getShiftInsideForPointAndEdge(point.getY() + shift, with[b], with[e]);
+        break;
+      case Intersection::N:
+        // nothing, go to the next edge
+        break;
+    }
   }
 
-  // calculate P-E-X angle coef
-  float pointAngleCoef = 0;
-  if (! isEqual(point.getX(), end.getX(), FLOAT_COMPARISON_PRECISION)) {
-    pointAngleCoef = (point.getY() - end.getY()) / (point.getX() - end.getX());
-  } else {
-    pointAngleCoef = MAXFLOAT;
-  }
-
-  // If angle (NOT angle coef) P-E-X == B-E-X - point is on the edge and it means INSIDE
-  // P-E-X > B-E-X - we have INTERSECTION,
-  // if P-E-X < B-E-X - NO,
-  if (isEqual(pointAngleCoef, edgeAngleCoef, 1e-2)) {
-    return 0;
-  } else {
-    // compare angle coefficients
-    return (edgeAngleCoef >0 && pointAngleCoef < 0) ||
-        (edgeAngleCoef >0 && pointAngleCoef > edgeAngleCoef) ||
-        (edgeAngleCoef <0 && pointAngleCoef < 0 && pointAngleCoef > edgeAngleCoef);
-  }
+  // point is INSIDE if ray from point has intersected the polygon odd times
+  return intersectionCounter % 2 == 1;
 }
 
 // ray casting from point to edge
-int Collider::isIntersectionRayCastingWithEdge(const Vector point, Vector begin, Vector end) {
+Intersection Collider::getIntersectionRayCastingWithEdge(const Vector point, const Vector begin, const Vector end) {
   if (isEqual(point, begin) || isEqual(point, end)) {
-    // if point is equal to vertices of this edge then INSIDE
-    return 0;
-  }
-
-  // B should be ABOVE E for this algorithm, By > Ey
-  if (begin.getY() < end.getY()) {
-    Vector t = end;
-    end = begin;
-    begin = t;
+    // if point is equal to vertices of this edge then MEMBER
+    return Intersection::MEMBER;
   }
 
   // cast a ray from tested point to positive X axis
@@ -125,21 +90,26 @@ int Collider::isIntersectionRayCastingWithEdge(const Vector point, Vector begin,
 
   // if tested point is inside edge Y-projection
   if (isInRange(rayY, begin.getY(), end.getY())) {
-    if (point.getX() > math2d::max(begin.getX(), end.getX())) {
+    if (point.getX() > lalgebra::max(begin.getX(), end.getX())) {
       // if tested point is at the right of the edge then NO INTERSECTION
-      return -1;
+      return Intersection::N;
     } else if (isEqual(rayY, begin.getY(), FLOAT_COMPARISON_PRECISION) ||
         isEqual(rayY, end.getY(), FLOAT_COMPARISON_PRECISION)) {
-      return 2;
-    } else if (point.getX() < math2d::min(begin.getX(), end.getX())) {
+      return Intersection::VERTEX;
+    } else if (point.getX() < lalgebra::min(begin.getX(), end.getX())) {
       // if tested point is at the left of the edge then INTERSECTION
-      return 1;
+      return Intersection::Y;
     } else {
-      bool r = isPointAtLeftOfEdge(point, begin, end);
-      return r ? 1 : -1;
+      int r = getPointToVectorOrientation(begin, end, point);
+
+      if (r == 0) return Intersection::MEMBER;
+      // if the Begin is BELOW the End then point should lie at the LEFT for intersection
+      else if (r>0 && (begin.getY() < end.getY())) return Intersection::Y;
+      // otherwise at the RIGHT
+      else if (r<0 && (begin.getY() > end.getY())) return Intersection::Y;
     }
   }
-  return -1;
+  return Intersection::N;
 }
 
 #endif //__Collider_CPP_

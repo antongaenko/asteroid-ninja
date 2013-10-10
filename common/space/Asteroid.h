@@ -28,9 +28,9 @@
 #include "SpaceArchitect.h"
 
 
-class Asteroid : public SpaceObject<SpaceArchitect::ASTEROID_VERTEX_COUNT> {
+class Asteroid : public SpaceObject {
 public:
-  Asteroid(const int hitsCount, const Geometry<float, SpaceArchitect::ASTEROID_VERTEX_COUNT> &geometry, const ColorRGB &color, const Vector &initPos);
+  Asteroid(const int hitsCount, const Geometry &geometry, const ColorRGB &color, const Vector &initPos);
   
   // set angular speed in radians
   void setAngularFrequencyRadians(const float angularFrequency);

@@ -8,9 +8,9 @@
 
 
 #import <SenTestingKit/SenTestingKit.h>
-#import "Math2D.h"
+#import "LAlgebra.h"
 
-using namespace math2d;
+using namespace lalgebra;
 
 @interface Math2DTest : SenTestCase
 
@@ -42,34 +42,18 @@ Matrix *m2;
   delete m2;
 }
 
-// Test Vector3
-- (void)testVector3 {
-  Vector v3 = *v1;
-  STAssertEquals(v3[0], v1->getX(), nil);
-  STAssertEquals(v3[1], v1->getY(), nil);
-  STAssertEquals(v3[2], v1->getW(), nil);
-  Vector v4 (v2->getX(), v2->getY(), v2->getW());
-  STAssertEquals(v4[0], v2->getX(), nil);
-  STAssertEquals(v4[1], v2->getY(), nil);
-  STAssertEquals(v4[2], v2->getW(), nil);
-  v4 = v3;
-  STAssertEquals(v4[0], v1->getX(), nil);
-  STAssertEquals(v4[1], v1->getY(), nil);
-  STAssertEquals(v4[2], v1->getW(), nil);
-}
-
 // Test SquareMatrix initialization
 - (void)testInitSquareMatrix {
-  FlatMatrix m = m1->flat();
+  std::vector<float> m = m1->flat();
   STAssertEquals(m1->getSize(), 3, nil);
-  STAssertEquals(m.getSize(), 9, nil);
-  for (int i = 0; i < m.getSize(); i++) {
+  STAssertEquals((int) m.size(), 9, nil);
+  for (int i = 0; i < m.size(); i++) {
     if (i == 0 || i == 4 || i == 8) STAssertEquals(m[i], 1.0f, nil);
     else STAssertEquals(m[i], 0.0f, nil);
   }
 
   m = m2->flat();
-  for (int i = 0; i < m.getSize(); i++) {
+  for (int i = 0; i < m.size(); i++) {
     STAssertEquals(m[i], 0.0f, nil);
   }
 }
@@ -77,27 +61,30 @@ Matrix *m2;
 // Test SquareMatrix access
 - (void)testSquareMatrixAccess {
   Matrix &m = *m2;
-  FlatMatrix a = m.flat();
-  for (int i = 0; i < a.getSize(); i++) {
+  std::vector<float> a = m.flat();
+  for (int i = 0; i < a.size(); i++) {
     STAssertEquals(a[i], 0.0f, nil);
-  }
-
-  // test flat matrix internal array
-  for (int i = 0; i < a.getSize(); i++) {
-    STAssertEquals(a.getArrayC()[i], 0.0f, nil);
   }
 }
 
 // Nil (with all 0) * Any = Nil
 - (void)testMatrixNilMultiplication {
   Matrix &m = *m2;
-  STAssertEquals((RotateMatrix(10) * m).flat(), m.flat(), nil);
+  auto f = m.flat();
+  auto f2 = (RotateMatrix(10) * m).flat();
+  for (int i = 0; i < f.size(); i++) {
+    STAssertEquals(f[i], f2[i], nil);
+  }
 }
 
 // Any * Identity = Any
 - (void)testMatrixIdentityMultiplication {
   Matrix &m = *m1;
-  STAssertEquals((ScaleMatrix(10) * m).flat(), ScaleMatrix(10).flat(), nil);
+  auto f = ScaleMatrix(10).flat();
+  auto f2 = (ScaleMatrix(10) * m).flat();
+  for (int i = 0; i < f.size(); i++) {
+    STAssertEquals(f[i], f2[i], nil);
+  }
 }
 
 // Vector * R * T * M = Vector
@@ -117,16 +104,16 @@ Matrix *m2;
   result = v * RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50);
   STAssertEquals(isEqual(result, Vector(5, -9.1421356, 50)), true, nil);
 
-  Geometry<float, 3> g = Geometry<float, 3>((Vector[]) {
-      Vector(-10, -10, 1),
-      Vector(10, -10, 1),
-      Vector(0, 10, 1)}) * RotateMatrix(45, Degree) * TranslateMatrix(5, 5) * ScaleMatrix(1.0f / 50);
+  Geometry g = Geometry({{-10, -10, 1}, {10, -10, 1}, {0, 10, 1}}) *
+      RotateMatrix(45, Degree) *
+      TranslateMatrix(5, 5) *
+      ScaleMatrix(1.0f / 50);
 
   STAssertEquals(isEqual(g[0], Vector(5, -9.1421356, 50)), true, nil);
   STAssertEquals(isEqual(g[1], Vector(19.1421356, 5, 50)), true, nil);
   STAssertEquals(isEqual(g[2], Vector(-2.0710678, 12.0710678, 50)), true, nil);
 
-  g = Geometry<float, 3>((Vector[]) {
+  g = Geometry({
       Vector(-10, -10, 1),
       Vector(10, -10, 1),
       Vector(0, 10, 1)}).rotate(45, Degree).translate(5,5).scale(1.0f / 50);
@@ -134,27 +121,6 @@ Matrix *m2;
   STAssertEquals(isEqual(g[0], Vector(5, -9.1421356, 50)), true, nil);
   STAssertEquals(isEqual(g[1], Vector(19.1421356, 5, 50)), true, nil);
   STAssertEquals(isEqual(g[2], Vector(-2.0710678, 12.0710678, 50)), true, nil);
-}
-
-// Test Array
-- (void)testArrayCopy {
-  FlatMatrix a;
-  // test bigger
-  Array<float, 10> donor = Array<float, 10>();
-  for (int i = 0; i < donor.getSize(); i++) {donor[i] = 1;}
-  a = donor;
-
-  for (int i = 0; i < a.getSize(); i++) {
-    STAssertEquals(a[i], donor[i], nil);
-  }
-
-  // test smaller
-  Array<float, 5> donor2 = Array<float, 5>();
-  for (int i = 0; i < donor2.getSize(); i++) {donor2[i] = 2;}
-  a = donor2;
-  for (int i = 0; i < a.getSize(); i++) {
-    STAssertEquals(a[i], i < donor2.getSize() ? donor2[i] : 0.0f, nil);
-  }
 }
 
 // test rectangle-point intersection
@@ -203,69 +169,6 @@ Matrix *m2;
   Rectangle r2(Vector(-10, 10), Vector(-5,5));
   STAssertEquals(r2.getWidth(), 5, nil);
   STAssertEquals(r2.getHeight(), 5, nil);
-  
-}
-
-// test bounds of free geometry
--(void)testRectangleBoundsOfGeometry {
-  Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
-  auto g = Geometry<float, 6>(geomArr);
-  auto b = getBounds<6>(g);
-  STAssertEquals(b.getTopLeft().getX(), -12.0f, nil);
-  STAssertEquals(b.getTopLeft().getY(), 10.0f, nil);
-    STAssertEquals(b.getBottomRight().getX(), 15.0f, nil);
-    STAssertEquals(b.getBottomRight().getY(), -7.0f, nil);
-}
-
-// test getting center of geometry
--(void)testCenterOfGeometry {
-  // test for one point
-  Vector oneGeomArr[] = { Vector(10.5, -1.2) };
-  auto onePointGeom = Geometry<float, 1>(oneGeomArr);
-  STAssertEquals(isEqual(Vector(10.5, -1.2), getCentroid(onePointGeom)), true, nil);
-  
-  // test for free geometry
-  Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
-  auto g = Geometry<float, 6>(geomArr);
-  auto c = getCentroid(g);
-  STAssertEquals(isEqual(Vector(-2.0/6, 3.0/6),c), true, nil);
-}
-
-// test algorithm to check if point is inside free polygon. It uses point orientation relatively each polygon side
--(void)testInsideOutsideWithFreeGeometry {
-  const int Size = 6;
-  Vector geomArr[] = { Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) };
-  auto g = Geometry<float, Size>(geomArr);
-  int orientationCenter, orientationInside, orientationOutside;
-  
-  // then check point which is inside geometry
-  for (int i = 0; i < Size; i++) {
-    orientationCenter = crossProduct2D(g[i % Size], g[(i+1) % Size], getCentroid(g));
-    orientationInside = crossProduct2D(g[i % Size], g[(i+1) % Size], Vector(-9, 8));
-    // orientation should have equal signs
-    STAssertEquals(orientationCenter * orientationInside > 0, true, nil);
-  }
-  
-  bool isDifferent = false;
-  // then check point which is outside geometry
-  for (int i = 0; i < Size; i++) {
-    orientationCenter = crossProduct2D(g[i % Size], g[(i+1) % Size], getCentroid(g));
-    orientationOutside = crossProduct2D(g[i % Size], g[(i+1) % Size], Vector(-10, -5));
-    if (orientationCenter * orientationOutside < 0) {
-      isDifferent = true;
-      break;
-    }
-  }
-  // orientation should be different for some sides
-  STAssertEquals(isDifferent, true, nil);
-  
-  // then check point which is part of geometry
-  for (int i = 0; i < Size; i++) {
-    orientationCenter = crossProduct2D(g[i % Size], g[(i+1) % Size], getCentroid(g));
-    orientationOutside = crossProduct2D(g[i % Size], g[(i+1) % Size], Vector(-5, -5));
-    // orientation should have equal signs or be zero
-    STAssertEquals(orientationCenter * orientationInside > 0, true, nil);
-  }
 }
 
 @end

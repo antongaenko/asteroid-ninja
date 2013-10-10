@@ -23,23 +23,20 @@
 #ifndef SPACEOBJECT_H
 #define SPACEOBJECT_H
 
-#include "Math2D.h"
+#include "LAlgebra.h"
 #include "OpenGL.h"
 #include "Logger.h"
 
-using namespace math2d;
+using namespace lalgebra;
 
-template <int Size>
 class SpaceObject {
 public:
-  static const int SIZE = Size;
-  
-  // TODO It's better to use template for countPoints param if asteroid point count will be static
-  SpaceObject(const Geometry<float, Size> &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
+  SpaceObject(const Geometry &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
 
   // apply to geometry all transformations
   virtual void update();
 
+  int getVertexCount() const;
 
   void setAngleInRadians(float angle);
   void setVelocity(const Vector &value);
@@ -53,17 +50,15 @@ public:
   bool isBumped() const;
 
   // methods to work with inside geometry
-  const Geometry<float, Size>& getCurrentGeometry() const;
+  const Geometry& getCurrentGeometry() const;
 
   ~SpaceObject() {};
 
 protected:
-  void bindBuffers();
-
   // initial 2D vertices of object
-  Geometry<float, Size> _initialGeometry;
+  Geometry _initialGeometry;
   // geometry with applying all rotations and translations
-  Geometry<float, Size> _transformedGeometry;
+  Geometry _transformedGeometry;
   // color for all points
   ColorRGB _color;
   // center of object. It changes each frame.
@@ -77,66 +72,5 @@ protected:
   bool _isBumped;
 
 };
-
-
-template <int Size>
-SpaceObject<Size>::SpaceObject(const Geometry<float, Size> &geometry, const ColorRGB &color, const Vector &initPos):
-_initialGeometry(geometry),
-_color(color),
-_position(initPos),
-_angle(0),
-_velocity(0, 0, 0),
-_isBumped(false) {};
-
-template <int Size>
-void SpaceObject<Size>::bindBuffers() {}
-
-/*template <int Size>
-void SpaceObject<Size>::setAngleInRadians(float angle);/* {
-  _angle = angle;
-}*/
-
-template <int Size>
-void SpaceObject<Size>::setVelocity(const Vector &value) {
-  _velocity = value;
-}
-
-template <int Size>
-Vector SpaceObject<Size>::getPosition() const {
-  return _position;
-}
-
-template <int Size>
-ColorRGB SpaceObject<Size>::getColor() const {
-  return _color;
-}
-
-template <int Size>
-void SpaceObject<Size>::setPosition(const Vector& newPos) {
-  _position = newPos;
-}
-
-template <int Size>
-const Geometry<float, Size>& SpaceObject<Size>::getCurrentGeometry() const {
-  return _transformedGeometry;
-};
-
-/*template <int Size>
-void SpaceObject<Size>::update() {
-  _position += _velocity;
-  _transformedGeometry = _initialGeometry.
-      rotate(_angle, Radians).
-      translate(_position.getX(), _position.getY()); 
-}*/
-
-template <int Size>
-void SpaceObject<Size>::setBumped() {
-  _isBumped = true;
-}
-
-template <int Size>
-bool SpaceObject<Size>::isBumped() const {
-  return _isBumped;
-}
 
 #endif /* SPACEOBJECT_H */

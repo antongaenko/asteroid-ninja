@@ -23,11 +23,10 @@
 
 
 #include "Asteroid.h"
-#include "SpaceObject.cpp"
 
 Asteroid::Asteroid(
     const int hitsCount,
-    const Geometry<float, SpaceArchitect::ASTEROID_VERTEX_COUNT> &geometry,
+    const Geometry &geometry,
     const ColorRGB &color,
     const Vector &initPos):SpaceObject(geometry, color, initPos), _hitsCount(hitsCount) {
   debug("Radar detects asteroid, sir!");

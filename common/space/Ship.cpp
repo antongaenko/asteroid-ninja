@@ -26,9 +26,8 @@
 #include "Logger.h"
 #include "Plasmoid.h"
 #include "SpaceArchitect.h"
-#include "SpaceObject.cpp"
 
-Ship::Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vector & initPos):
+Ship::Ship(const Geometry& geometry, const ColorRGB& color, const Vector & initPos):
   SpaceObject(geometry, color, initPos) {
   debug("Spacecraft is ready, sir!");
 }
@@ -36,7 +35,8 @@ Ship::Ship(const Geometry<float, 3>& geometry, const ColorRGB& color, const Vect
 // TODO Destroy laser object in this class user
 std::unique_ptr<Plasmoid> Ship::piffPaff() {
   debug("Piff paff!");
-  auto p = std::unique_ptr<Plasmoid>(new Plasmoid(SpaceArchitect::LASER, kRED, _position));
+  // TODO move outside SpaceArchitect
+  auto p = std::unique_ptr<Plasmoid>(new Plasmoid({SpaceArchitect::LASER}, kRED, _position));
   // apply rotation to laser
   p->setAngleInRadians(_angle);
   // then apply rotation to velocity vector

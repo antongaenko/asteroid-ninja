@@ -24,7 +24,7 @@
 #ifndef SPACE_H
 #define SPACE_H
 
-#include "Math2D.h"
+#include "LAlgebra.h"
 #include "Drawable.h"
 #include <list>
 #include <memory>
@@ -77,7 +77,7 @@ public:
   void setListener(std::function<void(SpaceEvent)> l);
 
 protected:
-  math2d::Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
+  lalgebra::Matrix prepareViewMatrix(const int resolutionWidth, const int resolutionHeight);
   // prepare shader for drawing
   void prepareShader();
   void compileShader();
@@ -92,9 +92,9 @@ private:
   std::list<std::unique_ptr<Plasmoid>> _plasmoids;
   std::list<std::unique_ptr<Asteroid>> _asteroids;
   
-  math2d::Rectangle _bounds;
+  lalgebra::Rectangle _bounds;
   // model view transformation ()
-  math2d::Matrix _viewMatrix;
+  lalgebra::Matrix _viewMatrix;
   // listener on internal space event such as asteroid collision, space collision and etc
   std::function<void(SpaceEvent)> onSpaceEvent;
   

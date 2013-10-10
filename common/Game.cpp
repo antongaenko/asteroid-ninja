@@ -23,6 +23,7 @@
 
 #include "Game.h"
 #include "Space.h"
+#include "Logger.h"
 
 Game::Game():_lives(3), _score(0) {
   info("Start game initialization...");
