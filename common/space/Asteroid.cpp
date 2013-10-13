@@ -41,3 +41,7 @@ void Asteroid::update() {
   _angle += _angularFrequency;
   SpaceObject::update();
 }
+
+int Asteroid::getHits() const {
+  return _hitsCount;
+}

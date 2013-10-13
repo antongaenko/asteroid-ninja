@@ -31,10 +31,12 @@
 class Asteroid : public SpaceObject {
 public:
   Asteroid(const int hitsCount, const Geometry &geometry, const ColorRGB &color, const Vector &initPos);
-  
+
   // set angular speed in radians
   void setAngularFrequencyRadians(const float angularFrequency);
   virtual void update() override;
+
+  int getHits() const;
 private:
   // hits count is lives indicator
   int _hitsCount;

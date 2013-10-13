@@ -26,6 +26,7 @@
 
 #include "SpaceObject.h"
 #include <memory>
+#include "math.h"
 
 class Plasmoid;
 

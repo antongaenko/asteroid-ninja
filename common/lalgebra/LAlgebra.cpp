@@ -34,10 +34,12 @@ namespace lalgebra {
     return f > s ? f : s;
   }
 
+  bool flipCoin() {
+    return rand() % 2 < 1;
+  }
+  
   bool isEqual(const float one, const float two, const float precision = FLOAT_COMPARISON_PRECISION) {
-    return fabs(one - two) < precision &&
-        fabs(one - two) < precision &&
-        fabs(one - two) < precision;
+    return fabs(one - two) < precision;
   }
 
   bool isInRange(const float what, const float from, const float to) {
@@ -65,20 +67,29 @@ namespace lalgebra {
       error("Incorrect rectangle. Check Top-Left and Bottom-Right parameters.");
     }
   }
+  
+  Rectangle::Rectangle(Geometry g):Geometry(4) {
+    if (g.getSize() >= 4) {
+      (*this)[0] = g[0];
+      (*this)[1] = g[1];
+      (*this)[2] = g[2];
+      (*this)[3] = g[3];
+    }
+  }
 
-  const Vector Rectangle::getTopLeft() const {
+  Vector Rectangle::getTopLeft() const {
     return (*this)[0];
   }
 
-  const Vector Rectangle::getTopRight() const {
+  Vector Rectangle::getTopRight() const {
     return (*this)[1];
   }
 
-  const Vector Rectangle::getBottomRight() const {
+  Vector Rectangle::getBottomRight() const {
     return (*this)[2];
   }
 
-  const Vector Rectangle::getBottomLeft() const {
+  Vector Rectangle::getBottomLeft() const {
     return (*this)[3];
   }
   
@@ -92,18 +103,18 @@ namespace lalgebra {
 
 
   // check all vertexes on intersection with other rectangle
-  bool Rectangle::isIntersected(Rectangle &r) {
+  bool Rectangle::isIntersected(Rectangle &r) const {
     return isInside(r.getTopLeft()) || isInside(r.getBottomRight()) ||
         isInside(r.getTopRight()) || isInside(r.getBottomLeft());
   }
 
   // include the edges
-  bool Rectangle::isInside(Vector p) {
+  bool Rectangle::isInside(Vector p) const {
     return isInRange(p.getX(), getTopLeft().getX(), getBottomRight().getX()) &&
         isInRange(p.getY(), getBottomRight().getY(), getTopLeft().getY());
   }
 
-  bool Rectangle::isOutside(Vector p) {
+  bool Rectangle::isOutside(Vector p) const {
     return !isInside(p);
   }
 
@@ -118,6 +129,16 @@ namespace lalgebra {
     if (isEqual(r, 0)) return 0;
     else if (r>0) return 1;
     else return -1;
+  }
+
+  // get centroid for specific geometry
+  Vector getCentroid(const Geometry &geom) {
+    float xSum = 0, ySum = 0, size = geom.getSize();
+    for (int i=0; i < size; i++) {
+      xSum += geom[i].getX();
+      ySum += geom[i].getY();
+    }
+    return Vector(xSum / size, ySum / size);
   }
   
 

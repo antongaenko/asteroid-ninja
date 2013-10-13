@@ -21,7 +21,6 @@
 		31F4E5F63F2A3934F506AC47 /* Shader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EEA73B747DF93993E514 /* Shader.mm */; };
 		31F4E87D5434E3623BF4E544 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E97344BE24E90571B48E /* Vector.cpp */; };
 		31F4E92A84D3BDC68E678B55 /* Geometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E157597C63177C5BA7A3 /* Geometry.cpp */; };
-		31F4E9344553869E9DE0F6AC /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EAAC31EFBE4CF5FA83A9 /* LAlgebra.cpp */; };
 		31F4E955F3A678F1F14A3BB2 /* Collider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E9B3D45158090AD1B00B /* Collider.cpp */; };
 		31F4E9848FC35AA5F02927AD /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EB1A28F15068CABD9381 /* AppDelegate.mm */; };
 		31F4EA088805C2B1F6E00BF3 /* SpaceArchitect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EBCBDCD405A399B50D2F /* SpaceArchitect.cpp */; };
@@ -34,7 +33,6 @@
 		4A1C15BD1802DB5C00ACAE39 /* ColliderTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C15BC1802DB5B00ACAE39 /* ColliderTest.mm */; };
 		4A4FDFE2180A94230039CF2C /* button_play_main.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE1180A94230039CF2C /* button_play_main.png */; };
 		4A4FDFE4180A9B750039CF2C /* button_attack.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE3180A9B750039CF2C /* button_attack.png */; };
-		4A4FDFE5180A9DC30039CF2C /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EAAC31EFBE4CF5FA83A9 /* LAlgebra.cpp */; };
 		4A4FDFE7180A9EA80039CF2C /* Main~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE6180A9EA80039CF2C /* Main~iPad.storyboard */; };
 		4A610711180A85AF00C67F25 /* asterod_bang.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4A610709180A85AF00C67F25 /* asterod_bang.mp4 */; };
 		4A610712180A85AF00C67F25 /* asteroid_bang.flac in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070A180A85AF00C67F25 /* asteroid_bang.flac */; };
@@ -72,6 +70,7 @@
 		4AFF4BA0180B318E000102F6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9C180B318E000102F6 /* Icon@2x.png */; };
 		4AFF4BA1180B318E000102F6 /* iTunesArtwork-@-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */; };
 		4AFF4BA2180B318E000102F6 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */; };
+		4AFF4BA5180B35F6000102F6 /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,13 +103,11 @@
 		31F4E62AA33ED0759145A612 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		31F4E6F84F2E36FB4B4A628A /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGL.h; path = ../../common/OpenGL.h; sourceTree = "<group>"; };
 		31F4E6FC79EBD1AB09696328 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
-		31F4E7B9FE980F7D16AA06B6 /* LAlgebra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LAlgebra.h; path = ../LAlgebra.h; sourceTree = "<group>"; };
 		31F4E807890989FDBA528231 /* SpaceArchitect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceArchitect.h; sourceTree = "<group>"; };
 		31F4E9631CBC8B0248D3684F /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		31F4E97344BE24E90571B48E /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
 		31F4E9B3D45158090AD1B00B /* Collider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Collider.cpp; path = ../Collider.cpp; sourceTree = "<group>"; };
 		31F4EA59EB53124F48BAF7E2 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
-		31F4EAAC31EFBE4CF5FA83A9 /* LAlgebra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LAlgebra.cpp; path = ../LAlgebra.cpp; sourceTree = "<group>"; };
 		31F4EB1A28F15068CABD9381 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		31F4EB31693DC5AF863B8889 /* GameViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = GameViewController.mm; sourceTree = "<group>"; };
 		31F4EB7F0E3BBD6D51EBEB6D /* SpaceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceObject.h; sourceTree = "<group>"; };
@@ -169,6 +166,8 @@
 		4AFF4B9C180B318E000102F6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork-@-2x.png"; sourceTree = "<group>"; };
 		4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LAlgebra.cpp; sourceTree = "<group>"; };
+		4AFF4BA4180B35F6000102F6 /* LAlgebra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAlgebra.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,14 +255,14 @@
 		31F4ECE83246C788C2E49DF2 /* lalgebra */ = {
 			isa = PBXGroup;
 			children = (
+				4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */,
+				4AFF4BA4180B35F6000102F6 /* LAlgebra.h */,
 				31F4E97344BE24E90571B48E /* Vector.cpp */,
 				31F4E62AA33ED0759145A612 /* Vector.h */,
 				31F4EA59EB53124F48BAF7E2 /* Matrix.cpp */,
 				31F4E3F1081EE534290FD259 /* Matrix.h */,
 				31F4E157597C63177C5BA7A3 /* Geometry.cpp */,
 				31F4EDDA6663BAD3C96FA48A /* Geometry.h */,
-				31F4EAAC31EFBE4CF5FA83A9 /* LAlgebra.cpp */,
-				31F4E7B9FE980F7D16AA06B6 /* LAlgebra.h */,
 				31F4E9B3D45158090AD1B00B /* Collider.cpp */,
 				31F4ECE1167B6D8A57FF7629 /* Collider.h */,
 			);
@@ -560,12 +559,12 @@
 				31F4EE57AF5AE8CA6983253A /* Asteroid.cpp in Sources */,
 				31F4EA088805C2B1F6E00BF3 /* SpaceArchitect.cpp in Sources */,
 				31F4EF29961B6D130B8504B9 /* GameViewController.mm in Sources */,
+				4AFF4BA5180B35F6000102F6 /* LAlgebra.cpp in Sources */,
 				31F4E1B84BE10B92B6EDFCEF /* GameView2D.mm in Sources */,
 				31F4E9848FC35AA5F02927AD /* AppDelegate.mm in Sources */,
 				31F4E87D5434E3623BF4E544 /* Vector.cpp in Sources */,
 				31F4E458040382ADF1D1C830 /* Matrix.cpp in Sources */,
 				31F4E069FC353709A614EA14 /* Geometry.cpp in Sources */,
-				31F4E9344553869E9DE0F6AC /* LAlgebra.cpp in Sources */,
 				31F4E955F3A678F1F14A3BB2 /* Collider.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,7 +573,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A4FDFE5180A9DC30039CF2C /* LAlgebra.cpp in Sources */,
 				31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */,
 				4A1C15BD1802DB5C00ACAE39 /* ColliderTest.mm in Sources */,
 				31F4E14A73A704A4D50B3D81 /* Vector.cpp in Sources */,

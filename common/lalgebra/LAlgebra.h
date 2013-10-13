@@ -27,6 +27,7 @@
 #define LALGEBRA_H
 
 #include "Geometry.h"
+#include "stdlib.h"
 
 namespace lalgebra {
   static const float FLOAT_COMPARISON_PRECISION = 1e-4;
@@ -40,6 +41,15 @@ namespace lalgebra {
 
   float min(float f, float s);
   float max(float f, float s);
+
+  // heads or tails
+  bool flipCoin();
+  
+  // return random int in range (from; to)
+  template <typename  T>
+  T randInRange(T from, T to) {
+    return from + (float)rand()/((float)RAND_MAX/(to-from));
+  }
 
   // check two floats with precision
   bool isEqual(const float one, const float two, const float precision);
@@ -56,6 +66,9 @@ namespace lalgebra {
   // 0 - it belongs vector
   // -1 - it's at the right of vector
   int getPointToVectorOrientation(const Vector &begin, const Vector &end, const Vector &point);
+
+  // get centroid for specific geometry
+  Vector getCentroid(const Geometry &geom);
 
   // RGB color
   typedef struct colorRGB {
@@ -77,20 +90,22 @@ namespace lalgebra {
   // Rectangle
   class Rectangle : public Geometry {
   public:
+    Rectangle(Geometry g);
     Rectangle(Vector topleft = Vector(0, 0), Vector bottomright = Vector(0, 0));
+    
+    // check if this rectangle intersects another one
+    bool isIntersected(Rectangle &r) const;
 
-    bool isIntersected(Rectangle &r);
-
-    const Vector getTopLeft() const;
-    const Vector getTopRight() const;
-    const Vector getBottomLeft() const;
-    const Vector getBottomRight() const;
+    Vector getTopLeft() const;
+    Vector getTopRight() const;
+    Vector getBottomLeft() const;
+    Vector getBottomRight() const;
     int getWidth() const;
     int getHeight() const;
 
-    bool isInside(Vector p);
-    bool isOutside(Vector p);
-
+    // check if point is inside/outside of this rectangle
+    bool isInside(Vector p) const;
+    bool isOutside(Vector p) const;
   };
 
 }

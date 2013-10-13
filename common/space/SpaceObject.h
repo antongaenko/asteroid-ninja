@@ -46,6 +46,7 @@ public:
 
   // instruct that this object is bumped by another
   void setBumped();
+  void disableBumped();
   // check if object is bumped
   bool isBumped() const;
 

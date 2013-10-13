@@ -26,33 +26,62 @@
 #include <stdlib.h>
 #include "SpaceArchitect.h"
 #include "Logger.h"
+#include <ctime>
 
-const Vector SpaceArchitect::PLASMOID_TURRET_POS = Vector(0, 20);
+Vector SpaceArchitect::PLASMOID_TURRET_POS = {0, 30};
 
 Vector SpaceArchitect::LASER = PLASMOID_TURRET_POS;
 
-Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, Vector(-20,-20),Vector(20,-20)};
+Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, {-20,-30}, {20,-30}};
 
 // TODO It should depend on Game FPS
-Vector SpaceArchitect::PLASMOID_VELOCITY = Vector(0, 15);
+Vector SpaceArchitect::PLASMOID_VELOCITY = {0, 30};
 
+const int SpaceArchitect::SHIP_VELOCITY_MAX = 8;
+
+const int SpaceArchitect::DESIGN_FPS = 30;
+
+const int SpaceArchitect::ASTEROID_VERTEX_COUNT_MIN = 10;
+const int SpaceArchitect::ASTEROID_VERTEX_COUNT_MAX = 20;
+const int SpaceArchitect::ASTEROID_BIG_RADIUS = 80;
+const int SpaceArchitect::ASTEROID_SMALL_RADIUS = 40;
+const int SpaceArchitect::ASTEROID_VELOCITY_MAX = 10;
+const int SpaceArchitect::ASTEROID_ANGULAR_FREQUENCY_DEGREE_MAX = 5;
+const int SpaceArchitect::ASTEROID_BIG_HITS = 2;
+const int SpaceArchitect::ASTEROID_SMALL_HITS = 1;
+
+// generate new asteroid geometry
+// set initial point and rotate it's vector to produce new polygon points
 Geometry SpaceArchitect::generateAsteroid(const int maxRadius) {
-  Geometry newGeom(ASTEROID_VERTEX_COUNT);
+  static bool isSeeding;
+  if (!isSeeding) {
+    srand(time(0));
+    isSeeding = true;
+  }
+  
+  int vertCount = randInRange(ASTEROID_VERTEX_COUNT_MIN, ASTEROID_VERTEX_COUNT_MAX);
+
+  Geometry newGeom(vertCount);
   // random initial radius
-  int initialRadius = rand() % (int)(maxRadius * .5) + (int)(maxRadius * .5);
-  float angleDiff = 2 * PI / ASTEROID_VERTEX_COUNT;
+  int initialRadius = maxRadius; //randInRange((int) .8 * maxRadius, maxRadius);
+  float angleDiff = 2 * PI / vertCount;
   
   // set first vertex
-  newGeom.add(Vector(0, initialRadius, 1));
+  newGeom.add({0, initialRadius});
   
   // then rotate it to produce all vertexes
-  for (int i = 1; i < ASTEROID_VERTEX_COUNT; i++) {
-    float scaleFactor = .5 + (float)rand()/((float)RAND_MAX);
-    newGeom.add(newGeom[i-1] * RotateMatrix(angleDiff) * ScaleMatrix(scaleFactor, scaleFactor));
+  for (int i = 1; i < vertCount; i++) {
+    float randAngleFactor = randInRange(0.7, 1.3);
+    float randAngle = angleDiff * randAngleFactor;
+    float randRadFactor = randInRange(0.85, 1.15);
+    newGeom.add(newGeom[i-1] * RotateMatrix(randAngle) * ScaleMatrix(randRadFactor, randRadFactor));
   }
+  
+  // we should shift geometry relatively centroid to allow right rotations
+  auto c = getCentroid(newGeom);
+  newGeom = newGeom.translate(-c.getX(), -c.getY());
 
   auto v = newGeom.flat();
-  debugArray("asteroid", &v[0], v.size(), 3);
 
   return newGeom;
 }

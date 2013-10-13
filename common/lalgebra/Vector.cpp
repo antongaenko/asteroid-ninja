@@ -31,6 +31,7 @@ Vector3<T>::Vector3(T x, T y, T w):_x(x), _y(y), _w(w) {}
 
 template <class T>
 Vector3<T>::Vector3(std::initializer_list<T> l) {
+  _w = 1;
   auto it = l.begin();
   if (it != l.end()) _x = *it;
   if (++it != l.end()) _y = *it;

@@ -44,15 +44,15 @@ enum class GameEvent {
 
 class Game {
 public:
-  static const int FPS = 60;
+  static const int FPS;
   static const int SCORE_FOR_SHIP_CRASH = -50;
   static const int SCORE_FOR_ASTEROID_CRACK = 50;
   static const int SCORE_FOR_ASTEROID_DESTRUCTION = 100;
-  // TODO maybe move ship speed to Space Architect
-  static const int MAX_PLAYER_SPEED_PX = 10;
 
   Game();
   ~Game();
+
+  int getPlayerSpeedMax() const;
 
   int getCurrentLives();
   int getCurrentScore();

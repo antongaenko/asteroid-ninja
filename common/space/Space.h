@@ -67,9 +67,6 @@ public:
   virtual void update(float msSinceLastUpdate) override;
   virtual void setSize(int width, int height) override;
   
-  // return count of ALL space objects
-  int getObjCount() const;
-  
   // return count of ALL space objects vertexes
   int getAllVertexCount() const;
   
@@ -91,8 +88,12 @@ private:
   std::unique_ptr<Ship> _ship;
   std::list<std::unique_ptr<Plasmoid>> _plasmoids;
   std::list<std::unique_ptr<Asteroid>> _asteroids;
-  
+
+  // space bounds
   lalgebra::Rectangle _bounds;
+  // ship bounds. It's larger than space for some game logic (fe asteroids should be generated outside this field,
+  // bonus can be generated in this field)
+  lalgebra::Rectangle _shipExtraBounds;
   // model view transformation ()
   lalgebra::Matrix _viewMatrix;
   // listener on internal space event such as asteroid collision, space collision and etc

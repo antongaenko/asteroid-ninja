@@ -44,15 +44,25 @@ class SpaceArchitect {
   static const int GRAPHIC_RESOLUTION_WIDTH = 800;
   static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
   // ship laser tower position
-  static const Vector PLASMOID_TURRET_POS;
+  static Vector PLASMOID_TURRET_POS;
   static Vector LASER;
   static Vector SHIP[3];
 
   static Vector PLASMOID_VELOCITY;
+  static const int SHIP_VELOCITY_MAX;
 
-  static const int ASTEROID_VERTEX_COUNT = 12;
-  static const int ASTEROID_BIG_RADIUS = 60;
-  static const int ASTEROID_SMALL_RADIUS = 20;
+  static const int DESIGN_FPS;
+
+  static const int ASTEROID_VERTEX_COUNT_MIN;
+  static const int ASTEROID_VERTEX_COUNT_MAX;
+  static const int ASTEROID_BIG_RADIUS;
+  static const int ASTEROID_SMALL_RADIUS;
+
+  static const int ASTEROID_VELOCITY_MAX;
+  static const int ASTEROID_ANGULAR_FREQUENCY_DEGREE_MAX;
+
+  static const int ASTEROID_BIG_HITS;
+  static const int ASTEROID_SMALL_HITS;
 
   static Geometry generateAsteroid(const int maxRadius);
 

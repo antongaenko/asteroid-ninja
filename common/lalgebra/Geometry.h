@@ -67,6 +67,7 @@ public:
 
   // translate ALL vectors
   GeometryT translate(float dx, float dy);
+  GeometryT translate(Vector3<T> v);
 
 private:
   std::vector <Vector3<T>> _vectors;

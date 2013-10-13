@@ -89,7 +89,11 @@ GeometryT<T> GeometryT<T>::rotate(float angle, AngleMeasure unit) {return (*this
 template <class T>
 GeometryT<T> GeometryT<T>::translate(float dx, float dy) {return (*this) * TranslateMatrix33<T>(dx, dy);}
 
-
+template <class T>
+GeometryT<T> GeometryT<T>::translate(Vector3<T> v) {
+  Vector3<T> withScale = v.applyScale();
+  return this->translate(withScale.getX(), withScale.getY());
+}
 
 #endif //__Geometry_CPP_
 

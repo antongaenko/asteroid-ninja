@@ -29,7 +29,7 @@ _transformedGeometry(geometry),
 _color(color),
 _position(initPos),
 _angle(0),
-_velocity(0, 0, 0),
+_velocity(0, 0, 1),
 _isBumped(false) {};
 
 void SpaceObject::update() {
@@ -69,6 +69,10 @@ const Geometry& SpaceObject::getCurrentGeometry() const {
 
 void SpaceObject::setBumped() {
   _isBumped = true;
+}
+
+void SpaceObject::disableBumped() {
+  _isBumped = false;
 }
 
 

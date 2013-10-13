@@ -29,7 +29,6 @@
 class Plasmoid : public SpaceObject {
 public:
   Plasmoid(const Geometry &geometry, const ColorRGB &color, const Vector &initPos);
-  ~Plasmoid();
 };
 
 

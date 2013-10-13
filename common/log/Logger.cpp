@@ -27,26 +27,31 @@
 
 // use to notify reader about a program state
 void info(char const *txt, ...) {
+  if (DEBUG) {
     printf("INFO: ");
     va_list args;
     va_start(args, txt);
     vprintf(txt, args);
     va_end(args);
     printf("\n");
+  }
 }
 
 // use to print for your needs
 void debug(char const *txt, ...) {
+  if (DEBUG) {
     printf("DEBUG: ");
     va_list args;
     va_start(args, txt);
     vprintf(txt, args);
     va_end(args);
     printf("\n");
+  }
 }
 
 // use to print float array or matrix
 void debugArray(char const *txt, float arr[], int size, short matrixRowSize) {
+  if (DEBUG) {
     printf("DEBUG: %s \n", txt);
     for (int i=0; i<size; i+= matrixRowSize) {
         // if this array is matrix
@@ -61,15 +66,18 @@ void debugArray(char const *txt, float arr[], int size, short matrixRowSize) {
         }
     }
     printf("\n");
+  }
 }
 
 // use to notify about wrong state of a program
 void error(char const *txt, ...) {
+  if (DEBUG) {
     fprintf(stderr, "ERROR: ");
     va_list args;
     va_start(args, txt);
     vfprintf(stderr, txt, args);
     va_end(args);
     fprintf(stderr, "\n");
+  }
 }
 

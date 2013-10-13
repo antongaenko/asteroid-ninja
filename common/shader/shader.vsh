@@ -24,7 +24,7 @@ varying lowp vec3 colorVarying;
 void main()
 {
     // for ship plasmoids
-    gl_PointSize = 2.0;
+    gl_PointSize = 4.0;
     colorVarying = color; //save the color for the fragment shader
     // we use Vector(x,y,w) so we need use W here to prevent Z scaling and set output W to 1.0
     vec3 tp = position * viewMatrix;

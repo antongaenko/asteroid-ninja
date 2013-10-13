@@ -27,7 +27,3 @@
 
 Plasmoid::Plasmoid(const Geometry& geometry, const ColorRGB& color, const Vector & initPos):
 SpaceObject(geometry, color, initPos) {}
-
-Plasmoid::~Plasmoid() {
-  debug("pffff...");
-}

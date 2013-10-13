@@ -24,6 +24,9 @@
 #include "Game.h"
 #include "Space.h"
 #include "Logger.h"
+#include "SpaceArchitect.h"
+
+const int Game::FPS = SpaceArchitect::DESIGN_FPS;
 
 Game::Game():_lives(3), _score(0) {
   info("Start game initialization...");
@@ -36,27 +39,38 @@ Game::Game():_lives(3), _score(0) {
   _space->setListener([&](SpaceEvent e) {
     switch (e) {
       case SpaceEvent::SHIP_CRASH:
+        _lives--;
+        _score = max(_score + SCORE_FOR_SHIP_CRASH, 0);
         if (_onGameEvent) _onGameEvent(GameEvent::SHIP_CRASH);
-        _score += SCORE_FOR_SHIP_CRASH;
-        debug("ship crash!");
+        break;
+        
+      case SpaceEvent::ASTEROID_DESTROYED:
+        if (_onGameEvent) _onGameEvent(GameEvent::ASTEROID_BANG);
+        _score += SCORE_FOR_ASTEROID_DESTRUCTION;
+        _onGameEvent(GameEvent::SCORE_CHANGES);
         break;
         
       case SpaceEvent::ASTEROID_CRACK:
-        debug("asteroid bang!!");
         if (_onGameEvent) _onGameEvent(GameEvent::ASTEROID_BANG);
         _score += SCORE_FOR_ASTEROID_CRACK;
+        _onGameEvent(GameEvent::SCORE_CHANGES);
         break;
         
       default:
-        debug("unknown event %d",e);
+        error("unknown event %d",e);
         break;
     }
-    if (_onGameEvent) _onGameEvent(GameEvent::SCORE_CHANGES);
   });
   info("Finish game initialization.");
 }
 
-Game::~Game() {}
+Game::~Game() {
+  info("Destroy game. See you!");
+}
+
+int Game::getPlayerSpeedMax() const {
+  return SpaceArchitect::SHIP_VELOCITY_MAX;
+}
 
 int Game::getCurrentLives() {
   return _lives;
