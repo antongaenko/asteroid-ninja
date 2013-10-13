@@ -97,10 +97,10 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="359" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y7b-Xr-i3B">
-                                <rect key="frame" x="508" y="35" width="137" height="37"/>
+                                <rect key="frame" x="508" y="35" width="163" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="137" id="JgY-tC-HOt"/>
+                                    <constraint firstAttribute="width" constant="163" id="JgY-tC-HOt"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="32"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -154,9 +154,9 @@
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C40-jO-J8C">
-                                <rect key="frame" x="256" y="22" width="18" height="39"/>
+                                <rect key="frame" x="256" y="22" width="21" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <fontDescription key="fontDescription" name="AmericanTypewriter" family="American Typewriter" pointSize="32"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -182,7 +182,7 @@
                             <constraint firstItem="wkx-wZ-Asn" firstAttribute="centerY" secondItem="ZER-jU-9wi" secondAttribute="centerY" id="Xef-YS-gga"/>
                             <constraint firstAttribute="trailing" secondItem="wkp-IE-lA9" secondAttribute="trailing" constant="186" id="aEz-So-aOq"/>
                             <constraint firstItem="vOv-8k-pl8" firstAttribute="top" secondItem="C40-jO-J8C" secondAttribute="top" constant="-26" id="bhB-rf-XBp"/>
-                            <constraint firstAttribute="centerX" secondItem="y7b-Xr-i3B" secondAttribute="centerX" constant="-64.5" id="bxK-c9-dXe"/>
+                            <constraint firstAttribute="centerX" secondItem="y7b-Xr-i3B" secondAttribute="centerX" constant="-77.5" id="bxK-c9-dXe"/>
                             <constraint firstItem="sTf-Tz-umr" firstAttribute="top" secondItem="Nmg-wE-Mhc" secondAttribute="bottom" constant="378" id="dMZ-7R-C10"/>
                             <constraint firstItem="iMy-6r-SAi" firstAttribute="centerY" secondItem="sTf-Tz-umr" secondAttribute="centerY" id="eHZ-qB-D2e"/>
                             <constraint firstItem="y7b-Xr-i3B" firstAttribute="top" secondItem="Nmg-wE-Mhc" secondAttribute="bottom" constant="35" id="flU-li-DJu"/>
@@ -216,7 +216,7 @@
         <image name="button_play_main.png" width="243" height="93"/>
         <image name="joystick_body.png" width="78" height="78"/>
         <image name="joystick_field.png" width="229" height="228"/>
-        <image name="pause_button.png" width="52" height="48"/>
+        <image name="pause_button.png" width="54" height="50"/>
         <image name="up_pannel_left.png" width="348" height="76"/>
         <image name="up_pannel_middle.png" width="2" height="76"/>
         <image name="up_pannel_middle2.png" width="360" height="49"/>

@@ -155,7 +155,7 @@ unsigned int Shader::loadAndCompileShaderFile(GLenum type, const std::string& fi
             NSLog(@"\n%s", log);
             
             //free the allocated memory
-            delete log;
+            delete[] log;
         }
         
         //return an invalid _shader id to show that something went wrong

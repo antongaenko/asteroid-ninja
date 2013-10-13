@@ -38,8 +38,6 @@
     [self setupRenderBuffer];
     // we see all objects from above, so we don't need counter-side faces
     glEnable(GL_CULL_FACE);
-    // TODO it's 2D view, we don't need this test
-    glDisable(GL_DEPTH_TEST);
 
     [self setupFrameBuffer];
   }
@@ -52,13 +50,10 @@
 
 - (void)setupLayer {
   _glLayer = (CAEAGLLayer *) self.layer;
-  // TODO try it with RGB565
-  /*_glLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-          [NSNumber numberWithBool:FALSE], kEAGLDrawablePropertyRetainedBacking,
-          kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat,
-          nil];*/
-  // turn off transparency
-  _glLayer.opaque = YES;
+  // TODO use retina scale factor
+  _glLayer.contentsScale = 2.0;
+  // turn ON transparency to show backround
+  _glLayer.opaque = NO;
 }
 
 - (void)setupContext {
@@ -98,9 +93,15 @@
   }
 }
 
+// finish all commands on GPU and delete buffers
+- (void)cleanUp {
+  glFinish();
+  [self deleteBuffers];
+}
+
 // delete frame and render buffers
-- (void)deleteFrameBuffer {
-  info("delete frame buffer");
+- (void)deleteBuffers {
+  info("delete buffers");
   //we need a valid and current context to access any OpenGL methods
   if (_context) {
     [EAGLContext setCurrentContext:_context];
@@ -121,17 +122,22 @@
 // allow us to setup canvas
 - (void)setupDrawable:(Drawable *)canvas {
   canvas->setSize(_frameBufferWidth, _frameBufferHeight);
+  // TODO set image background
+  //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"space2.jpg"]];
 }
 
 // render itself and delegate rendering to canvas
 - (void)renderWithCanvas:(Drawable *)canvas {
   if (_context) {
-    glClearColor(0, 0, 0, 1.0);
+    if (!_colorRenderBuffer) [self setupRenderBuffer];
+    if (!_frameBuffer) [self setupFrameBuffer];
+
+    // clear with ALPHA to show view background
+    glClearColor(0, 0, 0, 0.0);
     glClear(GL_COLOR_BUFFER_BIT);
-
-    // TODO use time sinse last update for correct animation
-    canvas->draw();
-
+    // draw with OGL to render buffer
+    if (canvas) canvas->draw();
+    // show it
     [_context presentRenderbuffer:GL_RENDERBUFFER];
   } else {
     error("Set context before rendering.");
@@ -139,7 +145,7 @@
 }
 
 - (void)dealloc {
-  [self deleteFrameBuffer];
+  [self cleanUp];
 }
 
 

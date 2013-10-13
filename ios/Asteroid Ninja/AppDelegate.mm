@@ -31,8 +31,8 @@
   // TODO If debug
   
    /*UIViewController *game = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"game"];
-    [self.window setRootViewController:game];*/
-  
+    [self.window setRootViewController:game];
+  */
   return YES;
 }
 

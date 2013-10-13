@@ -25,6 +25,7 @@
 #import "Game.h"
 #import "Drawable.h"
 #import <AVFoundation/AVFoundation.h>
+#import "Logger.h"
 
 @interface GameViewController ()
 
@@ -36,25 +37,34 @@
   self = [super initWithCoder:coder];
   if (self) {
     _game = new Game();
+    scoreField.text = [NSString stringWithFormat:@"%d", _game->getCurrentScore()];
+    lifeIndicator.text = [NSString stringWithFormat:@"%d", _game->getCurrentLives()];
+    // set listener on events
     _game->setListener([self](GameEvent e) {
       switch (e) {
         case GameEvent::SCORE_CHANGES:
           scoreField.text = [NSString stringWithFormat:@"%d", _game->getCurrentScore()];
           break;
-          
+
         case GameEvent::SHIP_CRASH:
           [self playForKey:@"crash" andPath:[[NSBundle mainBundle] pathForResource:@"crash" ofType:@"m4a"]];
+          // if lives are over then END
+          if (_game->getCurrentLives() < 1) {
+            [self gameOver];
+          } else {
+            lifeIndicator.text = [NSString stringWithFormat:@"%d", _game->getCurrentLives()];
+          }
           break;
-        
+
         case GameEvent::ASTEROID_BANG:
           [self playForKey:@"asteroid_bang" andPath:[[NSBundle mainBundle] pathForResource:@"asteroid_bang" ofType:@"m4a"]];
           break;
-          
+
         default:
+          error("bad game event %d", e);
           break;
       }
-      
-       });
+    });
 
     _sounds = [[NSCache alloc] init];
   }
@@ -62,33 +72,81 @@
   return self;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-  [super viewDidAppear:animated];
+- (void)play {
+  isPause = false;
   if (!_displayLink) {
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
-    [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    // TODO Set here frameInterval based on game FPS. Currently 30 fps
+    _displayLink.frameInterval = 2;
+    lastTimestamp = CACurrentMediaTime();
+    [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
   }
 }
 
-- (void)update:(CADisplayLink *)displayLink {
-  // TODO Count here time sinse last update
-  _game->getCanvas()->update(0);
-  [glView renderWithCanvas:_game->getCanvas()];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-  [super viewDidDisappear:animated];
-
-  if (_displayLink != nil) {
-    // stop the render loop
+- (void)pause {
+  isPause = true;
+  if (_displayLink) {
+    // remove display link from app run loop
     [_displayLink invalidate];
     _displayLink = nil;
   }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  [self play];
+  // TODO It should be in AppDelegate
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  // also listen for application resign and foreground to free resources
+  [nc addObserver:self selector:@selector(cleanUp) name:UIApplicationWillResignActiveNotification object:NULL];
+  [nc addObserver:self selector:@selector(applicationEnterForeground) name:UIApplicationWillEnterForegroundNotification object:NULL];
+}
+
+- (void)applicationEnterForeground {
+  // TODO It should be in AppDelegate
+  [self play];
+  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
+  // also listen for application resign and foreground to free resources
+  [nc addObserver:self selector:@selector(cleanUp) name:UIApplicationWillResignActiveNotification object:NULL];
+  [nc addObserver:self selector:@selector(applicationEnterForeground) name:UIApplicationWillEnterForegroundNotification object:NULL];
+}
+
+- (void) gameOver {
+  [self cleanUp];
+  // return to menu
+  [self dismissViewControllerAnimated:YES completion:^{
+    // clean game to free resources
+    delete _game;
+    _game = nil;
+  }];
+}
+
+- (void)cleanUp {
+  if (!isPause)[self pause];
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)update:(CADisplayLink *)displayLink {
+  double currentTime = [displayLink timestamp];
+  double renderTime = currentTime - lastTimestamp;
+  lastTimestamp = currentTime;
+
+  if (_game) {
+    _game->getCanvas()->update(renderTime);
+    [glView renderWithCanvas:_game->getCanvas()];
+  }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+  [super viewDidDisappear:animated];
+  [self pause];
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   [glView setupDrawable:_game->getCanvas()];
+  // also prepare audio first time
+  [self getForPath:[[NSBundle mainBundle] pathForResource:@"plasmoid" ofType:@"m4a"]];
 }
 
 // Simple joystick behaviour
@@ -110,47 +168,53 @@
 
     // TODO check this formula
     // max player speed = max joystick distance (field radius)
-    float gameFactor = distance / radiusNotExceed * Game::MAX_PLAYER_SPEED_PX;
+    float gameFactor = distance / radiusNotExceed * _game->getPlayerSpeedMax();
     // also we need to divide on FPS
     gameFactor = gameFactor / Game::FPS;
 
     _game->movePlayer(xShift * gameFactor, yShiftGL * gameFactor, angle);
   }
-
-
 }
 
 // return AVAudioPlayer for specific path
--(AVAudioPlayer*) getForPath:(NSString*) path {
-  NSURL *urlPath= [NSURL fileURLWithPath:path];
-  AVAudioPlayer* player = [[AVAudioPlayer alloc] initWithContentsOfURL:urlPath error:nil];
-  // TODO get system volume
-  player.volume = 0.5;
+- (AVAudioPlayer *)getForPath:(NSString *)path {
+  NSURL *urlPath = [NSURL fileURLWithPath:path];
+  AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:urlPath error:nil];
   [player prepareToPlay];
   return player;
 }
 
 // get player from cache and use or create new player
--(void)playForKey:(id)key andPath:(NSString*) path {
+- (void)playForKey:(id)key andPath:(NSString *)path {
   if ([_sounds objectForKey:key]) {
-    AVAudioPlayer* player = [_sounds objectForKey:key];
-    [player play];
+    AVAudioPlayer *player = [_sounds objectForKey:key];
+    if (!player.playing) {
+      [player play];
+    }
   } else {
-    AVAudioPlayer* player = [self getForPath:path];
+    AVAudioPlayer *player = [self getForPath:path];
     [player play];
     [_sounds setObject:player forKey:key];
   }
 }
 
-// AVAudioPlayer delegate method
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-  // set the player ready to play for the next time
-  if (flag) [player prepareToPlay];
+- (IBAction)onPlayPause:(id)sender {
+  UIButton* b = (UIButton*) sender;
+  isPause = !isPause;
+  if (isPause) {
+    [self pause];
+    [b setImage:[UIImage imageNamed:@"play_button.png"] forState:UIControlStateNormal];
+  } else {
+    [self play];
+    [b setImage:[UIImage imageNamed:@"pause_button.png"] forState:UIControlStateNormal];
+  }
 }
 
 - (IBAction)onFire:(id)sender {
-  _game->playerAttack();
-  [self playForKey:@"fire" andPath:[[NSBundle mainBundle] pathForResource:@"plasmoid" ofType:@"m4a"]];
+  if (!isPause) {
+    _game->playerAttack();
+    [self playForKey:@"fire" andPath:[[NSBundle mainBundle] pathForResource:@"plasmoid" ofType:@"m4a"]];
+  }
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -158,7 +222,8 @@
 }
 
 - (void)dealloc {
-  delete _game;
+  [self cleanUp];
+  if (_game) delete _game;
 }
 
 

@@ -44,4 +44,5 @@ class Drawable;
 
 - (void) setupDrawable:(Drawable*) canvas;
 - (void) renderWithCanvas:(Drawable*) canvas;
+- (void) cleanUp;
 @end

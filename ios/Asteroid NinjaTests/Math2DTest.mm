@@ -123,6 +123,17 @@ Matrix *m2;
   STAssertEquals(isEqual(g[2], Vector(-2.0710678, 12.0710678, 50)), true, nil);
 }
 
+-(void)testCenterOfGeometry {
+  // test for one point
+  auto onePointGeom = Geometry({{10.5, -1.2}});
+  STAssertEquals(isEqual(Vector(10.5, -1.2), getCentroid(onePointGeom)), true, nil);
+
+  // test for free geometry
+  auto g = Geometry({ Vector(-10, 10), Vector(-12, 0), Vector(-5, -5), Vector(0, -7), Vector(10, -2), Vector(15, 7) });
+  auto c = getCentroid(g);
+  STAssertEquals(isEqual(Vector(-2.0/6, 3.0/6),c), true, nil);
+}
+
 // test rectangle-point intersection
 - (void)testRectangleInsideOutside {
   Rectangle r(Vector(-10, 10), Vector(10,-10));
@@ -169,6 +180,13 @@ Matrix *m2;
   Rectangle r2(Vector(-10, 10), Vector(-5,5));
   STAssertEquals(r2.getWidth(), 5, nil);
   STAssertEquals(r2.getHeight(), 5, nil);
+}
+
+- (void)testRandomInRange {
+  for (int i = 0; i < 10000; i++) {
+    STAssertEqualsWithAccuracy(randInRange(1, 3), 2, 1, nil);
+    STAssertEqualsWithAccuracy(randInRange(-10.0f, 10.0f), 0.0f, 10.0, nil);
+  }
 }
 
 @end

@@ -32,8 +32,6 @@
 		31F4EF29961B6D130B8504B9 /* GameViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EB31693DC5AF863B8889 /* GameViewController.mm */; };
 		31F4EF9065B79E467701570E /* Logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4E9631CBC8B0248D3684F /* Logger.cpp */; };
 		4A1C15BD1802DB5C00ACAE39 /* ColliderTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4A1C15BC1802DB5B00ACAE39 /* ColliderTest.mm */; };
-		4A1C15C31806B2B700ACAE39 /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4A1C15C21806B2B700ACAE39 /* space.jpg */; };
-		4A1C15C71806EBE700ACAE39 /* space2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4A1C15C61806EBE700ACAE39 /* space2.jpg */; };
 		4A4FDFE2180A94230039CF2C /* button_play_main.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE1180A94230039CF2C /* button_play_main.png */; };
 		4A4FDFE4180A9B750039CF2C /* button_attack.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE3180A9B750039CF2C /* button_attack.png */; };
 		4A4FDFE5180A9DC30039CF2C /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 31F4EAAC31EFBE4CF5FA83A9 /* LAlgebra.cpp */; };
@@ -67,9 +65,13 @@
 		4A785B0B17D0E3FC00CB9555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785ADB17D0E3FB00CB9555 /* Foundation.framework */; };
 		4A785B1317D0E3FC00CB9555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4A785B1117D0E3FC00CB9555 /* InfoPlist.strings */; };
 		4A785B2917D5190A00CB9555 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A785B2817D5190A00CB9555 /* QuartzCore.framework */; };
-		4AAD753A1808785800035A6D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AAD75391808785800035A6D /* Default.png */; };
 		4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FD17ECB381008A2D67 /* joystick_field.png */; };
 		4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FE17ECB381008A2D67 /* joystick_body.png */; };
+		4AFF4B95180B2738000102F6 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B92180B2738000102F6 /* Default-Landscape.png */; };
+		4AFF4B9F180B318E000102F6 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9B180B318E000102F6 /* Icon-72@2x.png */; };
+		4AFF4BA0180B318E000102F6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9C180B318E000102F6 /* Icon@2x.png */; };
+		4AFF4BA1180B318E000102F6 /* iTunesArtwork-@-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */; };
+		4AFF4BA2180B318E000102F6 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,8 +126,6 @@
 		31F4EECD6AB5AE27687FCDD0 /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../../common/Game.cpp; sourceTree = "<group>"; };
 		31F4EED7375F9F6783631C02 /* shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.fsh; sourceTree = "<group>"; };
 		4A1C15BC1802DB5B00ACAE39 /* ColliderTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColliderTest.mm; sourceTree = "<group>"; };
-		4A1C15C21806B2B700ACAE39 /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
-		4A1C15C61806EBE700ACAE39 /* space2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space2.jpg; sourceTree = "<group>"; };
 		4A4FDFE1180A94230039CF2C /* button_play_main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_play_main.png; sourceTree = "<group>"; };
 		4A4FDFE3180A9B750039CF2C /* button_attack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_attack.png; sourceTree = "<group>"; };
 		4A4FDFE6180A9EA80039CF2C /* Main~iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main~iPad.storyboard"; sourceTree = "<group>"; };
@@ -161,9 +161,14 @@
 		4A785B1017D0E3FC00CB9555 /* Asteroid NinjaTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Asteroid NinjaTests-Info.plist"; sourceTree = "<group>"; };
 		4A785B1217D0E3FC00CB9555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4A785B2817D5190A00CB9555 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		4AAD75391808785800035A6D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		4AB6C2FD17ECB381008A2D67 /* joystick_field.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick_field.png; sourceTree = "<group>"; };
 		4AB6C2FE17ECB381008A2D67 /* joystick_body.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick_body.png; sourceTree = "<group>"; };
+		4AFF4B92180B2738000102F6 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
+		4AFF4B99180B2972000102F6 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		4AFF4B9B180B318E000102F6 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
+		4AFF4B9C180B318E000102F6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork-@-2x.png"; sourceTree = "<group>"; };
+		4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,6 +332,8 @@
 		4A785AE417D0E3FB00CB9555 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4AFF4B99180B2972000102F6 /* Default-Landscape@2x~ipad.png */,
+				4AFF4B92180B2738000102F6 /* Default-Landscape.png */,
 				4A785AE517D0E3FB00CB9555 /* Asteroid Ninja-Info.plist */,
 				4A785AE617D0E3FB00CB9555 /* InfoPlist.strings */,
 				4A785AE917D0E3FB00CB9555 /* main.m */,
@@ -377,6 +384,7 @@
 		4AB6C2FB17ECB381008A2D67 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				4AFF4B9A180B318E000102F6 /* icons */,
 				4A4FDFE3180A9B750039CF2C /* button_attack.png */,
 				4A4FDFE1180A94230039CF2C /* button_play_main.png */,
 				4A61071F180A85D100C67F25 /* bg.png */,
@@ -387,14 +395,22 @@
 				4A61071B180A85C600C67F25 /* up_pannel_right.png */,
 				4A610708180A85AF00C67F25 /* sounds */,
 				4A610710180A85AF00C67F25 /* up_pannel_left.png */,
-				4AAD75391808785800035A6D /* Default.png */,
-				4A1C15C61806EBE700ACAE39 /* space2.jpg */,
-				4A1C15C21806B2B700ACAE39 /* space.jpg */,
 				4AB6C2FD17ECB381008A2D67 /* joystick_field.png */,
 				4AB6C2FE17ECB381008A2D67 /* joystick_body.png */,
 			);
 			name = assets;
 			path = ../../assets;
+			sourceTree = "<group>";
+		};
+		4AFF4B9A180B318E000102F6 /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				4AFF4B9B180B318E000102F6 /* Icon-72@2x.png */,
+				4AFF4B9C180B318E000102F6 /* Icon@2x.png */,
+				4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */,
+				4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */,
+			);
+			path = icons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,8 +485,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A610722180A85D100C67F25 /* bg.png in Resources */,
+				4AFF4BA2180B318E000102F6 /* iTunesArtwork.png in Resources */,
+				4AFF4BA0180B318E000102F6 /* Icon@2x.png in Resources */,
 				4A4FDFE7180A9EA80039CF2C /* Main~iPad.storyboard in Resources */,
 				4A610711180A85AF00C67F25 /* asterod_bang.mp4 in Resources */,
+				4AFF4B95180B2738000102F6 /* Default-Landscape.png in Resources */,
 				4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */,
 				4A61071D180A85C600C67F25 /* up_pannel_middle2.png in Resources */,
 				4A785AF017D0E3FB00CB9555 /* Default.png in Resources */,
@@ -480,15 +499,14 @@
 				4A610712180A85AF00C67F25 /* asteroid_bang.flac in Resources */,
 				4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */,
 				4A4FDFE2180A94230039CF2C /* button_play_main.png in Resources */,
-				4AAD753A1808785800035A6D /* Default.png in Resources */,
 				4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */,
+				4AFF4B9F180B318E000102F6 /* Icon-72@2x.png in Resources */,
 				31F4EADBBB5843C0D2694491 /* shader.fsh in Resources */,
 				4A610718180A85AF00C67F25 /* up_pannel_left.png in Resources */,
-				4A1C15C71806EBE700ACAE39 /* space2.jpg in Resources */,
 				4A61071C180A85C600C67F25 /* up_pannel_middle.png in Resources */,
-				4A1C15C31806B2B700ACAE39 /* space.jpg in Resources */,
 				31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */,
 				4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */,
+				4AFF4BA1180B318E000102F6 /* iTunesArtwork-@-2x.png in Resources */,
 				4A610717180A85AF00C67F25 /* plasmoid.wav in Resources */,
 				4A610714180A85AF00C67F25 /* asteroid_bang_source.m4a in Resources */,
 				4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */,

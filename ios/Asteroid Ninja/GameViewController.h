@@ -8,24 +8,33 @@
 
 #import <UIKit/UIKit.h>
 #import "GameView2D.h"
+#import "Game.h"
 
 class Game;
 
 @interface GameViewController : UIViewController {
 
-@public
-
+@private
+  // it contains game logic and it's a bridge to c++ sources
   Game* _game;
 
-  CADisplayLink* _displayLink;
-  
-  NSCache *_sounds;
+  bool isPause;
 
+  CADisplayLink* _displayLink;
+  // cache of AVAudioPlayer 
+  NSCache* _sounds;
+  
+  double lastTimestamp;
+
+  __weak IBOutlet UILabel *lifeIndicator;
   IBOutlet GameView2D * glView;
   __weak IBOutlet UILabel *scoreField;
-    __weak IBOutlet UIImageView *joystickField;
-    __weak IBOutlet UIView *joystickBody;
-    __weak IBOutlet UIButton *fireButton;
+  __weak IBOutlet UIImageView *joystickField;
+  __weak IBOutlet UIView *joystickBody;
+  __weak IBOutlet UIButton *fireButton;
 }
+
+-(void) gameOver;
+-(void) cleanUp;
 
 @end
