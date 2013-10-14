@@ -66,11 +66,9 @@
 		4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FD17ECB381008A2D67 /* joystick_field.png */; };
 		4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AB6C2FE17ECB381008A2D67 /* joystick_body.png */; };
 		4AFF4B95180B2738000102F6 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B92180B2738000102F6 /* Default-Landscape.png */; };
-		4AFF4B9F180B318E000102F6 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9B180B318E000102F6 /* Icon-72@2x.png */; };
-		4AFF4BA0180B318E000102F6 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9C180B318E000102F6 /* Icon@2x.png */; };
-		4AFF4BA1180B318E000102F6 /* iTunesArtwork-@-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */; };
-		4AFF4BA2180B318E000102F6 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */; };
 		4AFF4BA5180B35F6000102F6 /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */; };
+		4AFF4BBB180BA96D000102F6 /* BigBang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BB9180BA96D000102F6 /* BigBang.cpp */; };
+		4AFF4BBD180BBB72000102F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4BBC180BBB72000102F6 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,12 +160,11 @@
 		4AB6C2FE17ECB381008A2D67 /* joystick_body.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick_body.png; sourceTree = "<group>"; };
 		4AFF4B92180B2738000102F6 /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
 		4AFF4B99180B2972000102F6 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
-		4AFF4B9B180B318E000102F6 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
-		4AFF4B9C180B318E000102F6 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork-@-2x.png"; sourceTree = "<group>"; };
-		4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
 		4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LAlgebra.cpp; sourceTree = "<group>"; };
 		4AFF4BA4180B35F6000102F6 /* LAlgebra.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LAlgebra.h; sourceTree = "<group>"; };
+		4AFF4BB9180BA96D000102F6 /* BigBang.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BigBang.cpp; sourceTree = "<group>"; };
+		4AFF4BBA180BA96D000102F6 /* BigBang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigBang.h; sourceTree = "<group>"; };
+		4AFF4BBC180BBB72000102F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +244,8 @@
 				31F4E11F0DD92E05FF871E5D /* Asteroid.h */,
 				31F4EBCBDCD405A399B50D2F /* SpaceArchitect.cpp */,
 				31F4E807890989FDBA528231 /* SpaceArchitect.h */,
+				4AFF4BB9180BA96D000102F6 /* BigBang.cpp */,
+				4AFF4BBA180BA96D000102F6 /* BigBang.h */,
 			);
 			name = space;
 			path = ../../common/space;
@@ -324,6 +323,7 @@
 				4A785B1F17D4EFB200CB9555 /* Classes */,
 				4A785AE417D0E3FB00CB9555 /* Supporting Files */,
 				31F4E60B320737CD0B815D72 /* shader */,
+				4AFF4BBC180BBB72000102F6 /* Images.xcassets */,
 			);
 			path = "Asteroid Ninja";
 			sourceTree = "<group>";
@@ -383,7 +383,6 @@
 		4AB6C2FB17ECB381008A2D67 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				4AFF4B9A180B318E000102F6 /* icons */,
 				4A4FDFE3180A9B750039CF2C /* button_attack.png */,
 				4A4FDFE1180A94230039CF2C /* button_play_main.png */,
 				4A61071F180A85D100C67F25 /* bg.png */,
@@ -399,17 +398,6 @@
 			);
 			name = assets;
 			path = ../../assets;
-			sourceTree = "<group>";
-		};
-		4AFF4B9A180B318E000102F6 /* icons */ = {
-			isa = PBXGroup;
-			children = (
-				4AFF4B9B180B318E000102F6 /* Icon-72@2x.png */,
-				4AFF4B9C180B318E000102F6 /* Icon@2x.png */,
-				4AFF4B9D180B318E000102F6 /* iTunesArtwork-@-2x.png */,
-				4AFF4B9E180B318E000102F6 /* iTunesArtwork.png */,
-			);
-			path = icons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,8 +472,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A610722180A85D100C67F25 /* bg.png in Resources */,
-				4AFF4BA2180B318E000102F6 /* iTunesArtwork.png in Resources */,
-				4AFF4BA0180B318E000102F6 /* Icon@2x.png in Resources */,
+				4AFF4BBD180BBB72000102F6 /* Images.xcassets in Resources */,
 				4A4FDFE7180A9EA80039CF2C /* Main~iPad.storyboard in Resources */,
 				4A610711180A85AF00C67F25 /* asterod_bang.mp4 in Resources */,
 				4AFF4B95180B2738000102F6 /* Default-Landscape.png in Resources */,
@@ -499,13 +486,11 @@
 				4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */,
 				4A4FDFE2180A94230039CF2C /* button_play_main.png in Resources */,
 				4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */,
-				4AFF4B9F180B318E000102F6 /* Icon-72@2x.png in Resources */,
 				31F4EADBBB5843C0D2694491 /* shader.fsh in Resources */,
 				4A610718180A85AF00C67F25 /* up_pannel_left.png in Resources */,
 				4A61071C180A85C600C67F25 /* up_pannel_middle.png in Resources */,
 				31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */,
 				4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */,
-				4AFF4BA1180B318E000102F6 /* iTunesArtwork-@-2x.png in Resources */,
 				4A610717180A85AF00C67F25 /* plasmoid.wav in Resources */,
 				4A610714180A85AF00C67F25 /* asteroid_bang_source.m4a in Resources */,
 				4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */,
@@ -563,6 +548,7 @@
 				31F4E1B84BE10B92B6EDFCEF /* GameView2D.mm in Sources */,
 				31F4E9848FC35AA5F02927AD /* AppDelegate.mm in Sources */,
 				31F4E87D5434E3623BF4E544 /* Vector.cpp in Sources */,
+				4AFF4BBB180BA96D000102F6 /* BigBang.cpp in Sources */,
 				31F4E458040382ADF1D1C830 /* Matrix.cpp in Sources */,
 				31F4E069FC353709A614EA14 /* Geometry.cpp in Sources */,
 				31F4E955F3A678F1F14A3BB2 /* Collider.cpp in Sources */,
@@ -672,12 +658,14 @@
 		4A785B1A17D0E3FC00CB9555 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
 				INFOPLIST_FILE = "Asteroid Ninja/Asteroid Ninja-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_GENERATE_MAP_FILE = YES;
 				"OTHER_CFLAGS[arch=*]" = "-Wall";
 				"OTHER_CPLUSPLUSFLAGS[arch=*]" = "-Wall";
@@ -690,12 +678,14 @@
 		4A785B1B17D0E3FC00CB9555 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Asteroid Ninja/Asteroid Ninja-Prefix.pch";
 				INFOPLIST_FILE = "Asteroid Ninja/Asteroid Ninja-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_GENERATE_MAP_FILE = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
