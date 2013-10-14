@@ -28,6 +28,7 @@ THE SOFTWARE.
 #include "Shader.h"
 #include "Plasmoid.h"
 #include "Asteroid.h"
+#include "BigBang.h"
 #include "Collider.h"
 #include "Logger.h"
 
@@ -81,7 +82,7 @@ Asteroid* prepareAsteroidOnEdge(int hits, const Rectangle spaceBounds, const Ast
   return prepareAsteroid(hits, spaceBounds, spaceBounds, from);
 }
 
-// TODO Make Enable method which on/off glUseProgram
+
 Space::Space() {
   _ship = std::unique_ptr<Ship>(new Ship({SpaceArchitect::SHIP[0], SpaceArchitect::SHIP[1], SpaceArchitect::SHIP[2]} , kRED, Vector(0, 0)));
 }
@@ -154,6 +155,10 @@ void Space::update(float msSinceLastUpdate) {
   // for survival mode we change destroyed asteroid with new ones, good luck
   std::vector<Asteroid*> newAsteroids;
   newAsteroids.reserve(5);
+  // sometimes you're lucky and find the super bomb with plasmoid charge
+  std::vector<std::unique_ptr<Plasmoid>> newPlasmoids;
+  newAsteroids.reserve(20);
+  
   
   // update ship
   _ship->update(portion);
@@ -161,6 +166,15 @@ void Space::update(float msSinceLastUpdate) {
   if (_bounds.isOutside(_ship->getPosition())) {
     _ship->setPosition(teleport(_ship->getPosition(), _bounds));
   }
+  
+  // don't conflict with bomb
+  if (_bomb) {
+    _bomb->update();
+    if (Collider::isCollision(_ship->getCurrentGeometry(), _bomb->getCurrentGeometry())) {
+      _ship->setBumped();
+    }
+  }
+  
   // update asteroids and check collision between space ship and asteroids
   for (auto &a : _asteroids) {
     a->update(portion);
@@ -178,12 +192,17 @@ void Space::update(float msSinceLastUpdate) {
     }
   }
 
-  // TODO check collisions between asteroids too
-  
-  // TODO split the space on smaller areas and check collisions in them
-  // update plasmoids and check collision between plasmoids and asteroids
+  // update plasmoids and check collision between plasmoids and bomb and then with asteroids
   for (auto &p : _plasmoids) {
     p->update(portion);
+    // for bomb
+    if (_bomb && Collider::isCollision(p->getCurrentGeometry(), _bomb->getCurrentGeometry())) {
+      p->setBumped();
+      _bomb->setBumped();
+      for (auto& p : _bomb->boom()) newPlasmoids.push_back(std::move(p));
+    }
+    
+    // for asteroids
     for (auto &a : _asteroids) {
       if (Collider::isCollision(p->getCurrentGeometry(), a->getCurrentGeometry())) {
         p->setBumped();
@@ -211,6 +230,11 @@ void Space::update(float msSinceLastUpdate) {
   for (auto a : newAsteroids) {
     a->update(portion);
     _asteroids.push_back(std::unique_ptr<Asteroid>(a));
+  }
+  
+  // add plasmoids from bomb to all
+  for (auto& p : newPlasmoids) {
+    _plasmoids.push_back(std::move(p));
   }
 
   // remove out of space OR bumped plasmoids
@@ -256,6 +280,8 @@ void Space::prepareColorVBO(const unsigned int& shaderAttributeColor) {
   // get ship color for all vertices
   fillByColor(_ship.get(), colors, offset);
   
+  if (_bomb) fillByColor(_bomb.get(), colors, offset);
+  
   // get plasmoid color for ALL plasmoids
   for (auto &p : _plasmoids) fillByColor(p.get(), colors, offset);
   
@@ -282,6 +308,9 @@ void Space::prepareGeomVBO(const unsigned int& shaderAttributeGeom) {
   int offset = 0;
   // get ship geometry
   fillByGeom(_ship.get(), rawGeometry, offset);
+  
+  // bomb
+  if (_bomb) fillByGeom(_bomb.get(), rawGeometry, offset);
   
   // for all plasmoids
   for (auto& p : _plasmoids) fillByGeom(p.get(), rawGeometry, offset);
@@ -329,6 +358,12 @@ void Space::draw() {
   glDrawArrays(GL_TRIANGLES, offset, _ship->getVertexCount());
   offset += _ship->getVertexCount();
   
+  // draw the bomb if exists
+  if (_bomb) {
+    glDrawArrays(GL_TRIANGLE_FAN, offset, _bomb->getVertexCount());
+    offset += _bomb->getVertexCount();
+  }
+  
   // draw plasmoids
   for (auto& p : _plasmoids) {
     glDrawArrays(GL_POINTS, offset, p->getVertexCount());
@@ -363,6 +398,7 @@ Matrix Space::prepareViewMatrix(const int resolutionWidth, const int resolutionH
 
 int Space::getAllVertexCount() const {
   int count = _ship->getVertexCount();
+  if (_bomb) count += _bomb->getVertexCount();
   for (auto& p : _plasmoids) count += p->getVertexCount();
   for (auto& a : _asteroids) count += a->getVertexCount();
   return count;
@@ -372,6 +408,15 @@ int Space::getAllVertexCount() const {
 void Space::moveShip(float dx, float dy, float curAngle) {
   _ship->setVelocity(Vector(dx, dy));
   _ship->setAngleInRadians(curAngle);
+}
+
+// place bomb, please
+void Space::placeBomb() {
+  // create bomb
+  float xRand = randInRange(_shipExtraBounds.getTopLeft().getX(), _shipExtraBounds.getTopRight().getX());
+  float yRand = randInRange(_shipExtraBounds.getTopLeft().getY(), _shipExtraBounds.getTopRight().getY());
+  _bomb = std::unique_ptr<BigBang>(new BigBang({SpaceArchitect::BOMB[0], SpaceArchitect::BOMB[1], SpaceArchitect::BOMB[2], SpaceArchitect::BOMB[3]} , SpaceArchitect::BOMB_COLOR, {xRand, yRand}));
+  _bomb->setAngularFrequencyRadians(SpaceArchitect::BOMB_ANGULAR_FREQUENCY_DEGREE * DegreesToRadians);
 }
 
 // set space canvas size
@@ -387,6 +432,7 @@ void Space::setSize(int width, int height) {
   glViewport(0, 0, width, height);
 
   // also add random asteroids
+  debug("Radar detects asteroids, sir!");
   for (int i = 0; i < 10; i++) {
     _asteroids.push_front(std::unique_ptr<Asteroid>(prepareAsteroid(SpaceArchitect::ASTEROID_BIG_HITS, _shipExtraBounds, _bounds)));
   }

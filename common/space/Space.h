@@ -40,6 +40,8 @@ class Plasmoid;
 
 class Asteroid;
 
+class BigBang;
+
 enum class SpaceEvent {
   SHIP_CRASH,
   // when plasmoid split asteroid
@@ -61,6 +63,7 @@ public:
   // external instructions to move or to attack
   void moveShip(float dx, float dy, float curAngle);
   void shipAttack();
+  void placeBomb();
 
   // Drawable interface
   virtual void draw() override;
@@ -88,6 +91,7 @@ private:
   std::unique_ptr<Ship> _ship;
   std::list<std::unique_ptr<Plasmoid>> _plasmoids;
   std::list<std::unique_ptr<Asteroid>> _asteroids;
+  std::unique_ptr<BigBang> _bomb;
 
   // space bounds
   lalgebra::Rectangle _bounds;

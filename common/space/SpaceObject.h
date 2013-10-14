@@ -33,7 +33,7 @@ public:
   SpaceObject(const Geometry &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
 
   // apply to geometry all transformations
-  virtual void update(float portion);
+  virtual void update(float portion = 1.0);
 
   int getVertexCount() const;
 

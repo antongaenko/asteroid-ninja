@@ -34,7 +34,11 @@ Vector SpaceArchitect::LASER = PLASMOID_TURRET_POS;
 
 Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, {-25,-30}, {25,-30}};
 
-static ColorRGB BIG_BANG_COLOR = {.3, .2, .55};
+Vector SpaceArchitect::BOMB[4] = { {0, 30}, {-30, 0}, {0, -30}, {30, 0} };
+
+ColorRGB SpaceArchitect::BOMB_COLOR = {.4, .2, .55};
+
+const int SpaceArchitect::BOMB_ANGULAR_FREQUENCY_DEGREE = 3;
 
 Vector SpaceArchitect::PLASMOID_VELOCITY = {0, 30};
 

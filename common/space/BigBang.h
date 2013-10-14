@@ -33,7 +33,17 @@ class BigBang: public SpaceObject {
 public:
   BigBang(const Geometry &geometry, const ColorRGB &color, const Vector &initPos);
   
+  virtual void update(float portion = 1.0) override;
+  
+  // set angular speed in radians
+  void setAngularFrequencyRadians(const float angularFrequency);
+  
   std::vector<std::unique_ptr<Plasmoid>> boom();
+
+private:
+  // it influences on model rotation about it's center
+  float _angularFrequency;
+
 };
 
 #endif /* defined(__Asteroid_Ninja__BigBang__) */

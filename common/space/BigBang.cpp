@@ -28,18 +28,31 @@
 BigBang::BigBang(const Geometry& geometry, const ColorRGB& color, const Vector & initPos):
 SpaceObject(geometry, color, initPos) {}
 
+void BigBang::setAngularFrequencyRadians(const float angularFrequency) {
+  _angularFrequency = angularFrequency;
+};
+
+
+void BigBang::update(float portion) {
+  _angle += _angularFrequency * portion;
+  SpaceObject::update(portion);
+}
+
+
 std::vector<std::unique_ptr<Plasmoid>> BigBang::boom() {
   static int const PLASMOID_COUNT = 10;
   std::vector<std::unique_ptr<Plasmoid>> v;
   v.reserve(PLASMOID_COUNT);
   float angleDiff = 2 * PI / PLASMOID_COUNT;
   
-  float angle = 0;
+  float angle = _angle;
   for (int i = 0; i < PLASMOID_COUNT; i++) {
     auto p = std::unique_ptr<Plasmoid>(new Plasmoid({SpaceArchitect::LASER}, _color, _position));
     // then apply rotation to velocity vector
-    p->setVelocity(SpaceArchitect::PLASMOID_VELOCITY * RotateMatrix(_angle, Radians));
+    p->setVelocity(SpaceArchitect::PLASMOID_VELOCITY * RotateMatrix(angle, Radians));
+    p->setAngleInRadians(angle);
     angle += angleDiff;
+    p->update();
     v.push_back(std::move(p));
   }
   

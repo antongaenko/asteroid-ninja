@@ -47,8 +47,10 @@ class SpaceArchitect {
   static Vector PLASMOID_TURRET_POS;
   static Vector LASER;
   static Vector SHIP[3];
+  static Vector BOMB[4];
   
-  static ColorRGB BIG_BANG_COLOR;
+  static ColorRGB BOMB_COLOR;
+  static const int BOMB_ANGULAR_FREQUENCY_DEGREE;
 
   static Vector PLASMOID_VELOCITY;
   static const int SHIP_VELOCITY_MAX;
