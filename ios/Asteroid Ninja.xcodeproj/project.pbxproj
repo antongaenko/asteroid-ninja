@@ -101,7 +101,6 @@
 		31F4E5E78B8447C8DE869924 /* Drawable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Drawable.h; path = ../../common/Drawable.h; sourceTree = "<group>"; };
 		31F4E62AA33ED0759145A612 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		31F4E6F84F2E36FB4B4A628A /* OpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenGL.h; path = ../../common/OpenGL.h; sourceTree = "<group>"; };
-		31F4E6FC79EBD1AB09696328 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
 		31F4E807890989FDBA528231 /* SpaceArchitect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpaceArchitect.h; sourceTree = "<group>"; };
 		31F4E9631CBC8B0248D3684F /* Logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Logger.cpp; sourceTree = "<group>"; };
 		31F4E97344BE24E90571B48E /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
@@ -167,6 +166,7 @@
 		4AFF4BBA180BA96D000102F6 /* BigBang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigBang.h; sourceTree = "<group>"; };
 		4AFF4BBC180BBB72000102F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4AFF4BBE180BC5CF000102F6 /* bg_pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_pattern.png; sourceTree = "<group>"; };
+		4AFF4BC0180BD4CB000102F6 /* Shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Shader.h; path = ../../common/shader/Shader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,7 +368,7 @@
 		4A785B1F17D4EFB200CB9555 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				31F4E6FC79EBD1AB09696328 /* Shader.h */,
+				4AFF4BC0180BD4CB000102F6 /* Shader.h */,
 				31F4EEA73B747DF93993E514 /* Shader.mm */,
 				31F4EECD6AB5AE27687FCDD0 /* Game.cpp */,
 				31F4ED7DC2434772365C93DC /* Game.h */,

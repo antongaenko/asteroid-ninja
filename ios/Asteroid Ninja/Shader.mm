@@ -22,9 +22,6 @@
 
 #include "Shader.h"
 
-#import <OpenGLES/ES2/gl.h>
-#import <OpenGLES/ES2/glext.h>
-
 //constructor
 //initializes our member variables with default values and stores the _shader file names
 Shader::Shader(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename):
