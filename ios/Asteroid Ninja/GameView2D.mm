@@ -50,8 +50,7 @@
 
 - (void)setupLayer {
   _glLayer = (CAEAGLLayer *) self.layer;
-  // TODO use retina scale factor
-  _glLayer.contentsScale = 2.0;
+  _glLayer.contentsScale = [[UIScreen mainScreen] scale];;
   // turn ON transparency to show backround
   _glLayer.opaque = NO;
 }
@@ -122,8 +121,7 @@
 // allow us to setup canvas
 - (void)setupDrawable:(Drawable *)canvas {
   canvas->setSize(_frameBufferWidth, _frameBufferHeight);
-  // TODO set image background
-  //self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"space2.jpg"]];
+  self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"bg_pattern.png"]];
 }
 
 // render itself and delegate rendering to canvas

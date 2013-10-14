@@ -165,14 +165,12 @@
     float yShiftGL = -yShift;
     // we need the angle opposite xShift. In OpenGL positive angle is counter-wise
     float angle = -atan2f(xShift, yShiftGL);
-
-    // TODO check this formula
+    
     // max player speed = max joystick distance (field radius)
-    float gameFactor = distance / radiusNotExceed * _game->getPlayerSpeedMax();
-    // also we need to divide on FPS
-    gameFactor = gameFactor / Game::FPS;
+    float xGameShift = xShift / radiusNotExceed * _game->getPlayerSpeedMax();
+    float yGameShift = yShiftGL / radiusNotExceed * _game->getPlayerSpeedMax();
 
-    _game->movePlayer(xShift * gameFactor, yShiftGL * gameFactor, angle);
+    _game->movePlayer(xGameShift, yGameShift, angle);
   }
 }
 

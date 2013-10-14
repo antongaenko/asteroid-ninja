@@ -69,6 +69,7 @@
 		4AFF4BA5180B35F6000102F6 /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */; };
 		4AFF4BBB180BA96D000102F6 /* BigBang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BB9180BA96D000102F6 /* BigBang.cpp */; };
 		4AFF4BBD180BBB72000102F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4BBC180BBB72000102F6 /* Images.xcassets */; };
+		4AFF4BBF180BC5CF000102F6 /* bg_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4BBE180BC5CF000102F6 /* bg_pattern.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,7 @@
 		4AFF4BB9180BA96D000102F6 /* BigBang.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BigBang.cpp; sourceTree = "<group>"; };
 		4AFF4BBA180BA96D000102F6 /* BigBang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BigBang.h; sourceTree = "<group>"; };
 		4AFF4BBC180BBB72000102F6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4AFF4BBE180BC5CF000102F6 /* bg_pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg_pattern.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +385,7 @@
 		4AB6C2FB17ECB381008A2D67 /* assets */ = {
 			isa = PBXGroup;
 			children = (
+				4AFF4BBE180BC5CF000102F6 /* bg_pattern.png */,
 				4A4FDFE3180A9B750039CF2C /* button_attack.png */,
 				4A4FDFE1180A94230039CF2C /* button_play_main.png */,
 				4A61071F180A85D100C67F25 /* bg.png */,
@@ -477,6 +480,7 @@
 				4A610711180A85AF00C67F25 /* asterod_bang.mp4 in Resources */,
 				4AFF4B95180B2738000102F6 /* Default-Landscape.png in Resources */,
 				4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */,
+				4AFF4BBF180BC5CF000102F6 /* bg_pattern.png in Resources */,
 				4A61071D180A85C600C67F25 /* up_pannel_middle2.png in Resources */,
 				4A785AF017D0E3FB00CB9555 /* Default.png in Resources */,
 				4A610713180A85AF00C67F25 /* asteroid_bang.m4a in Resources */,
