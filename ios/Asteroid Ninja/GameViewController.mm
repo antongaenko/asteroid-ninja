@@ -132,7 +132,8 @@
   lastTimestamp = currentTime;
 
   if (_game) {
-    _game->getCanvas()->update(renderTime);
+    // pass time in ms
+    _game->getCanvas()->update(renderTime * 1000);
     [glView renderWithCanvas:_game->getCanvas()];
   }
 }
@@ -147,6 +148,8 @@
   [glView setupDrawable:_game->getCanvas()];
   // also prepare audio first time
   [self getForPath:[[NSBundle mainBundle] pathForResource:@"plasmoid" ofType:@"m4a"]];
+  [self getForPath:[[NSBundle mainBundle] pathForResource:@"asteroid_bang" ofType:@"m4a"]];
+  [self getForPath:[[NSBundle mainBundle] pathForResource:@"crash" ofType:@"m4a"]];
 }
 
 // Simple joystick behaviour
@@ -187,7 +190,8 @@
   if ([_sounds objectForKey:key]) {
     AVAudioPlayer *player = [_sounds objectForKey:key];
     if (!player.playing) {
-      [player play];
+      // player in separate thread to prevent animation lags
+      [NSThread detachNewThreadSelector: @selector(play) toTarget: player withObject: nil];
     }
   } else {
     AVAudioPlayer *player = [self getForPath:path];
