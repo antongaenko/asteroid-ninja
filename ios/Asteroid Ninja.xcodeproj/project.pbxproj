@@ -34,13 +34,9 @@
 		4A4FDFE2180A94230039CF2C /* button_play_main.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE1180A94230039CF2C /* button_play_main.png */; };
 		4A4FDFE4180A9B750039CF2C /* button_attack.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE3180A9B750039CF2C /* button_attack.png */; };
 		4A4FDFE7180A9EA80039CF2C /* Main~iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A4FDFE6180A9EA80039CF2C /* Main~iPad.storyboard */; };
-		4A610711180A85AF00C67F25 /* asterod_bang.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 4A610709180A85AF00C67F25 /* asterod_bang.mp4 */; };
-		4A610712180A85AF00C67F25 /* asteroid_bang.flac in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070A180A85AF00C67F25 /* asteroid_bang.flac */; };
 		4A610713180A85AF00C67F25 /* asteroid_bang.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070B180A85AF00C67F25 /* asteroid_bang.m4a */; };
-		4A610714180A85AF00C67F25 /* asteroid_bang_source.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070C180A85AF00C67F25 /* asteroid_bang_source.m4a */; };
 		4A610715180A85AF00C67F25 /* crash.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070D180A85AF00C67F25 /* crash.m4a */; };
 		4A610716180A85AF00C67F25 /* plasmoid.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070E180A85AF00C67F25 /* plasmoid.m4a */; };
-		4A610717180A85AF00C67F25 /* plasmoid.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A61070F180A85AF00C67F25 /* plasmoid.wav */; };
 		4A610718180A85AF00C67F25 /* up_pannel_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A610710180A85AF00C67F25 /* up_pannel_left.png */; };
 		4A61071C180A85C600C67F25 /* up_pannel_middle.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A610719180A85C600C67F25 /* up_pannel_middle.png */; };
 		4A61071D180A85C600C67F25 /* up_pannel_middle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A61071A180A85C600C67F25 /* up_pannel_middle2.png */; };
@@ -125,13 +121,9 @@
 		4A4FDFE1180A94230039CF2C /* button_play_main.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_play_main.png; sourceTree = "<group>"; };
 		4A4FDFE3180A9B750039CF2C /* button_attack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_attack.png; sourceTree = "<group>"; };
 		4A4FDFE6180A9EA80039CF2C /* Main~iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Main~iPad.storyboard"; sourceTree = "<group>"; };
-		4A610709180A85AF00C67F25 /* asterod_bang.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = asterod_bang.mp4; sourceTree = "<group>"; };
-		4A61070A180A85AF00C67F25 /* asteroid_bang.flac */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroid_bang.flac; sourceTree = "<group>"; };
 		4A61070B180A85AF00C67F25 /* asteroid_bang.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroid_bang.m4a; sourceTree = "<group>"; };
-		4A61070C180A85AF00C67F25 /* asteroid_bang_source.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = asteroid_bang_source.m4a; sourceTree = "<group>"; };
 		4A61070D180A85AF00C67F25 /* crash.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = crash.m4a; sourceTree = "<group>"; };
 		4A61070E180A85AF00C67F25 /* plasmoid.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = plasmoid.m4a; sourceTree = "<group>"; };
-		4A61070F180A85AF00C67F25 /* plasmoid.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = plasmoid.wav; sourceTree = "<group>"; };
 		4A610710180A85AF00C67F25 /* up_pannel_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_pannel_left.png; sourceTree = "<group>"; };
 		4A610719180A85C600C67F25 /* up_pannel_middle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_pannel_middle.png; sourceTree = "<group>"; };
 		4A61071A180A85C600C67F25 /* up_pannel_middle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up_pannel_middle2.png; sourceTree = "<group>"; };
@@ -275,13 +267,9 @@
 		4A610708180A85AF00C67F25 /* sounds */ = {
 			isa = PBXGroup;
 			children = (
-				4A610709180A85AF00C67F25 /* asterod_bang.mp4 */,
-				4A61070A180A85AF00C67F25 /* asteroid_bang.flac */,
 				4A61070B180A85AF00C67F25 /* asteroid_bang.m4a */,
-				4A61070C180A85AF00C67F25 /* asteroid_bang_source.m4a */,
 				4A61070D180A85AF00C67F25 /* crash.m4a */,
 				4A61070E180A85AF00C67F25 /* plasmoid.m4a */,
-				4A61070F180A85AF00C67F25 /* plasmoid.wav */,
 			);
 			path = sounds;
 			sourceTree = "<group>";
@@ -478,7 +466,6 @@
 				4A610722180A85D100C67F25 /* bg.png in Resources */,
 				4AFF4BBD180BBB72000102F6 /* Images.xcassets in Resources */,
 				4A4FDFE7180A9EA80039CF2C /* Main~iPad.storyboard in Resources */,
-				4A610711180A85AF00C67F25 /* asterod_bang.mp4 in Resources */,
 				4AFF4B95180B2738000102F6 /* Default-Landscape.png in Resources */,
 				4A785AE817D0E3FB00CB9555 /* InfoPlist.strings in Resources */,
 				4AFF4BBF180BC5CF000102F6 /* bg_pattern.png in Resources */,
@@ -487,7 +474,6 @@
 				4A610713180A85AF00C67F25 /* asteroid_bang.m4a in Resources */,
 				4A610715180A85AF00C67F25 /* crash.m4a in Resources */,
 				4A4FDFE4180A9B750039CF2C /* button_attack.png in Resources */,
-				4A610712180A85AF00C67F25 /* asteroid_bang.flac in Resources */,
 				4A785AF217D0E3FB00CB9555 /* Default@2x.png in Resources */,
 				4A4FDFE2180A94230039CF2C /* button_play_main.png in Resources */,
 				4A785AF417D0E3FB00CB9555 /* Default-568h@2x.png in Resources */,
@@ -496,8 +482,6 @@
 				4A61071C180A85C600C67F25 /* up_pannel_middle.png in Resources */,
 				31F4EE0B5097FB40E61667A3 /* shader.vsh in Resources */,
 				4AB6C30017ECB381008A2D67 /* joystick_field.png in Resources */,
-				4A610717180A85AF00C67F25 /* plasmoid.wav in Resources */,
-				4A610714180A85AF00C67F25 /* asteroid_bang_source.m4a in Resources */,
 				4AB6C30117ECB381008A2D67 /* joystick_body.png in Resources */,
 				4A610724180A85D100C67F25 /* play_button.png in Resources */,
 				4A610723180A85D100C67F25 /* pause_button.png in Resources */,
