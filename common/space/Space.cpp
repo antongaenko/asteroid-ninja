@@ -148,8 +148,6 @@ Vector teleport(const Vector &pos, const Rectangle &bounds) {
 void Space::update(float msSinceLastUpdate) {
   // for correct animation we calculate update portion
   float portion = msSinceLastUpdate / (1000 / SpaceArchitect::DESIGN_FPS);
-  if (msSinceLastUpdate > 100)
-    debug("ms since last update %f and update portion %f", msSinceLastUpdate, portion);
   // for survival mode we change destroyed asteroid with new ones, good luck
   std::vector<Asteroid*> newAsteroids;
   newAsteroids.reserve(5);
