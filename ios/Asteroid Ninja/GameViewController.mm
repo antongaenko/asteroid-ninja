@@ -76,8 +76,7 @@
   isPause = false;
   if (!_displayLink) {
     _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update:)];
-    // TODO Set here frameInterval based on game FPS. Currently 30 fps
-    _displayLink.frameInterval = 2;
+    _displayLink.frameInterval = 60 / Game::FPS;
     lastTimestamp = CACurrentMediaTime();
     [_displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
   }

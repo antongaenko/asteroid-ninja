@@ -28,11 +28,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   [[UIApplication sharedApplication] setStatusBarHidden:YES];
-  // TODO If debug
-  
-   /*UIViewController *game = [self.window.rootViewController.storyboard instantiateViewControllerWithIdentifier:@"game"];
-    [self.window setRootViewController:game];
-  */
   return YES;
 }
 

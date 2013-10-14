@@ -70,6 +70,7 @@
 		4AFF4BBB180BA96D000102F6 /* BigBang.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BB9180BA96D000102F6 /* BigBang.cpp */; };
 		4AFF4BBD180BBB72000102F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4BBC180BBB72000102F6 /* Images.xcassets */; };
 		4AFF4BBF180BC5CF000102F6 /* bg_pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 4AFF4BBE180BC5CF000102F6 /* bg_pattern.png */; };
+		4AFF4BC1180BE6D5000102F6 /* LAlgebra.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AFF4BA3180B35F6000102F6 /* LAlgebra.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -563,6 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AFF4BC1180BE6D5000102F6 /* LAlgebra.cpp in Sources */,
 				31F4E49B3D17C94288EACD4F /* Math2DTest.mm in Sources */,
 				4A1C15BD1802DB5C00ACAE39 /* ColliderTest.mm in Sources */,
 				31F4E14A73A704A4D50B3D81 /* Vector.cpp in Sources */,

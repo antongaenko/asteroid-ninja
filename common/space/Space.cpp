@@ -140,12 +140,10 @@ Vector teleport(const Vector &pos, const Rectangle &bounds) {
 
 /**
  * Update scene, check lifecycle and check space collisions
- * TODO Add frameRate, startTime and currentFrame and use msSinseLastUpdate for correct animation
  * - update all positions, apply all effects and ...
  * - ... check out of bounds of the space for each object
  * - ... if (out of bounds) remove plasmoids and teleport other objects to counter-side edge (180 degree rotation)
- * - check the collisions with using externally set collider
- * - ... if (collision) we use collider callback to tell about that
+ * - check the collisions and apply all callbacks
  */
 void Space::update(float msSinceLastUpdate) {
   // for correct animation we calculate update portion
