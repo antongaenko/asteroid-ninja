@@ -32,11 +32,11 @@ _angle(0),
 _velocity(0, 0, 1),
 _isBumped(false) {};
 
-void SpaceObject::update() {
-  _position += _velocity;
+void SpaceObject::update(float portion) {
+  _position += _velocity * ScaleMatrix(portion, portion);
   _transformedGeometry = _initialGeometry.
       rotate(_angle, Radians).
-      translate(_position.getX(), _position.getY());
+      translate(_position);
 }
 
 int SpaceObject::getVertexCount() const {

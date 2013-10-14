@@ -32,7 +32,6 @@ Ship::Ship(const Geometry& geometry, const ColorRGB& color, const Vector & initP
   debug("Spacecraft is ready, sir!");
 }
 
-// TODO Destroy laser object in this class user
 std::unique_ptr<Plasmoid> Ship::piffPaff() {
   // TODO move outside SpaceArchitect
   auto p = std::unique_ptr<Plasmoid>(new Plasmoid({SpaceArchitect::LASER}, kRED, _position));

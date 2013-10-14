@@ -147,19 +147,23 @@ Vector teleport(const Vector &pos, const Rectangle &bounds) {
  * - ... if (collision) we use collider callback to tell about that
  */
 void Space::update(float msSinceLastUpdate) {
+  // for correct animation we calculate update portion
+  float portion = msSinceLastUpdate / (1000 / SpaceArchitect::DESIGN_FPS);
+  if (msSinceLastUpdate > 100)
+    debug("ms since last update %f and update portion %f", msSinceLastUpdate, portion);
   // for survival mode we change destroyed asteroid with new ones, good luck
   std::vector<Asteroid*> newAsteroids;
   newAsteroids.reserve(5);
   
   // update ship
-  _ship->update();
+  _ship->update(portion);
   // teleport it if it's out of space
   if (_bounds.isOutside(_ship->getPosition())) {
     _ship->setPosition(teleport(_ship->getPosition(), _bounds));
   }
   // update asteroids and check collision between space ship and asteroids
   for (auto &a : _asteroids) {
-    a->update();
+    a->update(portion);
     // teleport each if it's out of space
     if (_bounds.isOutside(a->getPosition())) {
       a->setPosition(teleport(a->getPosition(), _bounds));
@@ -179,7 +183,7 @@ void Space::update(float msSinceLastUpdate) {
   // TODO split the space on smaller areas and check collisions in them
   // update plasmoids and check collision between plasmoids and asteroids
   for (auto &p : _plasmoids) {
-    p->update();
+    p->update(portion);
     for (auto &a : _asteroids) {
       if (Collider::isCollision(p->getCurrentGeometry(), a->getCurrentGeometry())) {
         p->setBumped();
@@ -205,7 +209,7 @@ void Space::update(float msSinceLastUpdate) {
 
   // update new asteroids and push them to all friends for drawing
   for (auto a : newAsteroids) {
-    a->update();
+    a->update(portion);
     _asteroids.push_back(std::unique_ptr<Asteroid>(a));
   }
 
@@ -346,11 +350,11 @@ Space::~Space() {
 Matrix Space::prepareViewMatrix(const int resolutionWidth, const int resolutionHeight) {
   if (resolutionWidth > 0 && resolutionHeight > 0) {
     // x and y factors to normalize object' geometries
-    float xScale = 1.0 / resolutionWidth; //SpaceArchitect::GRAPHIC_RESOLUTION_WIDTH;
-    float yScale = 1.0 / resolutionHeight; //SpaceArchitect::GRAPHIC_RESOLUTION_HEIGHT;
+    float xScale = 1.0 / resolutionWidth * ((float)resolutionWidth / SpaceArchitect::GRAPHIC_RESOLUTION_WIDTH);
+    float yScale = 1.0 / resolutionHeight * ((float)resolutionHeight / SpaceArchitect::GRAPHIC_RESOLUTION_HEIGHT);
     // scale factor to screen resolution from design resolution. See Space Architect for more detail
     // TODO Add parameter enum Scale SaveProportion, StretchWidth and etc
-    float commonScale = 1; //static_cast<float>(resolutionHeight) / SpaceArchitect::GRAPHIC_RESOLUTION_HEIGHT;
+    float commonScale = 1;
 
     return ScaleMatrix(xScale, yScale, commonScale);
   }
@@ -373,11 +377,13 @@ void Space::moveShip(float dx, float dy, float curAngle) {
 // set space canvas size
 void Space::setSize(int width, int height) {
   _viewMatrix = prepareViewMatrix(width, height);
+  float xScale = (float) SpaceArchitect::GRAPHIC_RESOLUTION_WIDTH / width;
+  float yScale = (float) SpaceArchitect::GRAPHIC_RESOLUTION_HEIGHT / height;
   // set space bounds
-  _bounds = Rectangle(Vector(-width, height), Vector(width, -height));
+  _bounds = Rectangle(Vector(-width, height) * ScaleMatrix(xScale, yScale), Vector(width, -height) * ScaleMatrix(xScale, yScale));
   // ship extra bounds is a quarter of space bounds
   _shipExtraBounds = Rectangle(_bounds.getTopLeft() * ScaleMatrix(.25,.25), _bounds.getBottomRight() * ScaleMatrix(.25,.25));
-  // TODO maybe place this outside
+
   glViewport(0, 0, width, height);
 
   // also add random asteroids

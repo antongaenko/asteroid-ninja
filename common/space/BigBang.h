@@ -1,5 +1,5 @@
 /*
- Copyright (C) 2013 by Anton Gaenko 
+ Copyright (C) 2013 by Anton Gaenko
  Mail anton.gaenko@yahoo.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,25 +21,19 @@
  THE SOFTWARE.
  */
 
+#ifndef __Asteroid_Ninja__BigBang__
+#define __Asteroid_Ninja__BigBang__
 
-#include "Asteroid.h"
+#include "SpaceObject.h"
+#include <vector>
 
-Asteroid::Asteroid(
-    const int hitsCount,
-    const Geometry &geometry,
-    const ColorRGB &color,
-    const Vector &initPos):SpaceObject(geometry, color, initPos), _hitsCount(hitsCount) {}
+class Plasmoid;
 
-void Asteroid::setAngularFrequencyRadians(const float angularFrequency) {
-  _angularFrequency = angularFrequency;
+class BigBang: public SpaceObject {
+public:
+  BigBang(const Geometry &geometry, const ColorRGB &color, const Vector &initPos);
+  
+  std::vector<std::unique_ptr<Plasmoid>> boom();
 };
 
-
-void Asteroid::update(float portion) {
-  _angle += _angularFrequency * portion;
-  SpaceObject::update(portion);
-}
-
-int Asteroid::getHits() const {
-  return _hitsCount;
-}
+#endif /* defined(__Asteroid_Ninja__BigBang__) */

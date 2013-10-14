@@ -38,15 +38,17 @@ class SpaceArchitect {
   // This parameters show which resolution we use for geometry.
   // It helps us to scale geometry to device specific resolution.
   //
-  // fe game object with size 10х10px for default resolution (fe 800x480) should be
+  // fe game object with size 10х10px for resolution 800x480 should be
   // 13х19px for resolution 1024x768 without kept proportions
   // 13х13px (or 15х15 or 19х19 for choiсe) for resolution 1024x768 with kept proportions
-  static const int GRAPHIC_RESOLUTION_WIDTH = 800;
-  static const int GRAPHIC_RESOLUTION_HEIGHT = 480;
+  static const int GRAPHIC_RESOLUTION_WIDTH = 1024;
+  static const int GRAPHIC_RESOLUTION_HEIGHT = 768;
   // ship laser tower position
   static Vector PLASMOID_TURRET_POS;
   static Vector LASER;
   static Vector SHIP[3];
+  
+  static ColorRGB BIG_BANG_COLOR;
 
   static Vector PLASMOID_VELOCITY;
   static const int SHIP_VELOCITY_MAX;

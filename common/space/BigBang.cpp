@@ -1,5 +1,5 @@
 /*
- Copyright (C) 2013 by Anton Gaenko 
+ Copyright (C) 2013 by Anton Gaenko
  Mail anton.gaenko@yahoo.com
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -21,25 +21,27 @@
  THE SOFTWARE.
  */
 
+#include "BigBang.h"
+#include "Plasmoid.h"
+#include "SpaceArchitect.h"
 
-#include "Asteroid.h"
+BigBang::BigBang(const Geometry& geometry, const ColorRGB& color, const Vector & initPos):
+SpaceObject(geometry, color, initPos) {}
 
-Asteroid::Asteroid(
-    const int hitsCount,
-    const Geometry &geometry,
-    const ColorRGB &color,
-    const Vector &initPos):SpaceObject(geometry, color, initPos), _hitsCount(hitsCount) {}
-
-void Asteroid::setAngularFrequencyRadians(const float angularFrequency) {
-  _angularFrequency = angularFrequency;
-};
-
-
-void Asteroid::update(float portion) {
-  _angle += _angularFrequency * portion;
-  SpaceObject::update(portion);
-}
-
-int Asteroid::getHits() const {
-  return _hitsCount;
+std::vector<std::unique_ptr<Plasmoid>> BigBang::boom() {
+  static int const PLASMOID_COUNT = 10;
+  std::vector<std::unique_ptr<Plasmoid>> v;
+  v.reserve(PLASMOID_COUNT);
+  float angleDiff = 2 * PI / PLASMOID_COUNT;
+  
+  float angle = 0;
+  for (int i = 0; i < PLASMOID_COUNT; i++) {
+    auto p = std::unique_ptr<Plasmoid>(new Plasmoid({SpaceArchitect::LASER}, _color, _position));
+    // then apply rotation to velocity vector
+    p->setVelocity(SpaceArchitect::PLASMOID_VELOCITY * RotateMatrix(_angle, Radians));
+    angle += angleDiff;
+    v.push_back(std::move(p));
+  }
+  
+  return v;
 }

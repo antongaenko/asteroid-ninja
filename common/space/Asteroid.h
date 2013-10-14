@@ -34,7 +34,7 @@ public:
 
   // set angular speed in radians
   void setAngularFrequencyRadians(const float angularFrequency);
-  virtual void update() override;
+  virtual void update(float portion) override;
 
   int getHits() const;
 private:

@@ -25,7 +25,6 @@
 
 #include "LAlgebra.h"
 #include "OpenGL.h"
-#include "Logger.h"
 
 using namespace lalgebra;
 
@@ -34,7 +33,7 @@ public:
   SpaceObject(const Geometry &geometry, const ColorRGB &color, const Vector &initPos = Vector(0, 0, 1));
 
   // apply to geometry all transformations
-  virtual void update();
+  virtual void update(float portion);
 
   int getVertexCount() const;
 

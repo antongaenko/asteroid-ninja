@@ -32,12 +32,13 @@ Vector SpaceArchitect::PLASMOID_TURRET_POS = {0, 30};
 
 Vector SpaceArchitect::LASER = PLASMOID_TURRET_POS;
 
-Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, {-20,-30}, {20,-30}};
+Vector SpaceArchitect::SHIP[3] = {PLASMOID_TURRET_POS, {-25,-30}, {25,-30}};
 
-// TODO It should depend on Game FPS
+static ColorRGB BIG_BANG_COLOR = {.3, .2, .55};
+
 Vector SpaceArchitect::PLASMOID_VELOCITY = {0, 30};
 
-const int SpaceArchitect::SHIP_VELOCITY_MAX = 8;
+const int SpaceArchitect::SHIP_VELOCITY_MAX = 20;
 
 const int SpaceArchitect::DESIGN_FPS = 30;
 
@@ -45,8 +46,8 @@ const int SpaceArchitect::ASTEROID_VERTEX_COUNT_MIN = 10;
 const int SpaceArchitect::ASTEROID_VERTEX_COUNT_MAX = 20;
 const int SpaceArchitect::ASTEROID_BIG_RADIUS = 80;
 const int SpaceArchitect::ASTEROID_SMALL_RADIUS = 40;
-const int SpaceArchitect::ASTEROID_VELOCITY_MAX = 10;
-const int SpaceArchitect::ASTEROID_ANGULAR_FREQUENCY_DEGREE_MAX = 5;
+const int SpaceArchitect::ASTEROID_VELOCITY_MAX = 7;
+const int SpaceArchitect::ASTEROID_ANGULAR_FREQUENCY_DEGREE_MAX = 4;
 const int SpaceArchitect::ASTEROID_BIG_HITS = 2;
 const int SpaceArchitect::ASTEROID_SMALL_HITS = 1;
 
