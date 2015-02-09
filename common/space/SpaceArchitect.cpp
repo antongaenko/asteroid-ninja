@@ -72,7 +72,7 @@ Geometry SpaceArchitect::generateAsteroid(const int maxRadius) {
   float angleDiff = 2 * PI / vertCount;
   
   // set first vertex
-  newGeom.add({0, initialRadius});
+  newGeom.add({0, static_cast<float>(initialRadius)});
   
   // then rotate it to produce all vertexes
   for (int i = 1; i < vertCount; i++) {

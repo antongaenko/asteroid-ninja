@@ -40,7 +40,7 @@ THE SOFTWARE.
 // generate asteroid, prepare it position, velocity and anglular frequency
 // we should avoid ship bounds to prevent early game over
 Asteroid* prepareAsteroid(int hits, const Rectangle shipBounds, const Rectangle spaceBounds, const Asteroid* from = NULL) {
-  int xPos, yPos;
+  float xPos, yPos;
 
   if (from) {
     xPos = from->getPosition().getX();
@@ -62,9 +62,9 @@ Asteroid* prepareAsteroid(int hits, const Rectangle shipBounds, const Rectangle 
       Vector(xPos, yPos));
 
   // random velocity
-  int velocityX = 1 + rand() % (SpaceArchitect::ASTEROID_VELOCITY_MAX - 1);
+  float velocityX = 1 + rand() % (SpaceArchitect::ASTEROID_VELOCITY_MAX - 1);
   if (flipCoin()) velocityX = -velocityX;
-  int velocityY = 1 + rand() % (SpaceArchitect::ASTEROID_VELOCITY_MAX - 1);
+  float velocityY = 1 + rand() % (SpaceArchitect::ASTEROID_VELOCITY_MAX - 1);
   if (flipCoin()) velocityY = -velocityY;
 
   // random anglular frequency
